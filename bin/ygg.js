@@ -24,8 +24,9 @@ program
 program
     .command('console')
     .description('Run YGGDRASH console')
-    .action(() => {
-        console.log('Running...')
+    .option('--url <url>', 'Node url')
+    .action((cmd) => {
+        require('../lib/repl')(cleanArgs(cmd))
     })
 
 program
