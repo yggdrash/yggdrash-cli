@@ -15,10 +15,10 @@ program
     })
 
 program
-    .command('account')
+    .command('account <action>')
     .description('Manage accounts')
-    .action(() => {
-        console.log('account')
+    .action(action => {
+        require('../lib/account')(action)
     })
 
 program
