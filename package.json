@@ -25,7 +25,7 @@
   "homepage": "https://github.com/yggdrash/yggdrash-cli#readme",
   "dependencies": {
     "chalk": "^2.4.1",
-    "commander": "^2.15.1",
+    "commander": "^2.16.0",
     "jayson": "^2.0.6"
   },
   "devDependencies": {
