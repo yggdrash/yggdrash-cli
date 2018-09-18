@@ -1,0 +1,12 @@
+{
+  "timestamp": 1537260165,
+  "bodyLength": 652,
+  "body": "[{\"method\":\"CREATE\",\"params\":[{\"branchId\":\"80408f82f51d744e54905f06ab46f0155dd87dbd\",\"branch\":{\"name\":\"YGGDRASH\",\"symbol\":\"YGG\",\"property\":\"ecosystem\",\"type\":\"immunity\",\"description\":\"The Basis of the YGGDRASH Ecosystem. It is also an aggregate and a blockchain containing information of all Branch Chains.\",\"tag\":0.1,\"version\":\"0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0\",\"reference_address\":\"\",\"reserve_address\":\"0xcee3d4755e47055b530deeba062c5bd0c17eb00f\",\"owner\":\"0x5d411fafbd9bc5fe122162a745793a92354dd49e\",\"timestamp\":1537260165,\"version_history\":[\"0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0\"]}}]}]",
+  "author": "5d411fafbd9bc5fe122162a745793a92354dd49e",
+  "hash": "50541651e448d1702bb8a980df08d25d20a3aab43dd6dc8e1a1ff3ffe21f0428",
+  "chain": "fe7b7c93dd23f78e12ad42650595bc0f874c88f7",
+  "type": "0000000000000000",
+  "version": "0000000000000000",
+  "bodyHash": "8691b0002251b606f5459d1453dbf92919af31a1b5e00062034938048429bdf6",
+  "signature": "1b6fc6c1e26a5f44423f4ef3230a67cabaf5dafba7aea7b65294a5e2ce09529b280482077e19a723d7b6ea1005ad8ae6d35557ea9d7e171ce117531eaa59f940e5"
+}
