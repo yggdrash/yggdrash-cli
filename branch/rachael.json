@@ -1,0 +1,26 @@
+{
+  "branchId": "bb6cbf27ce81f50d5bfd4d085452c084aeb44338",
+  "branch": {
+    "name": "rachael",
+    "symbol": "RACHAEL",
+    "property": "ecosystem",
+    "type": "immunity",
+    "description": "The Basis of the YGGDRASH Ecosystem. It is also an aggregate and a blockchain containing information of all Branch Chains.",
+    "tag": 0.1,
+    "version": "0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0",
+    "reference_address": "",
+    "reserve_address": "0xcee3d4755e47055b530deeba062c5bd0c17eb00f",
+    "owner": "0xbfe2252de2dac4a2972935c41f29073c5c18ac6d",
+    "timestamp": 1537269000,
+    "version_history": [
+      "0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0"
+    ]
+  },
+  "author": "bfe2252de2dac4a2972935c41f29073c5c18ac6d",
+  "hash": "05dccd5ff3e7d3bff0df7ac6def49f1f9862bdd5f04e09dfe75401af0fc7cbd1",
+  "chain": "fe7b7c93dd23f78e12ad42650595bc0f874c88f7",
+  "type": "0000000000000000",
+  "version": "0000000000000000",
+  "bodyHash": "3d3c3b586749472db45c899b87f2dfc9f417a5d0e9c5b28b3a9bd93acd95d821",
+  "signature": "1c8f2a4c4e453e7d6ae4a86d4214b8e9cdeecb8a84d65758f03843ed9ce6ce673240811ad7994448438839f087d970863cd573b8b274a68e7c5cc55c2e2666bb07"
+}

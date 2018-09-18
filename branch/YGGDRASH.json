@@ -1,12 +1,12 @@
 {
-  "timestamp": 1537262823,
+  "timestamp": 1537268187,
   "bodyLength": 652,
-  "body": "[{\"method\":\"CREATE\",\"params\":[{\"branchId\":\"a0ee52e82368329c62b627e648485433698722f7\",\"branch\":{\"name\":\"YGGDRASH\",\"symbol\":\"YGG\",\"property\":\"ecosystem\",\"type\":\"immunity\",\"description\":\"The Basis of the YGGDRASH Ecosystem. It is also an aggregate and a blockchain containing information of all Branch Chains.\",\"tag\":0.1,\"version\":\"0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0\",\"reference_address\":\"\",\"reserve_address\":\"0xcee3d4755e47055b530deeba062c5bd0c17eb00f\",\"owner\":\"0x9de4908ccd8ee8d791d4f71c300b304773189b96\",\"timestamp\":1537262823,\"version_history\":[\"0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0\"]}}]}]",
-  "author": "9de4908ccd8ee8d791d4f71c300b304773189b96",
-  "hash": "c864e526ba796082747c0f6882bf310323428647b24d513e9eef4cb58eaa7eff",
+  "body": "[{\"method\":\"CREATE\",\"params\":[{\"branchId\":\"860e2fa6836dffa99266854bfcb4ea5124ac2aee\",\"branch\":{\"name\":\"YGGDRASH\",\"symbol\":\"YGG\",\"property\":\"ecosystem\",\"type\":\"immunity\",\"description\":\"The Basis of the YGGDRASH Ecosystem. It is also an aggregate and a blockchain containing information of all Branch Chains.\",\"tag\":0.1,\"version\":\"0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0\",\"reference_address\":\"\",\"reserve_address\":\"0xcee3d4755e47055b530deeba062c5bd0c17eb00f\",\"owner\":\"0xdd300b4854309692336351874659b5e12be1f5e4\",\"timestamp\":1537268187,\"version_history\":[\"0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0\"]}}]}]",
+  "author": "dd300b4854309692336351874659b5e12be1f5e4",
+  "hash": "eee8374af8fa426e56725abbd035598c9b71c5c478fc92bbdc74660c10b893c9",
   "chain": "fe7b7c93dd23f78e12ad42650595bc0f874c88f7",
   "type": "0000000000000000",
   "version": "0000000000000000",
-  "bodyHash": "75eb773d8c8bc06a51ef8c80dcfbd2366573e12d2c1f431d7572d462bd289fdb",
-  "signature": "1cf9e243c770ab8d6d2afeb58c7e0236f0e42afc49c69574cb1c3ee605c0e2b4d36bdc713f87c13890c6c4a88466307a7b9368267ba3d50661dcbec81f35d993e9"
+  "bodyHash": "b2057b8d2785196bdfb0f065de2f0219debe4969dd61b3f89c0d9a5671191465",
+  "signature": "1cad4d949b9c83346798ce9281ec9cf28bff64cddd6130dd971f017bd89d24a5306dcc4eba19e0d94406c798942ed22198595856ab77d9c468c9cb5e2af6f3898e"
 }
