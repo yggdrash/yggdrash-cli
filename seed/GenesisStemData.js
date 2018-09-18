@@ -1,7 +1,7 @@
 'use strict'
 
-var name  = "STEM";
-var symbol = "STEM";
+var name  = "YGGDRASH";
+var symbol = "YGG";
 var property = "ecosystem";
 var type = "immunity";
 var description = "The Basis of the YGGDRASH Ecosystem. It is also an aggregate and a blockchain containing information of all Branch Chains.";
