@@ -27,23 +27,24 @@ ygg>
 
 #### Example
 ```
-ygg> ygg.sendTransaction({"to":"0x407d73d8a49eeb85d32cf465507dd71d507100c1", "from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1", "value":"100"})
+ygg> ygg.fromYeedTransfer(ygg.getAccount(0), "0x407d73d8a49eeb85d32cf465507dd71d507100c1", 100)
 
 { jsonrpc: '2.0',
   id: 'f799eb35-1ede-485a-8881-1575b29c8cc8',
   result:
    '{[get : {"to":"0x407d73d8a49eeb85d32cf465507dd71d507100c1","from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1","value":"100"}][result : {txhash : 0x76a9fa4681a8abf94618543872444ba079d5302203ac6a5b5b2087a9f56ea8bf}]}' }
 ```
-
-### Non-Interactive use
+## Method
 ```
-$ ygg <command> [options]
-```
-
-#### Example
-Send transaction
-```
-$ ygg tx send --from ace --to bob --value 10
+wallet
+createAccount
+getAccounts
+getAccount
+createBranch
+createBranchJson
+plantToStem
+fromYeedTransfer
+getYeedBalance
 ```
 
 ## License
