@@ -30,13 +30,13 @@ program
     })
 
 program
-    .command('tx <action>')
+    .command('plant <action>')
     .option('--from <from>', 'from')
     .option('--to <to>', 'to')
     .option('--value <value>', 'value')
     .description('Manage transaction')
     .action((action, cmd) => {
-        require('../lib/stem/txData')(action, cleanArgs(cmd))
+        require('../lib/stem/plant')(action, cleanArgs(cmd))
     })
     // ex) ygg tx send --from ace --to bob --value 10
 
