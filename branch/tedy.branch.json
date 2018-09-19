@@ -1,5 +1,5 @@
 {
-  "branchId": "2fba7cd703d9077ce25abc2efadcccae3c7fea8f",
+  "branchId": "b74648062252d8f349791df237ac6125984809f1",
   "branch": {
     "name": "tedy",
     "symbol": "TEDY",
@@ -10,17 +10,17 @@
     "version": "0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0",
     "reference_address": "",
     "reserve_address": "0xcee3d4755e47055b530deeba062c5bd0c17eb00f",
-    "owner": "0x3bb0e08ea65599bc4bb86e8ae62b576368dd7df9",
-    "timestamp": 1537268863,
+    "owner": "0xfacd487e8a99075ea06ea30ffac151be757f8947",
+    "timestamp": 1537319451,
     "version_history": [
       "0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0"
     ]
   },
-  "author": "3bb0e08ea65599bc4bb86e8ae62b576368dd7df9",
-  "hash": "b10c8f2da547ba5bca510f73591d84974d00e00a52cdc4f42b2751a3d2911395",
+  "author": "0xfacd487e8a99075ea06ea30ffac151be757f8947",
+  "transactionHash": "812924da970dbe1f5108a0d4cb907b0e4f5315388eccbe2e93e9ea4f4a57cd62",
   "chain": "fe7b7c93dd23f78e12ad42650595bc0f874c88f7",
-  "type": "0000000000000000",
-  "version": "0000000000000000",
-  "bodyHash": "74665e64d925e5b45d01cc1b39f37d09c9cff7af00d19f804bd2cfbe2dbeebe7",
-  "signature": "1b76f984a43e518e446a8fa26244e5152ae82df63c8e0acb6b8aa31ec37848df4638e45bba0fc59be429601136c7e899e6eb0ef31a21a55ddefbe8dad1ce65f8bc"
+  "blockType": "0000000000000000",
+  "blockVersion": "0000000000000000",
+  "blockBodyHash": "1040dc24bd7c0be68cf325f8ee92f8a187c51d4f3ad131cc8caab8ef265ba019",
+  "signature": "1c07d058eb5775217154cad8cf21731a410d549a32d036e51170b6971be9cb2cb10e7848afc80c677e3205de28458fd67a9859cc2fbae0565f3cbf00d16f45ef52"
 }
