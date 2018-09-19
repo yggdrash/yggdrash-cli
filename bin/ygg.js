@@ -62,12 +62,18 @@ program
     .description('Plant branch')
     .action((action, cmd) => {
         if (cmd) {
-            db.get("accounts").map("address").value().map(addr => {
-                if(addr === action){
-                    let privatekeyEncryptedKey = db.get("principals").find({address:action}).value().EncryptedKey
-                    return actionPlant(privatekeyEncryptedKey, cmd)
-                }
-            });   
+            var Break = new Error('Break')
+            try {
+                db.get("accounts").map("address").value().map(addr => {
+                    if(addr === action){
+                        let privatekeyEncryptedKey = db.get("principals").find({address:action}).value().EncryptedKey
+                        actionPlant(privatekeyEncryptedKey, cmd)
+                        throw Break;
+                    }
+                });
+            } catch (e) {
+                if (e!== Break) throw Break;
+            }  
         } else {
             console.log('Not Found Command.')
         }
