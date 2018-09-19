@@ -66,8 +66,6 @@ program
                 if(addr === action){
                     let privatekeyEncryptedKey = db.get("principals").find({address:action}).value().EncryptedKey
                     return actionPlant(privatekeyEncryptedKey, cmd)
-                } else {
-                    console.log('Not Found Address.')        
                 }
             });   
         } else {
