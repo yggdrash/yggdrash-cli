@@ -2,11 +2,17 @@
 
 const program = require('commander')
 const chalk = require('chalk')
-const { createAccount, 
-        getAccounts, 
-        getAccount, 
-        plant, 
+const { actionCreateAccount, 
+        actionPlant, 
         register } = require('../lib/core')
+const { fromPrivateKey } = require('../lib/wallet')
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+
+const adapter = new FileSync('account.json')
+const db = low(adapter)
+db.defaults({ accounts: [], principals:[] })
+  .write()
 
 program
     .version(require('../package').version)
@@ -20,13 +26,60 @@ program
     })
 
 program
-    .command('createAccount <action>')
+    .command('account <action>')
     .description('Manage accounts')
-    .action((cmd, options) => {
-        console.log('options', options)
-        console.log('cmd', cmd)
-        console.log('cleanArgs(cmd)', cleanArgs(options))
-        // require('../lib/account')(action)
+    .action((action) => {
+        switch(action) {
+            case 'new':
+            const pk = actionCreateAccount();
+            const account = fromPrivateKey(pk);
+            const address = account.getAddressString();
+            db.get('accounts').push({
+                address: address
+            }).write()
+            db.get('principals').push({
+                address:address,
+                EncryptedKey:pk.toString('hex')
+            }).write()
+            console.log(`  ` + `Address - ${chalk.green(address)}`)
+            break
+    
+            case 'list':  
+            db.get("accounts").map("address").value().map(addr => {
+                console.log(addr)            
+            });    
+            break
+  
+            default:
+            console.log('Not Found Command.')
+            break;
+        }
+    })
+
+program
+    .command('plant <action>')
+    .arguments('<cmd> [env]')
+    .description('Plant branch')
+    .action((action, cmd) => {
+        if (cmd) {
+            db.get("accounts").map("address").value().map(addr => {
+                if(addr === action){
+                    let privatekeyEncryptedKey = db.get("principals").find({address:action}).value().EncryptedKey
+                    return actionPlant(privatekeyEncryptedKey, cmd)
+                } else {
+                    console.log('Not Found Address.')        
+                }
+            });   
+        } else {
+            console.log('Not Found Command.')
+        }
+    })
+
+program
+    .command('register <action>')
+    .description('Register branch')
+    .action((action) => {
+        register(action)
     })
 
 program
@@ -36,17 +89,6 @@ program
     .action((cmd) => {
         require('../lib/repl')(cleanArgs(cmd))
     })
-
-program
-    .command('plant <action>')
-    .option('--from <from>', 'from')
-    .option('--to <to>', 'to')
-    .option('--value <value>', 'value')
-    .description('Manage transaction')
-    .action((action, cmd) => {
-        require('../lib/stem/plant')(action, cleanArgs(cmd))
-    })
-    // ex) ygg tx send --from ace --to bob --value 10
 
 // output help information on unknown commands
 program
