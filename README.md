@@ -25,26 +25,39 @@ $ ygg console
 ygg> 
 ```
 
-#### Example
+## Method
+### Wallet
+```
+createAccount
+getAccounts
+getAccount
+```
+### STEM
+```
+plant
+rawPlant
+register
+rawRegister
+```
+
+### YEED
+```
+fromYeedTransfer
+getYeedBalance
+```
+
+## Example
+### YEED
 ```
 ygg> ygg.fromYeedTransfer(ygg.getAccount(0), "0x407d73d8a49eeb85d32cf465507dd71d507100c1", 100)
+```
 
+### Returns
+```
 { jsonrpc: '2.0',
   id: 'f799eb35-1ede-485a-8881-1575b29c8cc8',
   result:
    '{[get : {"to":"0x407d73d8a49eeb85d32cf465507dd71d507100c1","from":"0x407d73d8a49eeb85d32cf465507dd71d507100c1","value":"100"}][result : {txhash : 0x76a9fa4681a8abf94618543872444ba079d5302203ac6a5b5b2087a9f56ea8bf}]}' }
-```
-## Method
-```
-wallet
-createAccount
-getAccounts
-getAccount
-createBranch
-createBranchJson
-plantToStem
-fromYeedTransfer
-getYeedBalance
 ```
 
 ## License

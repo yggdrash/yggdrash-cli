@@ -2,6 +2,11 @@
 
 const program = require('commander')
 const chalk = require('chalk')
+const { createAccount, 
+        getAccounts, 
+        getAccount, 
+        plant, 
+        register } = require('../lib/core')
 
 program
     .version(require('../package').version)
@@ -15,10 +20,13 @@ program
     })
 
 program
-    .command('account <action>')
+    .command('createAccount <action>')
     .description('Manage accounts')
-    .action(action => {
-        require('../lib/account')(action)
+    .action((cmd, options) => {
+        console.log('options', options)
+        console.log('cmd', cmd)
+        console.log('cleanArgs(cmd)', cleanArgs(options))
+        // require('../lib/account')(action)
     })
 
 program
