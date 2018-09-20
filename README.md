@@ -104,6 +104,8 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 ### register
 ```
 ygg> ygg.register(branch.json file)
+or
+ygg> ygg.register(branch.json file, network option)
 ```
 
 #### Returns
@@ -114,6 +116,8 @@ TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
 #### Example
 ```
 ygg> ygg.register("/Users/haewonwoo/woohae/yggdrash-cli/seed/seed1.json")
+or
+ygg> ygg.register("/Users/haewonwoo/woohae/yggdrash-cli/seed/seed1.json", "10.10.10.100:8080")
 ```
 
 
@@ -121,6 +125,8 @@ ygg> ygg.register("/Users/haewonwoo/woohae/yggdrash-cli/seed/seed1.json")
 ### fromTransfer
 ```
 ygg> ygg.fromTransfer([branch id], [from address], [to address], [value])
+or
+ygg> ygg.fromTransfer([branch id], [from address], [to address], [value], [network])
 ```
 
 #### Returns
@@ -130,7 +136,9 @@ TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
 
 #### Example
 ```
-ygg> ygg.fromTransfer('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000000)
+ygg> ygg.fromTransfer('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000)
+or
+ygg> ygg.fromTransfer('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000,"10.10.10.100:8080")
 ```
 
 ### getBalance
@@ -168,11 +176,15 @@ $ ygg account list
 Generate branch.json file
 ```
 $ ygg plant 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 /Users/homedir/yggdrash-cli/seed/yeed.seed.json
+or
+$ ygg plant 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 /Users/homedir/yggdrash-cli/seed/yeed.seed.json -h 10.10.10.100:8080
 ```
 
 Transactions that register a branch with the stem
 ```
-$ ygg register /Users/homedir/yggdrash-cli/seed/yeed.branch.json
+$ ygg stem register -b /Users/homedir/woohae/yggdrash-cli/seed/tedy.branch.json
+or
+$ ygg stem register -b /Users/homedir/woohae/yggdrash-cli/seed/tedy.branch.json -h 10.10.10.100:8080
 ```
 
 ## License
