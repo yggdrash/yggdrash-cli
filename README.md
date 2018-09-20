@@ -167,12 +167,15 @@ $ ygg account list
 
 Generate branch.json file
 ```
-$ ygg plant 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 /Users/homedir/yggdrash-cli/seed/yeed.seed.json
+$ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s //Users/homedir/yggdrash-cli/seed/yeed.branch.json
 ```
 
 Transactions that register a branch with the stem
 ```
-$ ygg register /Users/homedir/yggdrash-cli/seed/yeed.branch.json
+$ ygg stem register -b /Users/homedir/yggdrash-cli/seed/yeed.branch.json -h 10.10.10.10:8080
+or
+defalt => localhost
+$ ygg stem register -b /Users/homedir/yggdrash-cli/seed/yeed.branch.json 
 ```
 
 ## License

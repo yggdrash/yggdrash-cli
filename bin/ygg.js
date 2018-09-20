@@ -4,7 +4,8 @@ const program = require('commander')
 const chalk = require('chalk')
 const { createAccount, 
         plant, 
-        register } = require('../lib/core')
+        register,
+        fromTransfer } = require('../lib/core')
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
@@ -44,37 +45,47 @@ program
     })
 
 program
-    .command('plant <action>')
-    .arguments('<cmd> [env]')
-    .description('Plant branch')
+    .command('stem <action>')
+    .option('-o, --owner <owner>', 'owner')
+    .option('-s, --seed <seed>', 'seed')
+    .option('-n, --net <net>', 'net')
+    .option('-b, --branch <branch>', 'branch')
+    .description('Plant branch to STEM')
     .action((action, cmd) => {
-        if (cmd) {
-            plant(action, cmd)
+        if (action === "plant") {
+            if(!cmd.owner || !cmd.seed){
+                console.log()
+                console.log(`  ` + chalk.red(`Unknown command`))
+                console.log()
+            } else {
+                plant(cmd.owner, cmd.seed)
+            }
+        } else if (action === "register") {
+            register(cmd.branch, cmd.net)
         } else {
             console.log('Not Found Command.')
         }
     })
 
 program
-    .command('register <action>')
-    .description('Register branch')
-    .action((action) => {
-        register(action)
-    })
-
-program
     .command('transfer <action>')
-    .option('--branch <branch>', 'branch')
-    .option('--from <from>', 'from')
-    .option('--to <to>', 'to')
-    .option('--value <value>', 'value')
+    .option('-b, --branch <branch>', 'branch')
+    .option('-f, --from <from>', 'from')
+    .option('-t, --to <to>', 'to')
+    .option('-v, --value <value>', 'value')
+    .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
-        if(action === "from"){
-            require('../lib/coin/test')(action, cleanArgs(cmd))
+        if(action === "yeed"){
+            if (!cmd.branch || !cmd.from || !cmd.to || !cmd.value) {
+                console.log()
+                console.log(`  ` + chalk.red(`Unknown command`))
+                console.log()
+            } else {
+                fromTransfer(cmd.branch, cmd.from, cmd.to, cmd.value, cmd.net)
+            }
         }
     })
-    // ex) ygg tx send --from ace --to bob --value 10
 program
     .command('console')
     .description('Run YGGDRASH console')
