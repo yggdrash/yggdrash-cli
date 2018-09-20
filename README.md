@@ -106,7 +106,7 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 ```
 ygg> ygg.register(branch.json file)
 or
-ygg> ygg.register(branch.json file, network option)
+ygg> ygg.register(branch.json file, network)
 ```
 
 #### Returns
@@ -165,17 +165,17 @@ $ ygg <command> [options]
 ```
 
 #### Example
-create account
+### create account
 ```
 $ ygg account new
 ```
 
-Account list
+### Account list
 ```
 $ ygg account list
 ```
 
-Generate branch.json file
+### Generate branch.json file
 - option - o : owner
          - s : seed.json file
          - n : network
@@ -186,7 +186,7 @@ or
 $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir/yggdrash-cli/seed/yeed.branch.json
 ```
 
-Transactions that register a branch with the stem
+### Transactions that register a branch with the stem
 - defalt network - localhost
 - option - b : branch file
          - n : network
@@ -197,7 +197,7 @@ or
 $ ygg stem register -b /Users/homedir/yggdrash-cli/seed/yeed.branch.json -n 10.10.10.10:8080
 ```
 
-Transfer coin
+### Transfer coin
 - defalt network - localhost
 - option - b : branch id
          - f : from address
