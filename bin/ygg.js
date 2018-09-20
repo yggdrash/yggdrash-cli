@@ -2,17 +2,14 @@
 
 const program = require('commander')
 const chalk = require('chalk')
-const { actionCreateAccount, 
-        actionPlant, 
+const { createAccount, 
+        plant, 
         register } = require('../lib/core')
-const { fromPrivateKey } = require('../lib/wallet')
+
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
-
 const adapter = new FileSync('account.json')
 const db = low(adapter)
-db.defaults({ accounts: [], principals:[] })
-  .write()
 
 program
     .version(require('../package').version)
@@ -31,22 +28,12 @@ program
     .action((action) => {
         switch(action) {
             case 'new':
-            const pk = actionCreateAccount();
-            const account = fromPrivateKey(pk);
-            const address = account.getAddressString();
-            db.get('accounts').push({
-                address: address
-            }).write()
-            db.get('principals').push({
-                address:address,
-                EncryptedKey:pk.toString('hex')
-            }).write()
-            console.log(`  ` + `Address - ${chalk.green(address)}`)
+            createAccount()
             break
     
             case 'list':  
-            db.get("accounts").map("address").value().map(addr => {
-                console.log(addr)            
+            db.get("accounts").map("address").value().map(address => {
+                console.log(`  ` + `${chalk.green(address)}`)    
             });    
             break
   
@@ -62,12 +49,7 @@ program
     .description('Plant branch')
     .action((action, cmd) => {
         if (cmd) {
-            db.get("accounts").map("address").value().map(addr => {
-                if(addr === action){
-                    let privatekeyEncryptedKey = db.get("principals").find({address:action}).value().EncryptedKey
-                    return actionPlant(privatekeyEncryptedKey, cmd)
-                }
-            });   
+            plant(action, cmd)
         } else {
             console.log('Not Found Command.')
         }
@@ -80,6 +62,19 @@ program
         register(action)
     })
 
+program
+    .command('transfer <action>')
+    .option('--branch <branch>', 'branch')
+    .option('--from <from>', 'from')
+    .option('--to <to>', 'to')
+    .option('--value <value>', 'value')
+    .description('Manage transaction')
+    .action((action, cmd) => {
+        if(action === "from"){
+            require('../lib/coin/test')(action, cleanArgs(cmd))
+        }
+    })
+    // ex) ygg tx send --from ace --to bob --value 10
 program
     .command('console')
     .description('Run YGGDRASH console')
