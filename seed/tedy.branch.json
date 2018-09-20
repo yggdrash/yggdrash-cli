@@ -1,0 +1,26 @@
+{
+  "branchId": "3951e75076c62fcef08a6c49ea5b2126703f3f16",
+  "branch": {
+    "name": "tedy",
+    "symbol": "TEDY",
+    "property": "ecosystem",
+    "type": "immunity",
+    "description": "The Basis of the YGGDRASH Ecosystem. It is also an aggregate and a blockchain containing information of all Branch Chains.",
+    "tag": 0.1,
+    "version": "0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0",
+    "reference_address": "",
+    "reserve_address": "0xcee3d4755e47055b530deeba062c5bd0c17eb00f",
+    "owner": "0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6",
+    "timestamp": 1537410428,
+    "version_history": [
+      "0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0"
+    ]
+  },
+  "author": "0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6",
+  "transactionHash": "b949e48d05d479dd7c2557a1fe65036ecabe36cf52e7c14112dfedb1451bfb35",
+  "chain": "fe7b7c93dd23f78e12ad42650595bc0f874c88f7",
+  "blockType": "0000000000000000",
+  "blockVersion": "0000000000000000",
+  "blockBodyHash": "0b5ede6c766d57118d0598fed4c0ba3621f6a8ed85c7c7a02b3e69767c2c02e7",
+  "signature": "1ca779b3d8ca510980bd8c181f1cc30ece733f92dcfb19dd935974ab936f9373156b0caa23edf35db214795c28ad23c12d6f1ac52900361775856bf872b536aba2"
+}

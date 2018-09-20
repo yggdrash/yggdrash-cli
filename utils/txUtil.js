@@ -252,6 +252,9 @@ var hexToNumberString = function (value) {
     return toBN(value).toString(10);
 };
 
+var hexString = (str) => {
+    return Buffer.from(str, 'hex').toString('hex');
+}
 
 /**
  * Converts value to it's hex representation
@@ -441,5 +444,6 @@ module.exports = {
     leftPad: leftPad,
     rightPad: rightPad,
     toTwosComplement: toTwosComplement,
-    decimalToHex:decimalToHex
+    decimalToHex:decimalToHex,
+    hexString:hexString
 };
