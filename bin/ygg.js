@@ -63,6 +63,19 @@ program
     })
 
 program
+    .command('transfer <action>')
+    .option('--branch <branch>', 'branch')
+    .option('--from <from>', 'from')
+    .option('--to <to>', 'to')
+    .option('--value <value>', 'value')
+    .description('Manage transaction')
+    .action((action, cmd) => {
+        if(action === "from"){
+            require('../lib/coin/test')(action, cleanArgs(cmd))
+        }
+    })
+    // ex) ygg tx send --from ace --to bob --value 10
+program
     .command('console')
     .description('Run YGGDRASH console')
     .option('--url <url>', 'Node url')
