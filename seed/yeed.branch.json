@@ -1,5 +1,5 @@
 {
-  "branchId": "b90fd32d64f55ea0b8cde8c2b30bad2a2295ce38",
+  "branchId": "186c70234e90406ff94eebd32edb9789346104a0",
   "branch": {
     "name": "YEED",
     "symbol": "YEED",
@@ -11,16 +11,16 @@
     "reference_address": "",
     "reserve_address": "0xcee3d4755e47055b530deeba062c5bd0c17eb00f",
     "owner": "aca4215631187ab5b3af0d4c251fdf45c79ad3c6",
-    "timestamp": 1537412792,
+    "timestamp": 1537419989,
     "version_history": [
       "0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0"
     ]
   },
   "author": "0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6",
-  "transactionHash": "0f609c6a3f0520a7b3d25507b437e7d2efa26dbf2502112bce173b284a181a27",
+  "transactionHash": "f62b8bb53ad85c2eb0fd8fc89a4de6dc58fd88d9a0a50b3df7767472c0bed881",
   "chain": "fe7b7c93dd23f78e12ad42650595bc0f874c88f7",
   "blockType": "0000000000000000",
   "blockVersion": "0000000000000000",
-  "blockBodyHash": "22a596f8e1ff6c009bd2375cc967c1ddd2c8a0e41b4b3793e9ead81c514362c8",
-  "signature": "1c7e84b3c1de1d6bcfe31ef2898ff459c7787f472382755170fd88f4f0340f959e3c5ff5f6a4f82a569a81c145551b643055d3379c910d8c5372afae3504e3fdcb"
+  "blockBodyHash": "9608492033ae32b6c6fb8e4c90c707035fd7cef4d45dcc3d54d8959be6ad612d",
+  "signature": "1b800ea62aa80a7d3a8757d7575a0118113e95414b1200e878318d6e91ec7185616eb7699950db25e1e8d95aa8c37650fa0334aa159f19b8e31afbc8be4409c98e"
 }
