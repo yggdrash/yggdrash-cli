@@ -11,6 +11,21 @@ YGGDRASH CLI allows you to communicate with a remote or local node and carry out
 $ npm install -g @yggdrash/cli
 ```
 
+## Method
+### Wallet
+- createAccount - Generate account
+- getAccounts - Account list
+- getAccount - View specific account
+
+### STEM
+- plant - Generate branch.json file
+- register - Transactions that register a branch with the stem
+
+### Coin
+- fromTransfer - Coin transfer
+- getBalance - Account Balance Display
+
+
 ## Usage
 ### Interactive use
 ```
@@ -25,43 +40,23 @@ $ ygg console
 ygg> 
 ```
 
-## Method
-### Wallet
-```
-createAccount - Generate account
-getAccounts - Account list
-getAccount - View specific account
-```
-### STEM
-```
-plant - Generate branch.json file
-register - Transactions that register a branch with the stem
-```
-
-### Coin
-```
-fromTransfer - Coin transfer
-getBalance - Account Balance Display
-```
-
 ## Wallet
-
 ### createAccount
 ```
 ygg> ygg.createAccount()
 ```
 
-### Returns
+#### Returns
 ```
 Address - 0x4349f9965c6b488f2b17a62bfdd90aba6167a2f3
 ```
 
-#### getAccounts
+### getAccounts
 ```
 ygg> ygg.getAccounts()
 ```
 
-### Returns
+#### Returns
 ```
 0x09a73e44b8195d5057d05386527406dbb34a468b
 0xc8d19bf9f999eae06a71da8c17000206ef463f39
@@ -69,12 +64,12 @@ ygg> ygg.getAccounts()
 ...
 ```
 
-#### getAccount
+### getAccount
 ```
 ygg> ygg.getAccount(0)
 ```
 
-### Returns
+#### Returns
 ```
 0x09a73e44b8195d5057d05386527406dbb34a468b
 ```
@@ -87,9 +82,9 @@ ygg> ygg.getAccount(0)
 ygg> ygg.plant(ownerAddress, seedFile)
 ```
 
-### Returns
+#### Returns
 ```
-  /Users/haewonwoo/woohae/yggdrash-cli/seed/tedy.branch.json saved.
+  /Users/homedir/yggdrash-cli/seed/tedy.branch.json saved.
   CREATOR - 0x09a73e44b8195d5057d05386527406dbb34a468b
   Branch Name - yeed
   Branch Symbol - YEED
@@ -101,7 +96,7 @@ ygg> ygg.plant(ownerAddress, seedFile)
 
   ==> Branch ID : 35128756b44e72b3a6144c13e9e252d05d7df30d
 ```
-### Example
+#### Example
 ```
 ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/yggdrash-cli/seed/yeed.seed.json")
 ```
@@ -111,30 +106,29 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 ygg> ygg.register(branch.json file)
 ```
 
-### Returns
+#### Returns
 ```
 TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
 ```
 
-### Example
+#### Example
 ```
 ygg> ygg.register("/Users/haewonwoo/woohae/yggdrash-cli/seed/seed1.json")
 ```
 
 
 ## Coin
-
 ### fromTransfer
 ```
 ygg> ygg.fromTransfer([branch id], [from address], [to address], [value])
 ```
 
-### Returns
+#### Returns
 ```
 TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
 ```
 
-### Example
+#### Example
 ```
 ygg> ygg.fromTransfer('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000000)
 ```
@@ -144,14 +138,41 @@ ygg> ygg.fromTransfer('186c70234e90406ff94eebd32edb9789346104a0', '0xaca42156311
 ygg> ygg.getBalance([branch id], [address])
 ```
 
-### Returns
+#### Returns
 ```
 Balance : 999000000
 ```
 
-### Example
+#### Example
 ```
 ygg> ygg.getBalance('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6')
+```
+
+
+## Non-Interactive use
+```
+$ ygg <command> [options]
+```
+
+#### Example
+create account
+```
+$ ygg account new
+```
+
+Account list
+```
+$ ygg account list
+```
+
+Generate branch.json file
+```
+$ ygg plant 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 /Users/homedir/yggdrash-cli/seed/yeed.seed.json
+```
+
+Transactions that register a branch with the stem
+```
+$ ygg register /Users/homedir/yggdrash-cli/seed/yeed.branch.json
 ```
 
 ## License
