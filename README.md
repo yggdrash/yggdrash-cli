@@ -102,7 +102,7 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 ```
 
 ### register
-- defalt network - localhost
+- default network - localhost
 ```
 ygg> ygg.register(branch.json file)
 or
@@ -116,15 +116,15 @@ TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
 
 #### Example
 ```
-ygg> ygg.register("/Users/haewonwoo/woohae/yggdrash-cli/seed/seed1.json")
+ygg> ygg.register("/Users/homedir/yggdrash-cli/seed/seed1.json")
 or
-ygg> ygg.register("/Users/haewonwoo/woohae/yggdrash-cli/seed/seed1.json", "10.10.10.100:8080")
+ygg> ygg.register("/Users/homedir/yggdrash-cli/seed/seed1.json", "10.10.10.100:8080")
 ```
 
 
 ## Coin
 ### fromTransfer
-- defalt network - localhost
+- default network - localhost
 ```
 ygg> ygg.fromTransfer([branch id], [from address], [to address], [value])
 or
@@ -187,7 +187,7 @@ $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir
 ```
 
 ### Transactions that register a branch with the stem
-- defalt network - localhost
+- default network - localhost
 - option - b : branch file
          - n : network
 
@@ -198,7 +198,7 @@ $ ygg stem register -b /Users/homedir/yggdrash-cli/seed/yeed.branch.json -n 10.1
 ```
 
 ### Transfer coin
-- defalt network - localhost
+- default network - localhost
 - option - b : branch id
          - f : from address
          - t : to address
