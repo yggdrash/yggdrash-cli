@@ -203,6 +203,26 @@ exports.bufferToHex = function (buf) {
 }
 
 /**
+ * Converts a `Decimal` into a hex `String`
+ * @param {decimal} Decimal
+ * @return {String}
+ */
+exports.decimalToHex = function (d) {
+  var hex = Number(d).toString(16);
+  hex = "0000000000000000".substr(0, 16 - hex.length) + hex; 
+  return hex;
+}
+
+/**
+ * Converts a `String` into a hex `String`
+ * @param {String} hexString
+ * @return {String}
+ */
+exports.hexString = function (str) {
+  return Buffer.from(str, 'hex').toString('hex');
+}
+
+/**
  * Interprets a `Buffer` as a signed integer and returns a `BN`. Assumes 256-bit numbers.
  * @param {Buffer} num
  * @return {BN}
