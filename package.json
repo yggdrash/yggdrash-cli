@@ -46,12 +46,12 @@
     "path": "^0.12.7",
     "rlp": "^2.1.0",
     "safe-buffer": "^5.1.2",
-    "scrypt.js": "^0.2.0",
     "secp256k1": "^3.5.2",
     "strip-hex-prefix": "^1.0.0",
     "underscore": "^1.9.1",
     "utf8": "^3.0.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "ygg": "git+https://github.com/wooheet/yggdrash-sdk.git"
   },
   "devDependencies": {
     "chai": "^4.1.2",
