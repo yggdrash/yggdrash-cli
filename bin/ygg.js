@@ -58,10 +58,8 @@ program
                 console.log(`  ` + chalk.red(`Unknown command`))
                 console.log()
             } else {
-                plant(cmd.owner, cmd.seed)
+                plant(cmd.owner, cmd.seed, cmd.net)
             }
-        } else if (action === "register") {
-            register(cmd.branch, cmd.net)
         } else {
             console.log('Not Found Command.')
         }
