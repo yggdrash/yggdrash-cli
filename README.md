@@ -169,7 +169,6 @@ $ ygg account list
 
 ```
 $ ygg stem plant --owner 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --seed /Users/homedir/yggdrash-cli/seed/yeed.seed.json
-./bin/ygg.js stem plant --owner 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --seed /Users/haewonwoo/woohae/yggdrash-cli/seed/yeed.seed.json
 or
 $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir/yggdrash-cli/seed/yeed.seed.json -n 10.10.10.10:8080
 ```
@@ -201,3 +200,8 @@ $ ygg balanceOf yeed -b 0a39170899bd7e721730c7c312afc154d784034b -a 0xaca4215631
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
+
+
+
+test
+./bin/ygg.js stem plant --owner 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --seed /Users/haewonwoo/woohae/yggdrash-cli/seed/yeed.seed.json
