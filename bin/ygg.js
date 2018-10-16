@@ -2,7 +2,8 @@
 
 const program = require('commander')
 const chalk = require('chalk')
-const { createAccount, 
+const { createAccount,
+        getBalance,
         plant, 
         register,
         fromTransfer } = require('../lib/core')
@@ -84,6 +85,25 @@ program
             }
         }
     })
+
+program
+    .command('balanceOf <action>')
+    .option('-b, --branch <branch>', 'branch')
+    .option('-a, --address <address>', 'address')
+    .option('-n, --net <net>', 'net')
+    .description('Query Balance')
+    .action((action, cmd) => {
+        if(action === "yeed"){
+            if (!cmd.branch || !cmd.address) {
+                console.log()
+                console.log(`  ` + chalk.red(`Unknown command`))
+                console.log()
+            } else {
+                getBalance(cmd.branch, cmd.address, cmd.net)
+            }
+        }
+    })
+
 program
     .command('console')
     .description('Run YGGDRASH console')

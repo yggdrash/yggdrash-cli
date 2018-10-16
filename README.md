@@ -98,6 +98,7 @@ ygg> ygg.plant(ownerAddress, seedFile, network)
   Branch Version 0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0
 
   ==> Branch ID : 35128756b44e72b3a6144c13e9e252d05d7df30d
+  ==> Transaction ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
 ```
 #### Example
 ```
@@ -185,6 +186,17 @@ $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir
 $ ygg transfer yeed --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --from 0x09a73e44b8195d5057d05386527406dbb34a468b --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
 or
 $ ygg transfer yeed -b 3f5d7163fc703dee829f4a47640e8acedf0986ac -f 0x09a73e44b8195d5057d05386527406dbb34a468b -t 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 -n 10.10.10.10:8080
+```
+
+### getBalance
+- default network - localhost
+- option - b : branch id
+         - a : address
+         - n : network
+```
+$ ygg balanceOf yeed -branch 0a39170899bd7e721730c7c312afc154d784034b -adress 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6
+or
+$ ygg balanceOf yeed -b 0a39170899bd7e721730c7c312afc154d784034b -a 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 n 10.10.10.10:8080
 ```
 
 ## License
