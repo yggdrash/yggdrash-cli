@@ -42,6 +42,7 @@
     "path": "^0.12.7",
     "utf8": "^3.0.0",
     "ygg": "git+https://github.com/wooheet/yggdrash-sdk.git",
+    "yggjs-utils": "git+https://github.com/wooheet/yggjs-utils.git",
     "yggjs-wallet": "git+https://github.com/wooheet/yggjs-wallet.git"
   },
   "devDependencies": {
