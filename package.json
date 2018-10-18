@@ -1,6 +1,6 @@
 {
   "name": "@yggdrash/cli",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Command line interface for YGGDRASH",
   "preferGlobal": true,
   "bin": {
@@ -18,42 +18,35 @@
     "yggdrash",
     "cli"
   ],
-  "author": "Luke Hwang",
+  "author": "YGGDRASH",
+  "authors": [
+    {
+      "name": "Tedy",
+      "email": "tedy@r2v.io",
+      "url": "https://github.com/yggdrash"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/yggdrash/yggdrash-cli/issues"
   },
   "homepage": "https://github.com/yggdrash/yggdrash-cli#readme",
   "dependencies": {
-    "bignumber.js": "^7.2.1",
     "bip39": "^2.5.0",
-    "bn.js": "^4.11.8",
-    "bs58check": "^2.1.2",
     "chalk": "^2.4.1",
-    "coinstring": "^2.3.0",
     "commander": "^2.16.0",
     "cors": "^2.8.4",
-    "create-hash": "^1.2.0",
-    "crypto": "^1.0.1",
-    "crypto-js": "^3.1.9-1",
-    "elliptic": "^6.4.0",
     "fs": "0.0.1-security",
-    "hex-to-binary": "^1.0.1",
     "jayson": "^2.0.6",
-    "keccak": "^1.4.0",
     "lowdb": "^1.0.0",
-    "number-to-bn": "^1.7.0",
     "path": "^0.12.7",
-    "rlp": "^2.1.0",
-    "safe-buffer": "^5.1.2",
-    "secp256k1": "^3.5.2",
-    "strip-hex-prefix": "^1.0.0",
-    "underscore": "^1.9.1",
     "utf8": "^3.0.0",
-    "uuid": "^3.3.2",
-    "ygg": "git+https://github.com/wooheet/yggdrash-sdk.git"
+    "ygg": "git+https://github.com/wooheet/yggdrash-sdk.git",
+    "ygg-wallet": "git+https://github.com/wooheet/yggjs-wallet.git"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "chai": "^4.1.2",
     "mocha": "^5.2.0"
   }
