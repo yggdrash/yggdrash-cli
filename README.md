@@ -78,8 +78,11 @@ ygg> ygg.getAccount(0)
 ## STEM
 
 ### plant
+- default network - localhost
 ```
 ygg> ygg.plant(ownerAddress, seedFile)
+or
+ygg> ygg.plant(ownerAddress, seedFile, network)
 ```
 
 #### Returns
@@ -95,36 +98,19 @@ ygg> ygg.plant(ownerAddress, seedFile)
   Branch Version 0xcc9612ff91ff844938acdb6608e58506a2f21b8a5d77e88726c0897e8d1d02c0
 
   ==> Branch ID : 35128756b44e72b3a6144c13e9e252d05d7df30d
+  ==> Transaction ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
 ```
 #### Example
 ```
 ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/yggdrash-cli/seed/yeed.seed.json")
-```
-
-### register
-- defalt network - localhost
-```
-ygg> ygg.register(branch.json file)
 or
-ygg> ygg.register(branch.json file, network)
-```
-
-#### Returns
-```
-TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
-```
-
-#### Example
-```
-ygg> ygg.register("/Users/haewonwoo/woohae/yggdrash-cli/seed/seed1.json")
-or
-ygg> ygg.register("/Users/haewonwoo/woohae/yggdrash-cli/seed/seed1.json", "10.10.10.100:8080")
+ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/yggdrash-cli/seed/yeed.seed.json", "10.10.10.100:8080")
 ```
 
 
 ## Coin
 ### fromTransfer
-- defalt network - localhost
+- default network - localhost
 ```
 ygg> ygg.fromTransfer([branch id], [from address], [to address], [value])
 or
@@ -175,30 +161,20 @@ $ ygg account new
 $ ygg account list
 ```
 
-### Generate branch.json file
+### Generate branch.json file & Transactions that register a branch with the stem
+- default network - localhost
 - option - o : owner
          - s : seed.json file
          - n : network
 
 ```
-$ ygg stem plant --owner 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --seed /Users/homedir/yggdrash-cli/seed/yeed.branch.json
+$ ygg stem plant --owner 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --seed /Users/homedir/yggdrash-cli/seed/yeed.seed.json
 or
-$ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir/yggdrash-cli/seed/yeed.branch.json
-```
-
-### Transactions that register a branch with the stem
-- defalt network - localhost
-- option - b : branch file
-         - n : network
-
-```
-$ ygg stem register --branch /Users/homedir/yggdrash-cli/seed/yeed.branch.json 
-or
-$ ygg stem register -b /Users/homedir/yggdrash-cli/seed/yeed.branch.json -n 10.10.10.10:8080
+$ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir/yggdrash-cli/seed/yeed.seed.json -n 10.10.10.10:8080
 ```
 
 ### Transfer coin
-- defalt network - localhost
+- default network - localhost
 - option - b : branch id
          - f : from address
          - t : to address
@@ -211,5 +187,22 @@ or
 $ ygg transfer yeed -b 3f5d7163fc703dee829f4a47640e8acedf0986ac -f 0x09a73e44b8195d5057d05386527406dbb34a468b -t 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 -n 10.10.10.10:8080
 ```
 
+### getBalance
+- default network - localhost
+- option - b : branch id
+         - a : address
+         - n : network
+```
+$ ygg balanceOf yeed -branch 0a39170899bd7e721730c7c312afc154d784034b -adress 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6
+or
+$ ygg balanceOf yeed -b 0a39170899bd7e721730c7c312afc154d784034b -a 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 n 10.10.10.10:8080
+```
+
 ## License
 This project is licensed under the [MIT License](LICENSE).
+
+
+
+test
+./bin/ygg.js stem plant --owner 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --seed /Users/haewonwoo/woohae/yggdrash-cli/seed/yeed.seed.json
+./bin/ygg.js transfer yeed --branch 92512ea125b8d70afe292b46877f015c0b158b72 --from 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
