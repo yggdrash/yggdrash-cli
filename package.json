@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha",
-    "test:watch": "mocha --watch"
+    "test:watch": "mocha --watch",
+    "build": "babel lib -w -d es5"
   },
   "repository": {
     "type": "git",
@@ -47,7 +48,11 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
     "chai": "^4.1.2",
     "mocha": "^5.2.0"
   }
