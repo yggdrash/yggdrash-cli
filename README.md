@@ -112,9 +112,9 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 ### fromTransfer
 - default network - localhost
 ```
-ygg> ygg.fromTransfer([branch id], [from address], [to address], [value])
+ygg> ygg.transferFrom([branch id], [from address], [to address], [value])
 or
-ygg> ygg.fromTransfer([branch id], [from address], [to address], [value], [network])
+ygg> ygg.transferFrom([branch id], [from address], [to address], [value], [network])
 ```
 
 #### Returns

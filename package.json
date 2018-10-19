@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha",
     "test:watch": "mocha --watch",
-    "build": "babel lib -w -d es5"
+    "build-es5": "babel lib -w -d es5"
   },
   "repository": {
     "type": "git",

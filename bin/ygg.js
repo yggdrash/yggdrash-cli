@@ -6,7 +6,7 @@ const { createAccount,
         getBalance,
         plant, 
         register,
-        fromTransfer } = require('../lib/core')
+        transferFrom } = require('../lib/core')
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
@@ -81,7 +81,7 @@ program
                 console.log(`  ` + chalk.red(`Unknown command`))
                 console.log()
             } else {
-                fromTransfer(cmd.branch, cmd.from, cmd.to, cmd.value, cmd.net)
+                transferFrom(cmd.branch, cmd.from, cmd.to, cmd.value, cmd.net)
             }
         }
     })
