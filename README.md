@@ -2,7 +2,7 @@
 YGGDRASH CLI allows you to communicate with a remote or local node and carry out YGGDRASH-related functionality using an interactive or non-interactive command line tool.
 
 ## Requirements
-- Node.js
+- Node.js - version 10.12.0
 - NPM
 - [YGGDRASH Node](https://github.com/yggdrash/yggdrash)
 

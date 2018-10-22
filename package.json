@@ -43,8 +43,8 @@
     "path": "^0.12.7",
     "utf8": "^3.0.0",
     "ygg": "git+https://github.com/wooheet/yggdrash-sdk.git",
-    "yggjs-utils": "git+https://github.com/wooheet/yggjs-utils.git",
-    "yggjs-wallet": "git+https://github.com/wooheet/yggjs-wallet.git"
+    "yggjs-utils": "git+ssh://git@bitbucket.org/r2v/yggjs-utils.git",     
+    "yggjs-wallet": "git+ssh://git@bitbucket.org/r2v/yggjs-wallet.git"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
