@@ -2,7 +2,7 @@
 YGGDRASH CLI allows you to communicate with a remote or local node and carry out YGGDRASH-related functionality using an interactive or non-interactive command line tool.
 
 ## Requirements
-- Node.js
+- Node.js - version 10.12.0
 - NPM
 - [YGGDRASH Node](https://github.com/yggdrash/yggdrash)
 
@@ -112,9 +112,9 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 ### fromTransfer
 - default network - localhost
 ```
-ygg> ygg.fromTransfer([branch id], [from address], [to address], [value])
+ygg> ygg.transferFrom([branch id], [from address], [to address], [value])
 or
-ygg> ygg.fromTransfer([branch id], [from address], [to address], [value], [network])
+ygg> ygg.transferFrom([branch id], [from address], [to address], [value], [network])
 ```
 
 #### Returns
