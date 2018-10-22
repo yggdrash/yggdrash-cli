@@ -42,8 +42,8 @@
     "lowdb": "^1.0.0",
     "path": "^0.12.7",
     "utf8": "^3.0.0",
-    "ygg": "git+https://github.com/wooheet/yggdrash-sdk.git",
-    "yggjs-utils": "git+ssh://git@bitbucket.org/r2v/yggjs-utils.git",     
+    "ygg": "git+ssh://git@bitbucket.org/r2v/javascript-sdk.git#tedy",
+    "yggjs-utils": "git+ssh://git@bitbucket.org/r2v/yggjs-utils.git",
     "yggjs-wallet": "git+ssh://git@bitbucket.org/r2v/yggjs-wallet.git"
   },
   "devDependencies": {
