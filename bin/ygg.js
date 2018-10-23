@@ -7,7 +7,7 @@ const { createAccount,
         plant, 
         register,
         transferFrom,
-        nodeRestart } = require('../lib/core')
+        admin } = require('../lib/core')
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
@@ -111,7 +111,11 @@ program
     .description('Node Admin Controller')
     .action((action, cmd) => {
         if(action === "restart"){
-            nodeRestart(cmd.net)
+            admin(action, cmd.net)
+        } else {
+            if(action === "setconfig"){
+                admin(action, cmd.net)
+            }
         }
     })
 program
