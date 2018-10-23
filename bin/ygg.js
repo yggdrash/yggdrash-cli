@@ -6,7 +6,8 @@ const { createAccount,
         getBalance,
         plant, 
         register,
-        transferFrom } = require('../lib/core')
+        transferFrom,
+        nodeRestart } = require('../lib/core')
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
@@ -104,6 +105,15 @@ program
         }
     })
 
+program
+    .command('admin <action>')
+    .option('-n, --net <net>', 'net')
+    .description('Node Admin Controller')
+    .action((action, cmd) => {
+        if(action === "restart"){
+            nodeRestart(cmd.net)
+        }
+    })
 program
     .command('console')
     .description('Run YGGDRASH console')
