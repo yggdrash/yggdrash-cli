@@ -26,7 +26,8 @@ $ npm install -g @yggdrash/cli
 - register - Transactions that register a branch with the stem
 
 ### Branch
-- fromTransfer - Coin transfer
+- transfer - Coin transfer
+- transferFrom - Coin transfer
 - getBalance - Account Balance Display
 
 
@@ -162,6 +163,22 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 ## Branch
 ### Transaction - transferFrom
 - default network - localhost
+- transfer default account - coinbase
+```
+ygg> ygg.transfer([branch id], [to address], [value])
+```
+#### Returns
+```
+TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
+```
+
+#### Example
+```
+ygg> ygg.transfer('186c70234e90406ff94eebd32edb9789346104a0', ygg.getAccount(0), 1000)
+or
+ygg> ygg.transfer('186c70234e90406ff94eebd32edb9789346104a0', ygg.getAccount(0), 1000, "10.10.10.100:8080")
+```
+
 ```
 ygg> ygg.transferFrom([branch id], [from address], [to address], [value])
 or
@@ -202,12 +219,13 @@ $ ygg <command> [options]
 ```
 
 #### Example
-### Wallet - create account
+## Wallet
+### create account
 ```
 $ ygg account new
 ```
 
-### Wallet - coinbase
+### coinbase
 ```
 $ ygg account coinbase
 ```
@@ -217,24 +235,25 @@ $ ygg account coinbase
 $ ygg account coinbase -o 0x09a73e44b8195d5057d05386527406dbb34a468b
 ```
 
-### Wallet - Account list
+### Account list
 ```
 $ ygg account list
 ```
 
-### Wallet - clear
+### clear
 ```
 ygg> ygg.accountClear()
 ```
 
-### node control - Restart
+## Node Control
+### Restart
 - default network - localhost
 - default admin account - ygg.coinbase()
 ```
 $ ygg admin restart
 ```
 
-### node control - Set config
+### Set config
 - default network - localhost
 - default admin account - ygg.coinbase()
 - option - p : port
@@ -245,7 +264,8 @@ $ ygg admin restart
 $ ygg admin setconfig -p 32921 -l info
 ```
 
-### Transaction - Generate branch.json file & Transactions that register a branch with the stem
+## Stem Trnansaction
+### Generate branch.json file & Transactions that register a branch with the stem
 - default network - localhost
 - option - o : owner
          - s : seed.json file
@@ -257,7 +277,8 @@ or
 $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir/yggdrash-cli/seed/yeed.seed.json -n 10.10.10.10:8080
 ```
 
-### Transaction - Transfer Branch
+## Branch Trnansaction
+### Transfer Branch
 - default network - localhost
 - option - b : branch id
          - f : from address
@@ -266,9 +287,13 @@ $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir
          - n : network
          
 ```
-$ ygg transfer yeed --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --from 0x09a73e44b8195d5057d05386527406dbb34a468b --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
+$ ygg sendTransaction transferFrom --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --from 0x09a73e44b8195d5057d05386527406dbb34a468b --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
 or
-$ ygg transfer yeed -b 3f5d7163fc703dee829f4a47640e8acedf0986ac -f 0x09a73e44b8195d5057d05386527406dbb34a468b -t 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 -n 10.10.10.10:8080
+$ ygg sendTransaction transferFrom -b 3f5d7163fc703dee829f4a47640e8acedf0986ac -f 0x09a73e44b8195d5057d05386527406dbb34a468b -t 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 -n 10.10.10.10:8080
+```
+
+```
+$ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
 ```
 
 ### getBalance
@@ -288,5 +313,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 
 test
-./bin/ygg.js stem plant --owner 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --seed /Users/haewonwoo/woohae/yggdrash-cli/seed/yeed.seed.json
-./bin/ygg.js transfer yeed --branch 92512ea125b8d70afe292b46877f015c0b158b72 --from 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
+./bin/ygg.js stem plant --owner 0x3f43786ee7df79ed2bdd38adb26dacfe9397a0be --seed /Users/haewonwoo/woohae/yggdrash-cli/seed/yeed.seed.json
+./bin/ygg.js sendTransaction transferFrom --branch 880754b5d247a903c61f38f43efda8a8ac61cb37 --from 0x3f43786ee7df79ed2bdd38adb26dacfe9397a0be --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000

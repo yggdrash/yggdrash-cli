@@ -10,6 +10,7 @@ const { createAccount,
         plant, 
         register,
         transferFrom,
+        transfer,
         admin } = require('../lib/core')
 
 const low = require('lowdb')
@@ -78,7 +79,7 @@ program
     })
 
 program
-    .command('transfer <action>')
+    .command('sendTransaction <action>')
     .option('-b, --branch <branch>', 'branch')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
@@ -86,13 +87,21 @@ program
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
-        if(action === "yeed"){
+        if(action === "transferFrom"){
             if (!cmd.branch || !cmd.from || !cmd.to || !cmd.value) {
                 console.log()
                 console.log(`  ` + chalk.red(`Unknown command`))
                 console.log()
             } else {
                 transferFrom(cmd.branch, cmd.from, cmd.to, cmd.value, cmd.net)
+            }
+        } else if(action === "transfer"){
+            if (!cmd.branch || !cmd.to || !cmd.value) {
+                console.log()
+                console.log(`  ` + chalk.red(`Unknown command`))
+                console.log()
+            } else {
+                transfer(cmd.branch, cmd.to, cmd.value, cmd.net)
             }
         }
     })
