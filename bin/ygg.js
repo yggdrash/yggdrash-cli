@@ -5,6 +5,7 @@ const chalk = require('chalk')
 const { createAccount,
         getAccounts,
         coinbase,
+        accountClear,
         getBalance,
         plant, 
         register,
@@ -43,6 +44,10 @@ program
   
             case 'coinbase':  
             cmd.owner ? coinbase(cmd.owner) : coinbase()
+            break
+
+            case 'clear':  
+            accountClear()
             break
 
             default:

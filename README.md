@@ -17,6 +17,10 @@ $ npm install -g @yggdrash/cli
 - getAccounts - Account list
 - getAccount - View specific account
 
+### Node Control
+- restart
+- setConfig
+
 ### STEM
 - plant - Generate branch.json file
 - register - Transactions that register a branch with the stem
@@ -88,6 +92,38 @@ ygg> ygg.getAccount(0)
 ```
 0x09a73e44b8195d5057d05386527406dbb34a468b
 ```
+
+### clear
+```
+ygg> ygg.accountClear()
+```
+
+## Node Control
+### restart
+```
+ygg> ygg.admin("restart")
+```
+#### Returns
+nonce
+```
+09a73e44b8195d50
+```
+
+#### setConfig
+- default network - localhost
+- option - action
+         - port
+         - log
+```
+ygg> ygg.admin("setconfig", "32191",  "info")
+```
+#### Returns
+nonce
+```
+527406dbb34a468b
+```
+
+
 
 
 ## STEM
@@ -186,16 +222,21 @@ $ ygg account coinbase -o 0x09a73e44b8195d5057d05386527406dbb34a468b
 $ ygg account list
 ```
 
+### Wallet - clear
+```
+ygg> ygg.accountClear()
+```
+
 ### node control - Restart
 - default network - localhost
-- default account - ygg.coinbase()
+- default admin account - ygg.coinbase()
 ```
 $ ygg admin restart
 ```
 
 ### node control - Set config
 - default network - localhost
-- default account - ygg.coinbase()
+- default admin account - ygg.coinbase()
 - option - p : port
          - l : log
          - n : network
