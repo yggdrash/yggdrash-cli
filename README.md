@@ -25,7 +25,7 @@ $ npm install -g @yggdrash/cli
 - plant - Generate branch.json file
 - register - Transactions that register a branch with the stem
 
-### Coin
+### Branch
 - fromTransfer - Coin transfer
 - getBalance - Account Balance Display
 
@@ -159,7 +159,7 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 ```
 
 
-## Coin
+## Branch
 ### Transaction - transferFrom
 - default network - localhost
 ```
@@ -257,7 +257,7 @@ or
 $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir/yggdrash-cli/seed/yeed.seed.json -n 10.10.10.10:8080
 ```
 
-### Transaction - Transfer coin
+### Transaction - Transfer Branch
 - default network - localhost
 - option - b : branch id
          - f : from address
