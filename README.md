@@ -51,6 +51,21 @@ ygg> ygg.createAccount()
 Address - 0x4349f9965c6b488f2b17a62bfdd90aba6167a2f3
 ```
 
+### coinbase
+```
+ygg> ygg.coinbase()
+```
+
+- option - owner update (address)
+```
+ygg> ygg.coinbase(owner)
+```
+
+#### Returns
+```
+Address - 0x09a73e44b8195d5057d05386527406dbb34a468b
+```
+
 ### getAccounts
 ```
 ygg> ygg.getAccounts()
@@ -77,7 +92,7 @@ ygg> ygg.getAccount(0)
 
 ## STEM
 
-### plant
+### Transaction - plant
 - default network - localhost
 ```
 ygg> ygg.plant(ownerAddress, seedFile)
@@ -109,7 +124,7 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 
 
 ## Coin
-### fromTransfer
+### Transaction - transferFrom
 - default network - localhost
 ```
 ygg> ygg.transferFrom([branch id], [from address], [to address], [value])
@@ -151,17 +166,45 @@ $ ygg <command> [options]
 ```
 
 #### Example
-### create account
+### Wallet - create account
 ```
 $ ygg account new
 ```
 
-### Account list
+### Wallet - coinbase
+```
+$ ygg account coinbase
+```
+
+- option -o : owner (owner update - address)
+```
+$ ygg account coinbase -o 0x09a73e44b8195d5057d05386527406dbb34a468b
+```
+
+### Wallet - Account list
 ```
 $ ygg account list
 ```
 
-### Generate branch.json file & Transactions that register a branch with the stem
+### node control - Restart
+- default network - localhost
+- default account - ygg.coinbase()
+```
+$ ygg admin restart
+```
+
+### node control - Set config
+- default network - localhost
+- default account - ygg.coinbase()
+- option - p : port
+         - l : log
+         - n : network
+
+```
+$ ygg admin setconfig -p 32921 -l info
+```
+
+### Transaction - Generate branch.json file & Transactions that register a branch with the stem
 - default network - localhost
 - option - o : owner
          - s : seed.json file
@@ -173,7 +216,7 @@ or
 $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir/yggdrash-cli/seed/yeed.seed.json -n 10.10.10.10:8080
 ```
 
-### Transfer coin
+### Transaction - Transfer coin
 - default network - localhost
 - option - b : branch id
          - f : from address

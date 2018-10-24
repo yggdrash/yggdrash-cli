@@ -3,6 +3,8 @@
 const program = require('commander')
 const chalk = require('chalk')
 const { createAccount,
+        getAccounts,
+        coinbase,
         getBalance,
         plant, 
         register,
@@ -27,19 +29,22 @@ program
 
 program
     .command('account <action>')
+    .option('-o, --owner <owner>', 'owner')
     .description('Manage accounts')
-    .action((action) => {
+    .action((action, cmd) => {
         switch(action) {
             case 'new':
             createAccount()
             break
     
             case 'list':  
-            db.get("accounts").map("address").value().map(address => {
-                console.log(`  ` + `${chalk.green(address)}`)    
-            });    
+            getAccounts()  
             break
   
+            case 'coinbase':  
+            cmd.owner ? coinbase(cmd.owner) : coinbase()
+            break
+
             default:
             console.log('Not Found Command.')
             break;
@@ -107,15 +112,19 @@ program
 
 program
     .command('admin <action>')
+    .option('-p, --port <port>', 'port')
+    .option('-l, --log <log>', 'log')
     .option('-n, --net <net>', 'net')
     .description('Node Admin Controller')
     .action((action, cmd) => {
         if(action === "restart"){
             admin(action, cmd.net)
+        } else if(action === "setconfig"){
+            admin(action, cmd.port, cmd.log, cmd.net)
         } else {
-            if(action === "setconfig"){
-                admin(action, cmd.net)
-            }
+            console.log()
+            console.log(`  ` + chalk.red(`Unknown command`))
+            console.log()
         }
     })
 program
