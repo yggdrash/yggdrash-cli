@@ -314,4 +314,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 test
 ./bin/ygg.js stem plant --owner 0x3f43786ee7df79ed2bdd38adb26dacfe9397a0be --seed /Users/haewonwoo/woohae/yggdrash-cli/seed/yeed.seed.json
-./bin/ygg.js sendTransaction transferFrom --branch 880754b5d247a903c61f38f43efda8a8ac61cb37 --from 0x3f43786ee7df79ed2bdd38adb26dacfe9397a0be --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
+./bin/ygg.js sendTransaction transferFrom --branch bd8dd4e474d72f2cb2c387dd719bb216f1ab5e0e --from 0x3f43786ee7df79ed2bdd38adb26dacfe9397a0be --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
