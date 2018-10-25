@@ -2,11 +2,13 @@
 
 const program = require('commander')
 const chalk = require('chalk')
-const { createAccount,
+const { account,
         getBalance,
         plant, 
         register,
-        transferFrom } = require('../lib/core')
+        transferFrom,
+        transfer,
+        node } = require('../lib/core')
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
@@ -26,19 +28,26 @@ program
 
 program
     .command('account <action>')
+    .option('-o, --owner <owner>', 'owner')
     .description('Manage accounts')
-    .action((action) => {
+    .action((action, cmd) => {
         switch(action) {
             case 'new':
-            createAccount()
+            account.create()
             break
     
             case 'list':  
-            db.get("accounts").map("address").value().map(address => {
-                console.log(`  ` + `${chalk.green(address)}`)    
-            });    
+            account.getAccounts()  
             break
   
+            case 'coinbase':  
+            cmd.owner ? account.coinbase(cmd.owner) : account.coinbase()
+            break
+
+            case 'clear':  
+            account.clear()
+            break
+
             default:
             console.log('Not Found Command.')
             break;
@@ -67,7 +76,7 @@ program
     })
 
 program
-    .command('transfer <action>')
+    .command('sendTransaction <action>')
     .option('-b, --branch <branch>', 'branch')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
@@ -75,13 +84,21 @@ program
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
-        if(action === "yeed"){
+        if(action === "transferFrom"){
             if (!cmd.branch || !cmd.from || !cmd.to || !cmd.value) {
                 console.log()
                 console.log(`  ` + chalk.red(`Unknown command`))
                 console.log()
             } else {
                 transferFrom(cmd.branch, cmd.from, cmd.to, cmd.value, cmd.net)
+            }
+        } else if(action === "transfer"){
+            if (!cmd.branch || !cmd.to || !cmd.value) {
+                console.log()
+                console.log(`  ` + chalk.red(`Unknown command`))
+                console.log()
+            } else {
+                transfer(cmd.branch, cmd.to, cmd.value, cmd.net)
             }
         }
     })
@@ -104,6 +121,29 @@ program
         }
     })
 
+program
+    .command('node <action>')
+    .option('-p, --port <port>', 'port')
+    .option('-l, --log <log>', 'log')
+    .option('-n, --net <net>', 'net')
+    .description('Node Admin Controller')
+    .action((action, cmd) => {
+        if(action === "restart"){
+            node.restart(cmd.net)
+        } else if(action === "setConfig"){
+            if (!cmd.port || !cmd.log) {
+                console.log()
+                console.log(`  ` + chalk.red(`Unknown command`))
+                console.log()
+            } else {
+                node.setConfig(cmd.port, cmd.log, cmd.net)
+            }
+        } else {
+            console.log()
+            console.log(`  ` + chalk.red(`Unknown command`))
+            console.log()
+        }
+    })
 program
     .command('console')
     .description('Run YGGDRASH console')
