@@ -2,8 +2,8 @@ const assert = require('assert');
 const { 
   createAccount,
   getAccounts,
-  clear,
-} = require('../lib/wallet')
+  accountClear,
+} = require('../lib/wallet/account')
 
 describe('Wallet Tests...', () => {
   describe('Account', () => {

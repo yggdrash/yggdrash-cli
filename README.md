@@ -48,7 +48,7 @@ ygg>
 ## Wallet
 ### createAccount
 ```
-ygg> ygg.createAccount()
+ygg> ygg.account.createAccount()
 ```
 
 #### Returns
@@ -58,12 +58,12 @@ Address - 0x4349f9965c6b488f2b17a62bfdd90aba6167a2f3
 
 ### coinbase
 ```
-ygg> ygg.coinbase()
+ygg> ygg.account.coinbase()
 ```
 
 - option - owner update (address)
 ```
-ygg> ygg.coinbase(owner)
+ygg> ygg.account.coinbase(owner)
 ```
 
 #### Returns
@@ -73,7 +73,7 @@ Address - 0x09a73e44b8195d5057d05386527406dbb34a468b
 
 ### getAccounts
 ```
-ygg> ygg.getAccounts()
+ygg> ygg.account.getAccounts()
 ```
 
 #### Returns
@@ -86,7 +86,7 @@ ygg> ygg.getAccounts()
 
 ### getAccount
 ```
-ygg> ygg.getAccount(0)
+ygg> ygg.account.getAccount(0)
 ```
 
 #### Returns
@@ -96,13 +96,13 @@ ygg> ygg.getAccount(0)
 
 ### clear
 ```
-ygg> ygg.accountClear()
+ygg> ygg.account.clear()
 ```
 
 ## Node Control
 ### restart
 ```
-ygg> ygg.admin("restart")
+ygg> ygg.node.restart()
 ```
 #### Returns
 nonce
@@ -112,11 +112,10 @@ nonce
 
 #### setConfig
 - default network - localhost
-- option - action
-         - port
+- option - port
          - log
 ```
-ygg> ygg.admin("setconfig", "32191",  "info")
+ygg> ygg.node.setConfig(32191,  "info")
 ```
 #### Returns
 nonce
@@ -161,7 +160,7 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 
 
 ## Branch
-### Transaction - transferFrom
+### Transaction - transfer
 - default network - localhost
 - transfer default account - coinbase
 ```
@@ -179,6 +178,8 @@ or
 ygg> ygg.transfer('186c70234e90406ff94eebd32edb9789346104a0', ygg.getAccount(0), 1000, "10.10.10.100:8080")
 ```
 
+### Transaction - transferFrom
+- default network - localhost
 ```
 ygg> ygg.transferFrom([branch id], [from address], [to address], [value])
 or
@@ -192,9 +193,9 @@ TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
 
 #### Example
 ```
-ygg> ygg.fromTransfer('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000)
+ygg> ygg.transferFrom('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000)
 or
-ygg> ygg.fromTransfer('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000, "10.10.10.100:8080")
+ygg> ygg.transferFrom('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000, "10.10.10.100:8080")
 ```
 
 ### getBalance
@@ -242,26 +243,26 @@ $ ygg account list
 
 ### clear
 ```
-ygg> ygg.accountClear()
+$ ygg account clear
 ```
 
 ## Node Control
 ### Restart
 - default network - localhost
-- default admin account - ygg.coinbase()
+- default sign account(admin account) - ygg.coinbase()
 ```
-$ ygg admin restart
+$ ygg node restart
 ```
 
 ### Set config
 - default network - localhost
-- default admin account - ygg.coinbase()
+- default sign account(admin account) - ygg.coinbase()
 - option - p : port
          - l : log
          - n : network
 
 ```
-$ ygg admin setconfig -p 32921 -l info
+$ ygg node setconfig -p 32921 -l info
 ```
 
 ## Stem Trnansaction

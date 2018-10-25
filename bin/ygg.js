@@ -2,16 +2,13 @@
 
 const program = require('commander')
 const chalk = require('chalk')
-const { createAccount,
-        getAccounts,
-        coinbase,
-        accountClear,
+const { account,
         getBalance,
         plant, 
         register,
         transferFrom,
         transfer,
-        admin } = require('../lib/core')
+        node } = require('../lib/core')
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
@@ -36,19 +33,19 @@ program
     .action((action, cmd) => {
         switch(action) {
             case 'new':
-            createAccount()
+            account.createAccount()
             break
     
             case 'list':  
-            getAccounts()  
+            account.getAccounts()  
             break
   
             case 'coinbase':  
-            cmd.owner ? coinbase(cmd.owner) : coinbase()
+            cmd.owner ? account.coinbase(cmd.owner) : account.coinbase()
             break
 
             case 'clear':  
-            accountClear()
+            account.clear()
             break
 
             default:
@@ -125,16 +122,22 @@ program
     })
 
 program
-    .command('admin <action>')
+    .command('node <action>')
     .option('-p, --port <port>', 'port')
     .option('-l, --log <log>', 'log')
     .option('-n, --net <net>', 'net')
     .description('Node Admin Controller')
     .action((action, cmd) => {
         if(action === "restart"){
-            admin(action, cmd.net)
-        } else if(action === "setconfig"){
-            admin(action, cmd.port, cmd.log, cmd.net)
+            node.restart(cmd.net)
+        } else if(action === "setConfig"){
+            if (!cmd.port || !cmd.log) {
+                console.log()
+                console.log(`  ` + chalk.red(`Unknown command`))
+                console.log()
+            } else {
+                node.setConfig(cmd.port, cmd.log, cmd.net)
+            }
         } else {
             console.log()
             console.log(`  ` + chalk.red(`Unknown command`))
