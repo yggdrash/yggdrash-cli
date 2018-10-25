@@ -13,7 +13,7 @@ $ npm install -g @yggdrash/cli
 
 ## Method
 ### Wallet
-- createAccount - Generate account
+- create - Generate account
 - getAccounts - Account list
 - getAccount - View specific account
 - coinbase - admin account
@@ -47,9 +47,9 @@ ygg>
 ```
 
 ## Wallet
-### createAccount
+### create
 ```
-ygg> ygg.account.createAccount()
+ygg> ygg.account.create()
 ```
 
 #### Returns

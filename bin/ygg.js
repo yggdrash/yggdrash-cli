@@ -33,7 +33,7 @@ program
     .action((action, cmd) => {
         switch(action) {
             case 'new':
-            account.createAccount()
+            account.create()
             break
     
             case 'list':  
