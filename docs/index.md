@@ -1,3 +1,4 @@
+# Yggdrash CLI
 
 ## Usage
 ### Interactive use
