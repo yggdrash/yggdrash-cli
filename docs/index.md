@@ -24,6 +24,7 @@ ygg> ygg.account.create()
 ```
 Address - 0x4349f9965c6b488f2b17a62bfdd90aba6167a2f3
 ```
+- - -
 
 ### coinbase
 ```
@@ -37,8 +38,9 @@ ygg> ygg.account.coinbase(owner)
 
 #### Returns
 ```
-Address - 0x09a73e44b8195d5057d05386527406dbb34a468b
+Coinbase - 0x09a73e44b8195d5057d05386527406dbb34a468b
 ```
+- - -
 
 ### getAccounts
 ```
@@ -52,6 +54,7 @@ ygg> ygg.account.getAccounts()
 0x2923379d13d6d56db59fc8b615218b023e634752
 ...
 ```
+- - -
 
 ### getAccount
 ```
@@ -62,13 +65,16 @@ ygg> ygg.account.getAccount(0)
 ```
 0x09a73e44b8195d5057d05386527406dbb34a468b
 ```
+- - -
 
 ### clear
 ```
 ygg> ygg.account.clear()
 ```
+- - -
 
 ## Node Control
+
 ### restart
 ```
 ygg> ygg.node.restart()
@@ -78,6 +84,7 @@ nonce
 ```
 09a73e44b8195d50
 ```
+- - -
 
 #### setConfig
 - default network - localhost
@@ -97,9 +104,7 @@ ygg> ygg.node.setConfig(32191,  "info")
 or
 ygg> ygg.node.setConfig(32191,  "info", "testnet.yggdrash.io")
 ```
-
-
-
+- - -
 
 ## STEM
 
@@ -132,7 +137,7 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 or
 ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/yggdrash-cli/seed/yeed.seed.json", "testnet.yggdrash.io")
 ```
-
+- - -
 
 ## Branch
 ### Transaction - transfer
@@ -152,6 +157,7 @@ ygg> ygg.transfer('186c70234e90406ff94eebd32edb9789346104a0', ygg.getAccount(0),
 or
 ygg> ygg.transfer('186c70234e90406ff94eebd32edb9789346104a0', ygg.getAccount(0), 1000, "testnet.yggdrash.io")
 ```
+- - -
 
 ### Transaction - transferFrom
 - default network - localhost
@@ -172,6 +178,7 @@ ygg> ygg.transferFrom('186c70234e90406ff94eebd32edb9789346104a0', '0xaca42156311
 or
 ygg> ygg.transferFrom('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000, "testnet.yggdrash.io")
 ```
+- - -
 
 ### getBalance
 ```
@@ -187,19 +194,22 @@ Balance : 999000000
 ```
 ygg> ygg.getBalance('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6')
 ```
-
+- - -
+- - -
 
 ## Non-Interactive use
 ```
 $ ygg <command> [options]
 ```
+- - -
 
-#### Example
 ## Wallet
+
 ### create account
 ```
 $ ygg account new
 ```
+- - -
 
 ### coinbase
 ```
@@ -210,24 +220,29 @@ $ ygg account coinbase
 ```
 $ ygg account coinbase -o 0x09a73e44b8195d5057d05386527406dbb34a468b
 ```
+- - -
 
 ### Account list
 ```
 $ ygg account list
 ```
+- - -
 
 ### clear
 ```
 $ ygg account clear
 ```
+- - -
 
 ## Node Control
+
 ### Restart
 - default network - localhost
 - default sign account(admin account) - ygg.coinbase()
 ```
 $ ygg node restart
 ```
+- - -
 
 ### Set config
 - default network - localhost
@@ -239,6 +254,7 @@ $ ygg node restart
 ```
 $ ygg node setconfig -p 32921 -l info
 ```
+- - -
 
 ## Stem Transaction
 ### Generate branch.json file & Transaction that register a branch with the stem
@@ -252,6 +268,7 @@ $ ygg stem plant --owner 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --seed /User
 or
 $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir/yggdrash-cli/seed/yeed.seed.json -n testnet.yggdrash.io
 ```
+- - -
 
 ## Branch Transaction
 ### Transfer Branch
@@ -271,6 +288,7 @@ $ ygg sendTransaction transferFrom -b 3f5d7163fc703dee829f4a47640e8acedf0986ac -
 ```
 $ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
 ```
+- - -
 
 ### getBalance
 - default network - localhost
