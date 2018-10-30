@@ -1,4 +1,4 @@
-# Yggdrash CLI
+# YGGDRASH CLI
 
 ## Usage
 ### Interactive use
@@ -27,6 +27,7 @@ Address - 0x4349f9965c6b488f2b17a62bfdd90aba6167a2f3
 - - -
 
 ### coinbase
+An account that runs transactions by default
 ```
 ygg> ygg.account.coinbase()
 ```
@@ -73,9 +74,10 @@ ygg> ygg.account.clear()
 ```
 - - -
 
-## Node Control
-
+## Node
+A collection of libraries that allows you to control nodes using an administrator account
 ### restart
+Restart the node
 ```
 ygg> ygg.node.restart()
 ```
@@ -87,6 +89,7 @@ nonce
 - - -
 
 #### setConfig
+Edit node settings
 - default network - localhost
 - option - port
          - log
@@ -107,7 +110,7 @@ ygg> ygg.node.setConfig(32191,  "info", "testnet.yggdrash.io")
 - - -
 
 ## STEM
-
+Sends a transaction to the stem network.
 ### Transaction - plant
 - default network - localhost
 ```
@@ -140,6 +143,7 @@ ygg> ygg.plant("0x09a73e44b8195d5057d05386527406dbb34a468b", "/Users/homedir/ygg
 - - -
 
 ## Branch
+Sends a transaction to the network.
 ### Transaction - transfer
 - default network - localhost
 - transfer default account - coinbase
@@ -195,7 +199,6 @@ Balance : 999000000
 ygg> ygg.getBalance('186c70234e90406ff94eebd32edb9789346104a0', '0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6')
 ```
 - - -
-- - -
 
 ## Non-Interactive use
 ```
@@ -212,6 +215,7 @@ $ ygg account new
 - - -
 
 ### coinbase
+An account that runs transactions by default
 ```
 $ ygg account coinbase
 ```
@@ -234,9 +238,9 @@ $ ygg account clear
 ```
 - - -
 
-## Node Control
-
+## Node
 ### Restart
+Restart the node
 - default network - localhost
 - default sign account(admin account) - ygg.coinbase()
 ```
@@ -245,6 +249,7 @@ $ ygg node restart
 - - -
 
 ### Set config
+Edit node settings
 - default network - localhost
 - default sign account(admin account) - ygg.coinbase()
 - option - p : port
@@ -257,7 +262,8 @@ $ ygg node setconfig -p 32921 -l info
 - - -
 
 ## Stem Transaction
-### Generate branch.json file & Transaction that register a branch with the stem
+### Plant
+Generate branch.json file & Transaction that register a branch with the stem
 - default network - localhost
 - option - o : owner
          - s : seed.json file
@@ -271,7 +277,21 @@ $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir
 - - -
 
 ## Branch Transaction
-### Transfer Branch
+### Transfer
+- default network - localhost
+- option - b : branch id
+         - f : from address
+         - t : to address
+         - v : value
+         - n : network
+         
+```
+$ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
+or
+$ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000 -n testnet.yggdrash.io
+```
+- - -
+### transferFrom
 - default network - localhost
 - option - b : branch id
          - f : from address
@@ -283,10 +303,6 @@ $ ygg stem plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir
 $ ygg sendTransaction transferFrom --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --from 0x09a73e44b8195d5057d05386527406dbb34a468b --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
 or
 $ ygg sendTransaction transferFrom -b 3f5d7163fc703dee829f4a47640e8acedf0986ac -f 0x09a73e44b8195d5057d05386527406dbb34a468b -t 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 -n testnet.yggdrash.io
-```
-
-```
-$ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
 ```
 - - -
 

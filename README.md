@@ -7,7 +7,7 @@ YGGDRASH CLI allows you to communicate with a remote or local node and carry out
 - [YGGDRASH Node](https://github.com/yggdrash/yggdrash)
 
 # Docs
-[Documentation](./docs/index.md)
+[Documentation](https://github.com/yggdrash/yggdrash-cli/tree/develop/docs)
 
 ## Installation
 ```sh

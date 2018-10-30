@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/yggdrash/yggdrash-cli#readme",
   "dependencies": {
+    "@yggdrash/sdk": "0.0.2",
     "bip39": "^2.5.0",
     "chalk": "^2.4.1",
     "commander": "^2.16.0",
@@ -41,10 +42,7 @@
     "jayson": "^2.0.6",
     "lowdb": "^1.0.0",
     "path": "^0.12.7",
-    "utf8": "^3.0.0",
-    "ygg": "git+ssh://git@bitbucket.org/r2v/javascript-sdk.git#tedy",
-    "yggjs-utils": "git+ssh://git@bitbucket.org/r2v/yggjs-utils.git",
-    "yggjs-wallet": "git+ssh://git@bitbucket.org/r2v/yggjs-wallet.git"
+    "utf8": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

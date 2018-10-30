@@ -9,7 +9,7 @@ const {
 const { restart, setConfig } = require('../lib/admin');
 const { transfer, transferFrom } = require('../lib/branch/sendTransaction');
 const { plant } = require('../lib/stem/plant');
-const Yggdrash = require("ygg")
+const Yggdrash = require("@yggdrash/sdk")
 
 const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider('http://localhost:8080'));
 const owner = '0xA771A6b5A6cAbE2ca35Fd55631717d95049D6338'
