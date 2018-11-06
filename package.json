@@ -39,6 +39,7 @@
     "commander": "^2.16.0",
     "cors": "^2.8.4",
     "fs": "0.0.1-security",
+    "inquirer": "^6.2.0",
     "jayson": "^2.0.6",
     "lowdb": "^1.0.0",
     "path": "^0.12.7",

@@ -2,6 +2,7 @@
 
 const program = require('commander')
 const chalk = require('chalk')
+const { db } = require('../lib/db')
 const { account,
         getBalance,
         plant, 
@@ -9,11 +10,6 @@ const { account,
         transferFrom,
         transfer,
         node } = require('../lib/core')
-
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('account.json')
-const db = low(adapter)
 
 program
     .version(require('../package').version)
@@ -24,6 +20,96 @@ program
     .description('Initialize config.json')
     .action(() => {
         console.log('initialize config.json')
+    })
+
+program
+    .command('branch <action>')
+    .description('create branch')
+    .action((action) => {
+        const inquirer = require('inquirer');
+        const path = require("path")
+        const fs = require("fs")
+        switch(action) {
+            case 'create':
+            inquirer.prompt([{
+                name: 'name',
+                type: 'input',
+                message: 'What\'s the branch name?',
+              },{
+                name: 'symbol',
+                type: 'input',
+                message: 'What\'s the branch symbol?',
+              }, {
+                name: 'property',
+                type: 'list',
+                message: 'What are the attributes of the branch?',
+                choices: ['currency'],
+                default: 0,
+              }, {
+                name: 'totalSupply',
+                type: 'input',
+                message: 'Total Supply'
+              }, {
+                name: 'type',
+                type: 'list',
+                message: 'Select what you want to do with the branch type.',
+                choices: ['immunity', 'mutable', 'instant', 'private'],
+                default: 0,
+              }, {
+                name: 'description',
+                type: 'input',
+                message: 'Explain what the branch does.',
+              }, {
+                name: 'tag',
+                type: 'input',
+                message: 'tag',
+              }]).then((answers) => {
+                  let frontier = answers.frontier
+                  if (answers.property === "currency") {
+                    let seed = {
+                        "name": answers.name || "metacoin",
+                        "symbol": answers.symbol.toUpperCase() || "MCO",
+                        "property": answers.property,
+                        "type": answers.type,
+                        "description": answers.description,
+                        "tag": Number(answers.tag),
+                        "version": answers.version,
+                        "reference_address": answers.reference_address || "",
+                        "reserve_address": answers.reserve_address || "",
+                        "genesis": {
+                            "alloc":{
+                                frontier: {
+                                    "balance": answers.totalSupply
+                                }
+                            }
+                        }
+                    }
+
+                    
+                    const seedLocation = path.join(__dirname, `../seed/${seed.symbol.toLowerCase()}.seed.json`);
+                    // fs.writeFileSync(seedLocation, JSON.stringify(seed));
+
+                    fs.writeFile(seedLocation,
+                    JSON.stringify(seed, undefined, '\t'), err => {
+                        if (err) throw err;
+                        console.log()
+                        console.log(`    ` + chalk.green(`yggdrash-cli/seed/${seed.symbol.toLowerCase()}.seed.json`) + ` saved.`)
+                        console.log()
+                    })
+                  }
+
+                  
+              });
+            break;
+
+            case 'plant':
+
+            break;
+    
+            default:
+            console.log('Not Found Command.')
+            break;
+        }
     })
 
 program
