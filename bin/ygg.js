@@ -9,7 +9,8 @@ const { account,
         register,
         transferFrom,
         transfer,
-        node } = require('../lib/core')
+        node,
+        seed } = require('../lib/core')
 
 program
     .version(require('../package').version)
@@ -24,18 +25,23 @@ program
 
 program
     .command('branch <action>')
+    .option('-s, --seed <seed>', 'seed')
     .description('create branch')
-    .action((action) => {
+    .action((action, cmd) => {
         const inquirer = require('inquirer');
-        const path = require("path")
-        const fs = require("fs")
         switch(action) {
             case 'create':
             inquirer.prompt([{
                 name: 'name',
                 type: 'input',
                 message: 'What\'s the branch name?',
-              },{
+              }, {
+                name: 'owner',
+                type: 'list',
+                message: 'Select branch owner',
+                choices: db().get("accounts").map("address").value(),
+                default: 0,
+              }, {
                 name: 'symbol',
                 type: 'input',
                 message: 'What\'s the branch symbol?',
@@ -43,12 +49,8 @@ program
                 name: 'property',
                 type: 'list',
                 message: 'What are the attributes of the branch?',
-                choices: ['currency'],
+                choices: ['currency', 'exchange', 'dex'],
                 default: 0,
-              }, {
-                name: 'totalSupply',
-                type: 'input',
-                message: 'Total Supply'
               }, {
                 name: 'type',
                 type: 'list',
@@ -63,47 +65,45 @@ program
                 name: 'tag',
                 type: 'input',
                 message: 'tag',
+              }, {
+                name: 'total_supply',
+                type: 'input',
+                message: 'total supply',
               }]).then((answers) => {
-                  let frontier = answers.frontier
-                  if (answers.property === "currency") {
-                    let seed = {
-                        "name": answers.name || "metacoin",
-                        "symbol": answers.symbol.toUpperCase() || "MCO",
-                        "property": answers.property,
-                        "type": answers.type,
-                        "description": answers.description,
-                        "tag": Number(answers.tag),
-                        "version": answers.version,
-                        "reference_address": answers.reference_address || "",
-                        "reserve_address": answers.reserve_address || "",
-                        "genesis": {
-                            "alloc":{
-                                frontier: {
-                                    "balance": answers.totalSupply
-                                }
-                            }
-                        }
-                    }
-
-                    
-                    const seedLocation = path.join(__dirname, `../seed/${seed.symbol.toLowerCase()}.seed.json`);
-                    // fs.writeFileSync(seedLocation, JSON.stringify(seed));
-
-                    fs.writeFile(seedLocation,
-                    JSON.stringify(seed, undefined, '\t'), err => {
-                        if (err) throw err;
-                        console.log()
-                        console.log(`    ` + chalk.green(`yggdrash-cli/seed/${seed.symbol.toLowerCase()}.seed.json`) + ` saved.`)
-                        console.log()
-                    })
-                  }
-
-                  
+                    seed(answers.name, answers.owner, answers.symbol, answers.property, answers.type, answers.description, answers.tag, answers.total_supply)
               });
             break;
 
             case 'plant':
+              plant(cmd.seed) 
+            break;
 
+            case 'deploy':
+            inquirer.prompt([{
+                name: 'network',
+                type: 'list',
+                message: 'network',
+                choices: ['local', 'testnet(not yet)', 'mainnet(not yet)'],
+                default: 0,
+              }]).then((answers) => {
+                switch(answers.network) {
+                    case 'local':
+                    plant(answers.owner, cmd.seed, 'http://localhost:8080') 
+                    break
+            
+                    case 'testnet':  
+                    plant(answers.owner, cmd.seed, 'http://testnet.yggdrash.io') 
+                    break
+          
+                    case 'mainnet':  
+                    plant(answers.owner, cmd.seed, 'http://mainnet.yggdrash.io') 
+                    break
+        
+                    default:
+                    console.log('Not Found Command.')
+                    break;
+                }
+              });
             break;
     
             default:
