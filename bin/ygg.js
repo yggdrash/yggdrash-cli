@@ -5,12 +5,12 @@ const chalk = require('chalk')
 const { db } = require('../lib/db')
 const { account,
         getBalance,
-        plant, 
-        register,
         transferFrom,
         transfer,
         node,
-        seed } = require('../lib/core')
+        seed,
+        plant,
+        deploy } = require('../lib/core')
 
 program
     .version(require('../package').version)
@@ -26,6 +26,7 @@ program
 program
     .command('branch <action>')
     .option('-s, --seed <seed>', 'seed')
+    .option('-b, --branch <branch>', 'branch')
     .description('create branch')
     .action((action, cmd) => {
         const inquirer = require('inquirer');
@@ -88,15 +89,15 @@ program
               }]).then((answers) => {
                 switch(answers.network) {
                     case 'local':
-                    plant(answers.owner, cmd.seed, 'http://localhost:8080') 
+                    deploy(cmd.branch, 'http://localhost:8080') 
                     break
             
                     case 'testnet':  
-                    plant(answers.owner, cmd.seed, 'http://testnet.yggdrash.io') 
+                    deploy(cmd.branch, 'http://testnet.yggdrash.io') 
                     break
           
                     case 'mainnet':  
-                    plant(answers.owner, cmd.seed, 'http://mainnet.yggdrash.io') 
+                    deploy(cmd.branch, 'http://mainnet.yggdrash.io') 
                     break
         
                     default:
