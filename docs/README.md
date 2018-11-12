@@ -209,6 +209,8 @@ $ ygg <command> [options]
 ## Wallet
 
 ### create account
+
+#### Example
 ```
 $ ygg account new
 ```
@@ -216,23 +218,26 @@ $ ygg account new
 
 ### coinbase
 An account that runs transactions by default
+#### Example
 ```
 $ ygg account coinbase
 ```
-
 - option -o : owner (owner update - address)
+#### Example
 ```
 $ ygg account coinbase -o 0x09a73e44b8195d5057d05386527406dbb34a468b
 ```
 - - -
 
 ### Account list
+#### Example
 ```
 $ ygg account list
 ```
 - - -
 
 ### clear
+#### Example
 ```
 $ ygg account clear
 ```
@@ -243,6 +248,8 @@ $ ygg account clear
 Restart the node
 - default network - localhost
 - default sign account(admin account) - ygg.coinbase()
+
+#### Example
 ```
 $ ygg node restart
 ```
@@ -256,27 +263,88 @@ Edit node settings
          - l : log
          - n : network
 
+#### Example
 ```
 $ ygg node setconfig -p 32921 -l info
 ```
 - - -
 
-## Stem Transaction
-### Plant
-Generate branch.json file & Transaction that register a branch with the stem
+## branch Transaction
+### create
+Generate seed.json file 
 - default network - localhost
-- option - o : owner
-         - s : seed.json file
-         - n : network
 
+#### Example
 ```
-$ ygg branch plant --owner 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 --seed /Users/homedir/yggdrash-cli/seed/yeed.seed.json
-or
-$ ygg branch plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homedir/yggdrash-cli/seed/yeed.seed.json -n testnet.yggdrash.io
+$ ygg branch create 
+```
+#### Returns
+```
+{
+  "name":"metacoin",
+	"owner":"c91e9d46dd4b7584f0b6348ee18277c10fd7cb94",
+  "symbol":"",
+  "property":"",
+  "type":"",
+  "description":"",
+  "contractId": "",
+  "genesis": {
+     "alloc": {
+  		  	"c91e9d46dd4b7584f0b6348ee18277c10fd7cb94": {
+    	  		"balance": "1000000000"
+				}
+	  }
+  }
+}
 ```
 - - -
 
-## Branch Transaction
+### plant
+Generate branch.json file 
+- default network - localhost
+- option - s : seed.json file
+
+#### Example
+```
+$ ygg branch plant --seed ./seed/yeed.seed.json
+```
+#### Returns
+```
+{
+  "name":"metacoin",
+  "owner":"c91e9d46dd4b7584f0b6348ee18277c10fd7cb94",
+  "symbol":"MCO",
+  "property":"currency",
+  "type":"immunity",
+  "*timestamp": "00000166c837f0c9",
+  "description":"Meta coin sample",
+  "*contractId": "1600949e1473163ed3918bc3c12f421b3fbd18c3",
+  "genesis": {
+    "alloc": {
+  		  	"3282791d6fd713f1e94f4bfd565eaa78b3a0599d": {
+    	  		"balance": "1000000000"
+			},
+    		"17961d633bcf20a7b029a7d94b7df4da2ec5427f": {
+      			"balance": "1000000000"
+			}
+	  }
+  },
+  "*signature":"1b7727aceca367f230591fc9c08a21142b95b8d88bbc97ad06a384b0946c23e4373cedb505b66fdf138e8431132ac034f62cb14d44c2ecde8b99c4a0f90e08bc5c",
+}
+```
+- - -
+
+### deploy
+Generate branch.json file 
+- default network - localhost
+- option - b : branch.json file
+
+#### Example
+```
+$ ygg branch deploy --branch ./branch/yeed.branch.json --node /Users/homedir/yggdrash
+```
+- - -
+
 ### Transfer
 - default network - localhost
 - option - b : branch id
@@ -285,10 +353,16 @@ $ ygg branch plant -o 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 -s /Users/homed
          - v : value
          - n : network
          
+#### Example
 ```
 $ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
 or
 $ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000 -n testnet.yggdrash.io
+```
+#### Returns
+transaction hash
+```
+ebbe3d2ae42f7fdf0d6f81bca7aec9cac79d58ee688d34ac75ef3a03cfc4d56b
 ```
 - - -
 ### transferFrom
@@ -298,11 +372,17 @@ $ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac
          - t : to address
          - v : value
          - n : network
-         
+
+#### Example         
 ```
 $ ygg sendTransaction transferFrom --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --from 0x09a73e44b8195d5057d05386527406dbb34a468b --to 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
 or
 $ ygg sendTransaction transferFrom -b 3f5d7163fc703dee829f4a47640e8acedf0986ac -f 0x09a73e44b8195d5057d05386527406dbb34a468b -t 0x60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 -n testnet.yggdrash.io
+```
+#### Returns
+transaction hash
+```
+ebbe3d2ae42f7fdf0d6f81bca7aec9cac79d58ee688d34ac75ef3a03cfc4d56b
 ```
 - - -
 
@@ -311,8 +391,15 @@ $ ygg sendTransaction transferFrom -b 3f5d7163fc703dee829f4a47640e8acedf0986ac -
 - option - b : branch id
          - a : address
          - n : network
+
+#### Example
 ```
 $ ygg balanceOf yeed -branch 0a39170899bd7e721730c7c312afc154d784034b -adress 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6
 or
 $ ygg balanceOf yeed -b 0a39170899bd7e721730c7c312afc154d784034b -a 0xaca4215631187ab5b3af0d4c251fdf45c79ad3c6 n testnet.yggdrash.io
+```
+#### Returns
+bignumber
+```
+1000000000
 ```

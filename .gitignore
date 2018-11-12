@@ -4,3 +4,6 @@ es5
 .idea/
 seed
 branch
+template/bin
+template/.classpath
+template/.project

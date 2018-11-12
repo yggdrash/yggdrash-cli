@@ -10,7 +10,7 @@ const { account,
         node,
         seed,
         plant,
-        deploy } = require('../lib/core')
+        deploy, test } = require('../lib/core')
 
 program
     .version(require('../package').version)
@@ -32,7 +32,7 @@ program
     .action((action, cmd) => {
         const inquirer = require('inquirer');
         switch(action) {
-            case 'create':
+            case 'init':
             inquirer.prompt([{
                 name: 'name',
                 type: 'input',
@@ -104,7 +104,11 @@ program
             //   });
               deploy(cmd.branch, cmd.node) 
             break;
-    
+
+            case 'test':
+              test()
+            break;
+              
             default:
             console.log('Not Found Command.')
             break;
