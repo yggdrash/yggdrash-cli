@@ -27,6 +27,7 @@ program
     .command('branch <action>')
     .option('-s, --seed <seed>', 'seed')
     .option('-b, --branch <branch>', 'branch')
+    .option('-n, --node <node>', 'node')
     .description('create branch')
     .action((action, cmd) => {
         const inquirer = require('inquirer');
@@ -63,10 +64,6 @@ program
                 type: 'input',
                 message: 'Explain what the branch does.',
               }, {
-                name: 'tag',
-                type: 'input',
-                message: 'tag',
-              }, {
                 name: 'total_supply',
                 type: 'input',
                 message: 'total supply',
@@ -80,31 +77,32 @@ program
             break;
 
             case 'deploy':
-            inquirer.prompt([{
-                name: 'network',
-                type: 'list',
-                message: 'network',
-                choices: ['local', 'testnet(not yet)', 'mainnet(not yet)'],
-                default: 0,
-              }]).then((answers) => {
-                switch(answers.network) {
-                    case 'local':
-                    deploy(cmd.branch, 'http://localhost:8080') 
-                    break
+            // inquirer.prompt([{
+            //     name: 'network',
+            //     type: 'list',
+            //     message: 'network',
+            //     choices: ['local', 'testnet(not yet)', 'mainnet(not yet)'],
+            //     default: 0,
+            //   }]).then((answers) => {
+            //     switch(answers.network) {
+            //         case 'local':
+            //         deploy(cmd.branch, 'http://localhost:8080') 
+            //         break
             
-                    case 'testnet':  
-                    deploy(cmd.branch, 'http://testnet.yggdrash.io') 
-                    break
+            //         case 'testnet':  
+            //         deploy(cmd.branch, 'http://testnet.yggdrash.io') 
+            //         break
           
-                    case 'mainnet':  
-                    deploy(cmd.branch, 'http://mainnet.yggdrash.io') 
-                    break
+            //         case 'mainnet':  
+            //         deploy(cmd.branch, 'http://mainnet.yggdrash.io') 
+            //         break
         
-                    default:
-                    console.log('Not Found Command.')
-                    break;
-                }
-              });
+            //         default:
+            //         console.log('Not Found Command.')
+            //         break;
+            //     }
+            //   });
+              deploy(cmd.branch, cmd.node) 
             break;
     
             default:

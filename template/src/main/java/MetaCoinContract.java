@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package io.yggdrash.core.contract;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import io.yggdrash.core.contract.CoinContract;
+import io.yggdrash.core.contract.TransactionReceipt;
 
 import java.math.BigDecimal;
 import java.util.Map;
