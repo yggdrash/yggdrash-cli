@@ -276,7 +276,7 @@ Generate seed.json file
 
 #### Example
 ```
-$ ygg branch create 
+$ ygg branch init 
 ```
 #### Returns
 ```
@@ -306,7 +306,7 @@ Generate branch.json file
 
 #### Example
 ```
-$ ygg branch plant --seed ./seed/yeed.seed.json
+$ ygg branch plant
 ```
 #### Returns
 ```
@@ -341,7 +341,7 @@ Generate branch.json file
 
 #### Example
 ```
-$ ygg branch deploy --branch ./branch/yeed.branch.json --node /Users/homedir/yggdrash
+$ ygg branch deploy --node /Users/homedir/yggdrash
 ```
 - - -
 
