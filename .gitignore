@@ -4,4 +4,4 @@ es5
 .idea/
 *.branch.json
 *.seed.json
-contract-template/
+contract/
