@@ -2,15 +2,14 @@
 
 const program = require('commander')
 const chalk = require('chalk')
+const exec = require('child_process').exec
 const { db } = require('../lib/db')
 const { account,
         getBalance,
         transferFrom,
         transfer,
         node,
-        seed,
-        plant,
-        deploy, test } = require('../lib/core')
+        branch } = require('../lib/core')
 
 program
     .version(require('../package').version)
@@ -25,88 +24,158 @@ program
 
 program
     .command('branch <action>')
-    .option('-s, --seed <seed>', 'seed')
-    .option('-b, --branch <branch>', 'branch')
     .option('-n, --node <node>', 'node')
     .description('create branch')
     .action((action, cmd) => {
         const inquirer = require('inquirer');
         switch(action) {
             case 'init':
+            exec("ls", (error, ls, stderr) => {
+                if (ls) {
+                    console.log()
+                    console.log(`    ` + chalk.red(`fatal: destination path is not an empty directory.`))
+                    console.log()
+                } else {
+                    exec("pwd", (error, pwd, stderr) => {
+                        let folderName = pwd.split('/').slice(-1)[0].trim()
+                        inquirer.prompt([{
+                            name: 'name',
+                            type: 'input',
+                            message: `Branch name:(${folderName})`,
+                          }]).then((answers) => {
+                            inquirer.prompt([{
+                                name: 'symbol',
+                                type: 'input',
+                                message: 'Symbol:',
+                              }, {
+                                name: 'property',
+                                type: 'list',
+                                message: 'Property: ',
+                                choices: ['currency', 'exchange', 'dex'],
+                                default: 0,
+                              }]).then((answers1) => {
+                                  if (answers1.property === 'currency') {
+                                    inquirer.prompt([{
+                                        name: 'description',
+                                        type: 'input',
+                                        message: 'Description: ',
+                                      }, {
+                                        name: 'frontier',
+                                        type: 'list',
+                                        message: 'Select frontier',
+                                        choices: db().get("accounts").map("address").value(),
+                                        default: 0,
+                                      }, {
+                                        name: 'total_supply',
+                                        type: 'input',
+                                        message: 'Total Supply: ',
+                                      }]).then((answers2) => {
+                                            var seed
+                                            if(answers.name){
+                                                if (!answers1.symbol) {
+                                                    seed = branch.seed(answers.name, answers1.name.substring(0,3).toUpperCase(), answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                                } else {
+                                                    seed = branch.seed(answers.name, answers1.symbol, answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                                }
+                                            } else {
+                                                if (!answers1.symbol) {
+                                                    seed = branch.seed(folderName, folderName.substring(0,3).toUpperCase(), answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                                } else {
+                                                    seed = branch.seed(folderName, answers1.symbol, answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                                }
+                                            }
+
+                                            inquirer.prompt([{
+                                                name: 'ok',
+                                                type: 'confirm',
+                                                message: 'Is this OK?',
+                                              }]).then((answers3) => {
+                                                  if (answers3.ok) {
+                                                    console.log()
+                                                    console.log(`    ` + chalk.green(`✍️  Cloning into 'contract'...`))
+                                                    console.log()
+                                                    branch.init(seed)
+                                                  } else {
+                                                    console.log()
+                                                    console.log('Aborted.')
+                                                    console.log()
+                                                    console.log()
+                                                  }
+                                              })
+                                      })
+                                  } else {
+                                    inquirer.prompt([{
+                                        name: 'description',
+                                        type: 'input',
+                                        message: 'Description: ',
+                                      }]).then((answers2) => {
+                                        const seed = branch.seed(answers.name ? answers.name : folderName, answers1.symbol, answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                        inquirer.prompt([{
+                                            name: 'ok',
+                                            type: 'confirm',
+                                            message: 'Is this OK?',
+                                          }]).then((answers3) => {
+                                              if (answers3.ok) {
+                                                console.log()
+                                                console.log(`    ` + chalk.green(`✍️  Cloning into 'contract'...`))
+                                                console.log()
+                                                branch.init(seed)
+                                              } else {
+                                                console.log()
+                                                console.log('Aborted.')
+                                                console.log()
+                                                console.log()
+                                              }
+                                          })
+                                      })
+                                  }
+                              })
+                          })
+                    })
+                }
+            })
+            break;
+
+            case 'build':
             inquirer.prompt([{
-                name: 'name',
-                type: 'input',
-                message: 'What\'s the branch name?',
-              }, {
                 name: 'owner',
                 type: 'list',
                 message: 'Select branch owner',
                 choices: db().get("accounts").map("address").value(),
                 default: 0,
-              }, {
-                name: 'symbol',
-                type: 'input',
-                message: 'What\'s the branch symbol?',
-              }, {
-                name: 'property',
-                type: 'list',
-                message: 'What are the attributes of the branch?',
-                choices: ['currency', 'exchange', 'dex'],
-                default: 0,
-              }, {
-                name: 'type',
-                type: 'list',
-                message: 'Select what you want to do with the branch type.',
-                choices: ['immunity', 'mutable', 'instant', 'private'],
-                default: 0,
-              }, {
-                name: 'description',
-                type: 'input',
-                message: 'Explain what the branch does.',
-              }, {
-                name: 'total_supply',
-                type: 'input',
-                message: 'total supply',
               }]).then((answers) => {
-                    seed(answers.name, answers.owner, answers.symbol, answers.property, answers.type, answers.description, answers.tag, answers.total_supply)
-              });
-            break;
-
-            case 'plant':
-              plant(cmd.seed) 
+                branch.build(answers.owner)
+              })
             break;
 
             case 'deploy':
-            // inquirer.prompt([{
-            //     name: 'network',
-            //     type: 'list',
-            //     message: 'network',
-            //     choices: ['local', 'testnet(not yet)', 'mainnet(not yet)'],
-            //     default: 0,
-            //   }]).then((answers) => {
-            //     switch(answers.network) {
-            //         case 'local':
-            //         deploy(cmd.branch, 'http://localhost:8080') 
-            //         break
+            inquirer.prompt([{
+                name: 'network',
+                type: 'list',
+                message: 'network',
+                choices: ['local', 'testnet(not yet)', 'mainnet(not yet)'],
+                default: 0,
+              }]).then((answers) => {
+                switch(answers.network) {
+                    case 'local':
+                    branch.deploy('http://localhost:8080') 
+                    break
             
-            //         case 'testnet':  
-            //         deploy(cmd.branch, 'http://testnet.yggdrash.io') 
-            //         break
+                    case 'testnet':  
+                    // branch.deploy('http://testnet.yggdrash.io') 
+                    console.log('Not yet')
+                    break
           
-            //         case 'mainnet':  
-            //         deploy(cmd.branch, 'http://mainnet.yggdrash.io') 
-            //         break
+                    case 'mainnet':  
+                    // branch.deploy('http://mainnet.yggdrash.io') 
+                    console.log('Not yet')
+                    break
         
-            //         default:
-            //         console.log('Not Found Command.')
-            //         break;
-            //     }
-            //   });
-              deploy(cmd.branch, cmd.node) 
-            break;
-
-            case 'test':
-              test()
+                    default:
+                    console.log('Not Found Command.')
+                    break;
+                }
+              });
             break;
               
             default:

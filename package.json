@@ -44,6 +44,7 @@
     "jayson": "^2.0.6",
     "lowdb": "^1.0.0",
     "path": "^0.12.7",
+    "safe-buffer": "^5.1.2",
     "utf8": "^3.0.0"
   },
   "devDependencies": {
