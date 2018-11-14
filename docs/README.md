@@ -282,10 +282,8 @@ $ ygg branch init
 ```
 {
   "name":"metacoin",
-	"owner":"c91e9d46dd4b7584f0b6348ee18277c10fd7cb94",
   "symbol":"",
   "property":"",
-  "type":"",
   "description":"",
   "contractId": "",
   "genesis": {
@@ -302,34 +300,32 @@ $ ygg branch init
 ### plant
 Generate branch.json file 
 - default network - localhost
-- option - s : seed.json file
 
 #### Example
 ```
-$ ygg branch plant
+$ ygg branch build
 ```
 #### Returns
 ```
 {
-  "name":"metacoin",
-  "owner":"c91e9d46dd4b7584f0b6348ee18277c10fd7cb94",
-  "symbol":"MCO",
-  "property":"currency",
-  "type":"immunity",
-  "*timestamp": "00000166c837f0c9",
-  "description":"Meta coin sample",
-  "*contractId": "1600949e1473163ed3918bc3c12f421b3fbd18c3",
-  "genesis": {
-    "alloc": {
-  		  	"3282791d6fd713f1e94f4bfd565eaa78b3a0599d": {
-    	  		"balance": "1000000000"
-			},
-    		"17961d633bcf20a7b029a7d94b7df4da2ec5427f": {
-      			"balance": "1000000000"
-			}
-	  }
-  },
-  "*signature":"1b7727aceca367f230591fc9c08a21142b95b8d88bbc97ad06a384b0946c23e4373cedb505b66fdf138e8431132ac034f62cb14d44c2ecde8b99c4a0f90e08bc5c",
+      "name":"metacoin",
+      "symbol":"MCO",
+      "property":"currency",
+      "description":"Meta coin sample",
+      "contractId": "1600949e1473163ed3918bc3c12f421b3fbd18c3",
+      "genesis": {
+        "alloc": {
+      		  	"3282791d6fd713f1e94f4bfd565eaa78b3a0599d": {
+        	  		"balance": "1000000000"
+    			},
+        		"17961d633bcf20a7b029a7d94b7df4da2ec5427f": {
+          			"balance": "1000000000"
+    			}
+    	  }
+      },
+      "timestamp": "00000166c837f0c9",
+      "owner":"c91e9d46dd4b7584f0b6348ee18277c10fd7cb94",
+      "signature":"1b7727aceca367f230591fc9c08a21142b95b8d88bbc97ad06a384b0946c23e4373cedb505b66fdf138e8431132ac034f62cb14d44c2ecde8b99c4a0f90e08bc5c",
 }
 ```
 - - -
@@ -337,11 +333,14 @@ $ ygg branch plant
 ### deploy
 Generate branch.json file 
 - default network - localhost
-- option - b : branch.json file
+- copy locations
+$HOME/.yggdrash/branch/[branchId]/branch.json
+$HOME/.yggdrash/contract/[2charOfContractId]/[ContractId].class
+ex).yggdrash/contract/13/13aab675b514a29e39611eda2b5563cfd9e92932.class
 
 #### Example
 ```
-$ ygg branch deploy --node /Users/homedir/yggdrash
+$ ygg branch deploy
 ```
 - - -
 

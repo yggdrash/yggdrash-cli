@@ -24,9 +24,8 @@ program
 
 program
     .command('branch <action>')
-    .option('-n, --node <node>', 'node')
     .description('create branch')
-    .action((action, cmd) => {
+    .action((action) => {
         const inquirer = require('inquirer');
         switch(action) {
             case 'init':
@@ -73,15 +72,35 @@ program
                                             var seed
                                             if(answers.name){
                                                 if (!answers1.symbol) {
-                                                    seed = branch.seed(answers.name, answers1.name.substring(0,3).toUpperCase(), answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                                    seed = branch.seed(answers.name, 
+                                                                        answers1.name.substring(0,3).toUpperCase(), 
+                                                                        answers1.property, 
+                                                                        answers2.description, 
+                                                                        answers2.frontier, 
+                                                                        answers2.total_supply)
                                                 } else {
-                                                    seed = branch.seed(answers.name, answers1.symbol, answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                                    seed = branch.seed(answers.name, 
+                                                                        answers1.symbol, 
+                                                                        answers1.property, 
+                                                                        answers2.description, 
+                                                                        answers2.frontier, 
+                                                                        answers2.total_supply)
                                                 }
                                             } else {
                                                 if (!answers1.symbol) {
-                                                    seed = branch.seed(folderName, folderName.substring(0,3).toUpperCase(), answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                                    seed = branch.seed(folderName, 
+                                                                        folderName.substring(0,3).toUpperCase(), 
+                                                                        answers1.property, 
+                                                                        answers2.description, 
+                                                                        answers2.frontier, 
+                                                                        answers2.total_supply)
                                                 } else {
-                                                    seed = branch.seed(folderName, answers1.symbol, answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                                    seed = branch.seed(folderName, 
+                                                                        answers1.symbol, 
+                                                                        answers1.property, 
+                                                                        answers2.description, 
+                                                                        answers2.frontier, 
+                                                                        answers2.total_supply)
                                                 }
                                             }
 
@@ -109,7 +128,12 @@ program
                                         type: 'input',
                                         message: 'Description: ',
                                       }]).then((answers2) => {
-                                        const seed = branch.seed(answers.name ? answers.name : folderName, answers1.symbol, answers1.property, answers2.description, answers2.frontier, answers2.total_supply)
+                                        const seed = branch.seed(answers.name ? answers.name : folderName, 
+                                                                    answers1.symbol, 
+                                                                    answers1.property, 
+                                                                    answers2.description, 
+                                                                    answers2.frontier, 
+                                                                    answers2.total_supply)
                                         inquirer.prompt([{
                                             name: 'ok',
                                             type: 'confirm',
