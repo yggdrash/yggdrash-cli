@@ -70,10 +70,11 @@ program
                                         message: 'Total Supply: ',
                                       }]).then((answers2) => {
                                             var seed
+                                            let symbol = answers1.name.length < 3 ? answers1.name.substring(0,3).toUpperCase() : answers1.name.toUpperCase()
                                             if(answers.name){
                                                 if (!answers1.symbol) {
                                                     seed = branch.seed(answers.name, 
-                                                                        answers1.name.substring(0,3).toUpperCase(), 
+                                                                        symbol,
                                                                         answers1.property, 
                                                                         answers2.description, 
                                                                         answers2.frontier, 
@@ -89,7 +90,7 @@ program
                                             } else {
                                                 if (!answers1.symbol) {
                                                     seed = branch.seed(folderName, 
-                                                                        folderName.substring(0,3).toUpperCase(), 
+                                                                        symbol,
                                                                         answers1.property, 
                                                                         answers2.description, 
                                                                         answers2.frontier, 
