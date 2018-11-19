@@ -42,10 +42,11 @@ program
                             type: 'input',
                             message: `Branch name:(${folderName})`,
                           }]).then((answers) => {
+                            let symbol = folderName.length > 3 ? folderName.substring(0,3).toUpperCase() : folderName.toUpperCase()
                             inquirer.prompt([{
                                 name: 'symbol',
                                 type: 'input',
-                                message: 'Symbol:',
+                                message: `Symbol:(${symbol})`,
                               }, {
                                 name: 'property',
                                 type: 'list',
@@ -88,7 +89,6 @@ program
                                                                         answers2.total_supply)
                                                 }
                                             } else {
-                                                let symbol = folderName.length > 3 ? folderName.substring(0,3).toUpperCase() : folderName.toUpperCase()
                                                 if (!answers1.symbol) {
                                                     seed = branch.seed(folderName, 
                                                                         symbol,

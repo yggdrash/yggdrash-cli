@@ -282,9 +282,9 @@ $ ygg branch init
 ```
 {
   "name":"metacoin",
-  "symbol":"",
-  "property":"",
-  "description":"",
+  "symbol":"MCO",
+  "property":"currency",
+  "description":"meta coin",
   "contractId": "",
   "genesis": {
      "alloc": {
