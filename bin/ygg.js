@@ -29,6 +29,12 @@ program
         const inquirer = require('inquirer');
         switch(action) {
             case 'init':
+            if (!account.getAccount(0)) {
+                console.log()
+                console.log(`    ` + chalk.red(`You need an account to create a branch. Please create an account.`))
+                console.log()
+                return false
+            }
             exec("ls", (error, ls, stderr) => {
                 if (ls) {
                     console.log()
