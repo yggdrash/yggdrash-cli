@@ -40,17 +40,17 @@ program
                         inquirer.prompt([{
                             name: 'name',
                             type: 'input',
-                            message: `Branch name:(${folderName})`,
+                            message: `Branch name: ${chalk.grey(`(${folderName})`)}`,
                           }]).then((answers) => {
                             let symbol = folderName.length > 3 ? folderName.substring(0,3).toUpperCase() : folderName.toUpperCase()
                             inquirer.prompt([{
                                 name: 'symbol',
                                 type: 'input',
-                                message: `Symbol:(${symbol})`,
+                                message: `Symbol: ${chalk.grey(`(${symbol})`)}`,
                               }, {
                                 name: 'property',
                                 type: 'list',
-                                message: 'Property: ',
+                                message: 'Property:',
                                 choices: ['currency', 'exchange', 'dex'],
                                 default: 0,
                               }]).then((answers1) => {
@@ -58,7 +58,7 @@ program
                                     inquirer.prompt([{
                                         name: 'description',
                                         type: 'input',
-                                        message: 'Description: ',
+                                        message: 'Description:',
                                       }, {
                                         name: 'frontier',
                                         type: 'list',
@@ -68,7 +68,7 @@ program
                                       }, {
                                         name: 'total_supply',
                                         type: 'input',
-                                        message: 'Total Supply: ',
+                                        message: 'Total Supply:',
                                       }]).then((answers2) => {
                                             var seed
                                             if(answers.name){
@@ -128,7 +128,7 @@ program
                                     inquirer.prompt([{
                                         name: 'description',
                                         type: 'input',
-                                        message: 'Description: ',
+                                        message: 'Description:',
                                       }]).then((answers2) => {
                                         const seed = branch.seed(answers.name ? answers.name : folderName, 
                                                                     answers1.symbol, 
