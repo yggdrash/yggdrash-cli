@@ -1,6 +1,6 @@
 {
   "name": "@yggdrash/cli",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "description": "Command line interface for YGGDRASH",
   "preferGlobal": true,
   "bin": {
