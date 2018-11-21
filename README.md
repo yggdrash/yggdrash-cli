@@ -28,7 +28,7 @@ $ yarn global add @yggdrash/cli
 - setConfig
 
 ### STEM
-- plant - Generate branch.json file & Transactions that register a branch with the stem
+- plant - Transactions that register a branch with the stem
 
 ### Branch
 - branch init - Create a seed file and a contract template

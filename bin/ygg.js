@@ -26,7 +26,7 @@ program
     .command('branch <action>')
     .description('create branch')
     .action((action) => {
-        const inquirer = require('inquirer');
+        const inquirer = require('inquirer')
         switch(action) {
             case 'init':
             if (!account.getAccount(0)) {
@@ -154,7 +154,7 @@ program
                                                 branch.init(seed)
                                               } else {
                                                 console.log()
-                                                console.log('Aborted.')
+                                                console.log(`    ` + chalk.red(`Aborted.`))
                                                 console.log()
                                                 console.log()
                                               }
