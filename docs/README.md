@@ -236,8 +236,8 @@ $ ygg node setconfig -p 32921 -l info
 ```
 - - -
 
-## branch Transaction
-### create
+## Generate branch
+### init
 Generate seed.json file 
 - default network - localhost
 
@@ -246,6 +246,7 @@ Generate seed.json file
 $ ygg branch init 
 ```
 #### Returns
+mco.seed.json
 ```
 {
   "name":"metacoin",
@@ -264,7 +265,7 @@ $ ygg branch init
 ```
 - - -
 
-### plant
+### build
 Generate branch.json file 
 - default network - localhost
 
@@ -273,6 +274,7 @@ Generate branch.json file
 $ ygg branch build
 ```
 #### Returns
+mco.branch.json
 ```
 {
       "name":"metacoin",
