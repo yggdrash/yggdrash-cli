@@ -7,12 +7,12 @@ YGGDRASH CLI allows you to communicate with a remote or local node and carry out
 - [YGGDRASH Node](https://github.com/yggdrash/yggdrash)
 
 # Docs
-[Documentation](https://github.com/yggdrash/yggdrash-cli/tree/develop/docs)
-[Getting Start](https://developer.yggdrash.io/)
+- [Documentation](https://github.com/yggdrash/yggdrash-cli/tree/develop/docs)
+- [Getting Start](https://developer.yggdrash.io/)
 
 ## Installation
 ```sh
-$ npm install -g @yggdrash/cli
+$ yarn global add @yggdrash/cli
 ```
 
 ## Method
@@ -31,12 +31,12 @@ $ npm install -g @yggdrash/cli
 - plant - Generate branch.json file & Transactions that register a branch with the stem
 
 ### Branch
-- transfer - Coin transfer
-- transferFrom - Coin transfer
-- getBalance - Account Balance Display
 - branch init - Create a seed file and a contract template
 - branch build - Build the created contract and create a branch file.
 - branch deploy - Deploy to node
+- transfer - Coin transfer
+- transferFrom - Coin transfer
+- getBalance - Account Balance Display
 
 ## Usage
 ### Interactive use
