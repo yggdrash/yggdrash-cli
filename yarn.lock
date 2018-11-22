@@ -108,8 +108,8 @@
     to-fast-properties "^2.0.0"
 
 "@types/node@^10.3.5":
-  version "10.12.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.9.tgz#a07bfa74331471e1dc22a47eb72026843f7b95c8"
+  version "10.12.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.10.tgz#4fa76e6598b7de3f0cb6ec3abacc4f59e5b3a2ce"
 
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
@@ -244,9 +244,9 @@
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.1.tgz#5c85d662f76fa1d34575766c5dcd6615abcd30d8"
 
-"@yggdrash/sdk@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@yggdrash/sdk/-/sdk-0.0.4.tgz#661e9e5a810eb10f733dbeae118bf153aecc1920"
+"@yggdrash/sdk@^0.0.5-beta.1":
+  version "0.0.5-beta.1"
+  resolved "https://registry.yarnpkg.com/@yggdrash/sdk/-/sdk-0.0.5-beta.1.tgz#aad80046d0a96dc4d7b53d4a0711d4b44221d643"
   dependencies:
     assert "^1.4.1"
     bignumber.js "^8.0.1"
