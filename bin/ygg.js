@@ -137,11 +137,11 @@ program
                                         message: 'Description:',
                                       }]).then((answers2) => {
                                         const seed = branch.seed(answers.name ? answers.name : folderName, 
-                                                                    answers1.symbol, 
-                                                                    answers1.property, 
-                                                                    answers2.description, 
-                                                                    answers2.frontier, 
-                                                                    answers2.total_supply)
+                                                                 answers1.symbol, 
+                                                                 answers1.property, 
+                                                                 answers2.description, 
+                                                                 answers2.frontier, 
+                                                                 answers2.total_supply)
                                         inquirer.prompt([{
                                             name: 'ok',
                                             type: 'confirm',

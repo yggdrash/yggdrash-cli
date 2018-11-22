@@ -1,7 +1,5 @@
 node_modules
-account.json
 es5
 .DS_Store
-.git*
 .idea
 contract/
