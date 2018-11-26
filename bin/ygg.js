@@ -26,7 +26,7 @@ program
     .command('branch <action>')
     .description('create branch')
     .action((action) => {
-        const inquirer = require('inquirer');
+        const inquirer = require('inquirer')
         switch(action) {
             case 'init':
             if (!account.getAccount(0)) {
@@ -137,11 +137,11 @@ program
                                         message: 'Description:',
                                       }]).then((answers2) => {
                                         const seed = branch.seed(answers.name ? answers.name : folderName, 
-                                                                    answers1.symbol, 
-                                                                    answers1.property, 
-                                                                    answers2.description, 
-                                                                    answers2.frontier, 
-                                                                    answers2.total_supply)
+                                                                 answers1.symbol, 
+                                                                 answers1.property, 
+                                                                 answers2.description, 
+                                                                 answers2.frontier, 
+                                                                 answers2.total_supply)
                                         inquirer.prompt([{
                                             name: 'ok',
                                             type: 'confirm',
@@ -154,7 +154,7 @@ program
                                                 branch.init(seed)
                                               } else {
                                                 console.log()
-                                                console.log('Aborted.')
+                                                console.log(`    ` + chalk.red(`Aborted.`))
                                                 console.log()
                                                 console.log()
                                               }

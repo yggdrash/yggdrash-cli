@@ -116,6 +116,8 @@ Sends a transaction to the network.
 - transfer default account - coinbase
 ```
 ygg> ygg.transfer([branch id], [to address], [value])
+or
+ygg> ygg.transfer([branch id], [to address], [value], [network])
 ```
 #### Returns
 ```
@@ -300,20 +302,24 @@ mco.branch.json
 - - -
 
 ### deploy
-Generate branch.json file 
+Generate branch.json file
 - default network - localhost
 - copy locations
+```
 $HOME/.yggdrash/branch/[branchId]/branch.json
 $HOME/.yggdrash/contract/[2charOfContractId]/[ContractId].class
-ex).yggdrash/contract/13/13aab675b514a29e39611eda2b5563cfd9e92932.class
-
+```
+```
+$HOME/.yggdrash/branch/27d5e39f2bddfc0afa4f617546bc12327b2e546b/branch.json
+$HOME/.yggdrash/contract/13/13aab675b514a29e39611eda2b5563cfd9e92932.class
+```
 #### Example
 ```
 $ ygg branch deploy
 ```
 - - -
 
-### Transfer
+### transfer
 - default network - localhost
 - option - b : branch id
          - f : from address
