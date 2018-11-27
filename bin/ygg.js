@@ -26,15 +26,16 @@ program
     .command('branch <action>')
     .description('create branch')
     .action((action) => {
+        if (!account.getAccount(0)) {
+            console.log()
+            console.log(`    ` + chalk.red(`You need an account to create a branch. Please create an account.`))
+            console.log()
+            return false
+        }
+
         const inquirer = require('inquirer')
         switch(action) {
             case 'init':
-            if (!account.getAccount(0)) {
-                console.log()
-                console.log(`    ` + chalk.red(`You need an account to create a branch. Please create an account.`))
-                console.log()
-                return false
-            }
             exec("ls", (error, ls, stderr) => {
                 if (ls) {
                     console.log()
@@ -175,8 +176,12 @@ program
                 message: 'Select branch owner',
                 choices: db().get("accounts").map("address").value(),
                 default: 0,
+              }, {
+                name: 'password',
+                type: 'password',
+                message: 'Password:'
               }]).then((answers) => {
-                branch.build(answers.owner)
+                branch.build(answers.owner, answers.password)
               })
             break;
 
@@ -209,7 +214,23 @@ program
                 }
               });
             break;
+
+            case 'list':
+            inquirer.prompt([{
+                name: 'network',
+                type: 'list',
+                message: 'network',
+                choices: ['local', 'remote'],
+                default: 0,
+              }]).then((answers) => {
+                    branch.getBranch()
+              });
+            break;
               
+            case 'set':
+                branch.setBranch()
+            break;
+
             default:
             console.log('Not Found Command.')
             break;
@@ -274,22 +295,36 @@ program
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
+        if (!cmd.branch || !cmd.to || !cmd.value) {
+            console.log()
+            console.log(`  ` + chalk.red(`Unknown command`))
+            console.log()
+            return false
+        } 
+
+        const inquirer = require('inquirer')
         if(action === "transferFrom"){
-            if (!cmd.branch || !cmd.from || !cmd.to || !cmd.value) {
-                console.log()
-                console.log(`  ` + chalk.red(`Unknown command`))
-                console.log()
-            } else {
-                transferFrom(cmd.branch, cmd.from, cmd.to, cmd.value, cmd.net)
-            }
+            inquirer.prompt([{
+                name: 'from',
+                type: 'list',
+                message: 'Select from address',
+                choices: db().get("accounts").map("address").value(),
+                default: 0,
+                }, {
+                name: 'password',
+                type: 'password',
+                message: 'Password:'
+            }]).then((answers) => {
+                transferFrom(cmd.branch, answers.from, cmd.to, cmd.value, answers.password, cmd.net)
+            })
         } else if(action === "transfer"){
-            if (!cmd.branch || !cmd.to || !cmd.value) {
-                console.log()
-                console.log(`  ` + chalk.red(`Unknown command`))
-                console.log()
-            } else {
-                transfer(cmd.branch, cmd.to, cmd.value, cmd.net)
-            }
+            inquirer.prompt([{
+                name: 'password',
+                type: 'password',
+                message: 'Password:'
+            }]).then((answers) => {
+                transfer(cmd.branch, cmd.to, cmd.value, answers.password, cmd.net)
+            })
         }
     })
 
