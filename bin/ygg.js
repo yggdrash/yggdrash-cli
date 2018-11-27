@@ -59,23 +59,23 @@ program
                                 type: 'list',
                                 message: 'Property:',
                                 choices: ['currency', 'exchange', 'dex'],
-                                default: 0,
+                                default: 0
                               }]).then((answers1) => {
                                   if (answers1.property === 'currency') {
                                     inquirer.prompt([{
                                         name: 'description',
                                         type: 'input',
-                                        message: 'Description:',
+                                        message: 'Description:'
                                       }, {
                                         name: 'frontier',
                                         type: 'list',
                                         message: 'Select frontier',
                                         choices: db().get("accounts").map("address").value(),
-                                        default: 0,
+                                        default: 0
                                       }, {
                                         name: 'total_supply',
                                         type: 'input',
-                                        message: 'Total Supply:',
+                                        message: 'Total Supply:'
                                       }]).then((answers2) => {
                                             var seed
                                             if(answers.name){
@@ -116,7 +116,7 @@ program
                                             inquirer.prompt([{
                                                 name: 'ok',
                                                 type: 'confirm',
-                                                message: 'Is this OK?',
+                                                message: 'Is this OK?'
                                               }]).then((answers3) => {
                                                   if (answers3.ok) {
                                                     console.log()
@@ -175,7 +175,7 @@ program
                 type: 'list',
                 message: 'Select branch owner',
                 choices: db().get("accounts").map("address").value(),
-                default: 0,
+                default: 0
               }, {
                 name: 'password',
                 type: 'password',
@@ -191,7 +191,7 @@ program
                 type: 'list',
                 message: 'network',
                 choices: ['local', 'testnet(not yet)', 'mainnet(not yet)'],
-                default: 0,
+                default: 0
               }]).then((answers) => {
                 switch(answers.network) {
                     case 'local':
@@ -220,15 +220,52 @@ program
                 name: 'network',
                 type: 'list',
                 message: 'network',
-                choices: ['local', 'remote'],
-                default: 0,
+                choices: ['Local', 'All'],
+                default: 0
               }]).then((answers) => {
-                    branch.getBranch()
+                    branch.getBranch(answers.network)
               });
             break;
               
             case 'set':
-                branch.setBranch()
+            inquirer.prompt([{
+                name: 'network',
+                type: 'list',
+                message: 'network',
+                choices: ['Local', 'Import'],
+                default: 0
+              }]).then((answers) => {
+                if (answers.network === 'Local') {
+                    let list = []
+                    let symbol = db().get('branches').map('symbol').value()
+                    let id = db().get('branches').map('id').value()
+                    for (let i in id)  {
+                        list[i] = `Symbol: ${symbol[i]}, ID: ${id[i]}`
+                    }   
+                    inquirer.prompt([{
+                        name: 'branch',
+                        type: 'list',
+                        message: 'branch',
+                        choices: list,
+                        default: 0
+                      }]).then((answers) => {
+                            branch.setBranch(answers.branch)
+                      })
+                } else {
+                    inquirer.prompt([{
+                        name: 'branch',
+                        type: 'input',
+                        message: 'branch:'
+                      }]).then((answers) => {
+                            branch.setBranch(answers.branch)
+                      })
+                }
+                  
+              })
+            break;
+              
+            case 'status':
+                branch.status()
             break;
 
             default:
@@ -239,7 +276,6 @@ program
 
 program
     .command('account <action>')
-    .option('-o, --owner <owner>', 'owner')
     .description('Manage accounts')
     .action((action, cmd) => {
         switch(action) {
@@ -251,7 +287,21 @@ program
             account.getAccounts()  
             break
   
-            case 'coinbase':  
+            case 'admin':  
+            inquirer.prompt([{
+                name: 'owner',
+                type: 'list',
+                message: 'Select branch owner',
+                choices: db().get("accounts").map("address").value(),
+                default: 0
+              }, {
+                name: 'password',
+                type: 'password',
+                message: 'Password:'
+              }]).then((answers) => {
+                branch.build(answers.owner, answers.password)
+              })
+
             cmd.owner ? account.coinbase(cmd.owner) : account.coinbase()
             break
 
