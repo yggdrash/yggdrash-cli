@@ -338,20 +338,25 @@ program
 
 program
     .command('sendTransaction <action>')
-    .option('-b, --branch <branch>', 'branch')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
     .option('-v, --value <value>', 'value')
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
-        if (!cmd.branch || !cmd.to || !cmd.value) {
+        if (!cmd.to || !cmd.value) {
             console.log()
             console.log(`  ` + chalk.red(`Unknown command`))
             console.log()
             return false
         } 
-
+        if (!db().get('currentBranch').value()) {
+            console.log()
+            console.log(chalk.red(`The current branch is not set.`))
+            console.log(`  ` + `use ${chalk.green('ygg branch set')}`)
+            console.log()
+            return false
+        }
         const inquirer = require('inquirer')
         if(action === "transferFrom"){
             inquirer.prompt([{
@@ -365,7 +370,7 @@ program
                 type: 'password',
                 message: 'Password:'
             }]).then((answers) => {
-                transferFrom(cmd.branch, answers.from, cmd.to, cmd.value, answers.password, cmd.net)
+                transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
             })
         } else if(action === "transfer"){
             inquirer.prompt([{
@@ -373,25 +378,24 @@ program
                 type: 'password',
                 message: 'Password:'
             }]).then((answers) => {
-                transfer(cmd.branch, cmd.to, cmd.value, answers.password, cmd.net)
+                transfer(cmd.to, cmd.value, answers.password, cmd.net)
             })
         }
     })
 
 program
     .command('balanceOf <action>')
-    .option('-b, --branch <branch>', 'branch')
     .option('-a, --address <address>', 'address')
     .option('-n, --net <net>', 'net')
     .description('Query Balance')
     .action((action, cmd) => {
         if(action === "yeed"){
-            if (!cmd.branch || !cmd.address) {
-                console.log()
+            if (!cmd.address) {
+
                 console.log(`  ` + chalk.red(`Unknown command`))
                 console.log()
             } else {
-                getBalance(cmd.branch, cmd.address, cmd.net)
+                getBalance(cmd.address, cmd.net)
             }
         }
     })
