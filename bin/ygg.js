@@ -167,7 +167,7 @@ program
                     })
                 }
             })
-            break;
+            break
 
             case 'build':
             inquirer.prompt([{
@@ -183,7 +183,7 @@ program
               }]).then((answers) => {
                 branch.build(answers.owner, answers.password)
               })
-            break;
+            break
 
             case 'deploy':
             inquirer.prompt([{
@@ -210,10 +210,10 @@ program
         
                     default:
                     console.log('Not Found Command.')
-                    break;
+                    break
                 }
-              });
-            break;
+              })
+            break
 
             case 'list':
             inquirer.prompt([{
@@ -224,8 +224,8 @@ program
                 default: 0
               }]).then((answers) => {
                     branch.getBranch(answers.network)
-              });
-            break;
+              })
+            break
               
             case 'set':
             inquirer.prompt([{
@@ -262,22 +262,60 @@ program
                 }
                   
               })
-            break;
+            break
               
             case 'status':
                 branch.status()
-            break;
+            break
 
             default:
             console.log('Not Found Command.')
-            break;
+            break
         }
     })
 
 program
     .command('account <action>')
     .description('Manage accounts')
-    .action((action, cmd) => {
+    .action((action) => {
+        switch(action) {
+            case 'new':
+            account.create()
+            break
+    
+            case 'list':  
+            account.getAccounts()  
+            break
+
+            case 'import':
+            const inquirer = require('inquirer')
+            inquirer.prompt([{
+                name: 'pk',
+                type: 'input',
+                message: 'private key(without 0x):'
+              }, {
+                name: 'password',
+                type: 'password',
+                message: 'Password:'
+              }]).then((answers) => {
+                    account.importAccount(answers.pk, answers.password)
+              })
+            break
+
+            case 'clear':  
+            account.clear()
+            break
+
+            default:
+            console.log('Not Found Command.')
+            break
+        }
+    })
+
+program
+    .command('admin <action>')
+    .description('Manage accounts')
+    .action((action) => {
         switch(action) {
             case 'new':
             account.create()
@@ -287,31 +325,9 @@ program
             account.getAccounts()  
             break
   
-            case 'admin':  
-            inquirer.prompt([{
-                name: 'owner',
-                type: 'list',
-                message: 'Select branch owner',
-                choices: db().get("accounts").map("address").value(),
-                default: 0
-              }, {
-                name: 'password',
-                type: 'password',
-                message: 'Password:'
-              }]).then((answers) => {
-                branch.build(answers.owner, answers.password)
-              })
-
-            cmd.owner ? account.coinbase(cmd.owner) : account.coinbase()
-            break
-
-            case 'clear':  
-            account.clear()
-            break
-
             default:
             console.log('Not Found Command.')
-            break;
+            break
         }
     })
 
