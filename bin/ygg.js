@@ -385,19 +385,31 @@ program
 
 program
     .command('balanceOf <action>')
-    .option('-a, --address <address>', 'address')
     .option('-n, --net <net>', 'net')
     .description('Query Balance')
     .action((action, cmd) => {
-        if(action === "yeed"){
-            if (!cmd.address) {
-
-                console.log(`  ` + chalk.red(`Unknown command`))
-                console.log()
-            } else {
-                getBalance(cmd.address, cmd.net)
-            }
-        }
+        const Yggdrash = require("@yggdrash/sdk")
+        const ygg = new Yggdrash()
+        if (!db().get('currentBranch').value()) {
+            console.log()
+            console.log(chalk.red(`The current branch is not set.`))
+            console.log(`  ` + `use ${chalk.green('ygg branch set')}`)
+            console.log()
+            return false
+        }     
+        if (!ygg.utils.isAddress(action)) {
+            console.log()
+            console.log(`  ` + chalk.red(`Invalid address`))
+            console.log()
+            return false
+        }   
+        if (!action) {
+            console.log()
+            console.log(`  ` + chalk.red(`Please input address`))
+            console.log()
+            return false
+        } 
+        getBalance(action, cmd.net)
     })
 
 program
