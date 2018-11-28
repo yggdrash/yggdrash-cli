@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/yggdrash/yggdrash-cli#readme",
   "dependencies": {
-    "@yggdrash/sdk": "^0.0.5-beta.1",
+    "@yggdrash/sdk": "git+ssh://git@github.com:yggdrash/yggjs.git#develop",
     "bip39": "^2.5.0",
     "chalk": "^2.4.1",
     "child_process": "^1.0.2",

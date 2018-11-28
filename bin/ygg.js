@@ -317,13 +317,13 @@ program
     .description('Manage accounts')
     .action((action) => {
         switch(action) {
-            case 'new':
-            account.create()
-            break
+            // case 'new':
+            // account.create()
+            // break
     
-            case 'list':  
-            account.getAccounts()  
-            break
+            // case 'list':  
+            // account.getAccounts()  
+            // break
   
             default:
             console.log('Not Found Command.')
