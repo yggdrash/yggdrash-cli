@@ -20,12 +20,14 @@ $ yarn global add @yggdrash/cli
 ## Method
 ### Wallet
 - create - Generate account
+- import - import account
 - getAccounts - Account list
 - getAccount - View specific account
 - coinbase - admin account
 - clear - clear account
 
-### Node Control
+### Node Control (soon)
+- start
 - restart
 - setConfig
 
