@@ -329,11 +329,18 @@ program
             break
     
             case 'set':
+            // require admin password
+
+            // 어드민 어카운트 비밀번호 받기
+            // 디크립션하여 프라이빗키 추출
+            // 프라이빗키 이용하여 어드레스 추출
+            // 어드민 어드레스와 동일하면 통과
+
             inquirer.prompt([{
                 name: 'owner',
                 type: 'list',
                 message: 'Select branch owner',
-                choices: db().get("accounts").map("address").value(),
+                choices: db().get("accounts").map("address").value().slice(1),
                 default: 0
               }]).then((answers) => {
                 account.adminAccount(answers.owner)  
