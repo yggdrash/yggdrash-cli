@@ -20,13 +20,14 @@ $ yarn global add @yggdrash/cli
 ## Method
 ### Wallet
 - create - Generate account
-- import - import account
+- import - Import account
 - getAccounts - Account list
 - getAccount - View specific account
-- coinbase - admin account
-- clear - clear account
+- admin - Admin account
+- clear - Clear account
 
 ### Node Control (soon)
+The node control is only available in the admin account.
 - start
 - restart
 - setConfig
@@ -38,6 +39,9 @@ $ yarn global add @yggdrash/cli
 - branch init - Create a seed file and a contract template
 - branch build - Build the created contract and create a branch file.
 - branch deploy - Deploy to node
+- branch list - View branch
+- branch set - Checked out branch
+- branch status - View current branch
 - transfer - Coin transfer
 - transferFrom - Coin transfer
 - getBalance - Account Balance Display

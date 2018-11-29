@@ -4,6 +4,7 @@ const program = require('commander')
 const chalk = require('chalk')
 const exec = require('child_process').exec
 const { db } = require('../lib/db')
+const inquirer = require('inquirer')
 const { account,
         getBalance,
         transferFrom,
@@ -33,7 +34,6 @@ program
             return false
         }
 
-        const inquirer = require('inquirer')
         switch(action) {
             case 'init':
             exec("ls", (error, ls, stderr) => {
@@ -296,7 +296,6 @@ program
             break
 
             case 'import':
-            const inquirer = require('inquirer')
             inquirer.prompt([{
                 name: 'pk',
                 type: 'input',
@@ -325,13 +324,21 @@ program
     .description('Manage accounts')
     .action((action) => {
         switch(action) {
-            // case 'new':
-            // account.create()
-            // break
+            case 'get':
+            account.adminAccount()
+            break
     
-            // case 'list':  
-            // account.getAccounts()  
-            // break
+            case 'set':
+            inquirer.prompt([{
+                name: 'owner',
+                type: 'list',
+                message: 'Select branch owner',
+                choices: db().get("accounts").map("address").value(),
+                default: 0
+              }]).then((answers) => {
+                account.adminAccount(answers.owner)  
+              })
+            break
   
             default:
             console.log('Not Found Command.')
@@ -374,6 +381,7 @@ program
             console.log()
             return false
         } 
+        
         if (!db().get('currentBranch').value()) {
             console.log()
             console.log(chalk.red(`The current branch is not set.`))
@@ -381,7 +389,7 @@ program
             console.log()
             return false
         }
-        const inquirer = require('inquirer')
+
         if(action === "transferFrom"){
             inquirer.prompt([{
                 name: 'from',

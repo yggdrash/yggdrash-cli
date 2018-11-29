@@ -244,9 +244,9 @@
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.1.tgz#5c85d662f76fa1d34575766c5dcd6615abcd30d8"
 
-"@yggdrash/sdk@git+ssh://git@github.com:yggdrash/yggjs.git#develop":
+"@yggdrash/sdk@git+ssh://git@github.com:yggdrash/yggdrash-sdk-js.git#develop":
   version "0.0.5-beta.1"
-  resolved "git+ssh://git@github.com:yggdrash/yggjs.git#9d9869d79281cfea14a1b8e3b8b6791904883656"
+  resolved "git+ssh://git@github.com:yggdrash/yggdrash-sdk-js.git#17a9455213f3cbd10b01efca3a4504d4c1c48100"
   dependencies:
     assert "^1.4.1"
     bignumber.js "^8.0.1"
