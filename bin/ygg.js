@@ -28,9 +28,7 @@ program
     .description('create branch')
     .action((action) => {
         if (!account.getAccount(0)) {
-            console.log()
-            console.log(`    ` + chalk.red(`You need an account to create a branch. Please create an account.`))
-            console.log()
+            console.log(`\n    ` + chalk.red(`You need an account to create a branch. Please create an account.\n`))
             return false
         }
 
@@ -38,9 +36,7 @@ program
             case 'init':
             exec("ls", (error, ls, stderr) => {
                 if (ls) {
-                    console.log()
-                    console.log(`    ` + chalk.red(`fatal: destination path is not an empty directory.`))
-                    console.log()
+                    console.log(`\n    ` + chalk.red(`fatal: destination path is not an empty directory.\n`))
                 } else {
                     exec("pwd", (error, pwd, stderr) => {
                         let folderName = pwd.split('/').slice(-1)[0].trim()
@@ -119,15 +115,10 @@ program
                                                 message: 'Is this OK?'
                                               }]).then((answers3) => {
                                                   if (answers3.ok) {
-                                                    console.log()
-                                                    console.log(`    ` + chalk.green(`✍️  Cloning into 'contract'...`))
-                                                    console.log()
+                                                    console.log(`\n    ` + chalk.green(`✍️  Cloning into 'contract'...\n`))
                                                     branch.init(seed)
                                                   } else {
-                                                    console.log()
-                                                    console.log('Aborted.')
-                                                    console.log()
-                                                    console.log()
+                                                    console.log('\nAborted.\n\n')
                                                   }
                                               })
                                       })
@@ -149,15 +140,10 @@ program
                                             message: 'Is this OK?',
                                           }]).then((answers3) => {
                                               if (answers3.ok) {
-                                                console.log()
-                                                console.log(`    ` + chalk.green(`✍️  Cloning into 'contract'...`))
-                                                console.log()
+                                                console.log(`\n    ` + chalk.green(`✍️  Cloning into 'contract'...\n`))
                                                 branch.init(seed)
                                               } else {
-                                                console.log()
-                                                console.log(`    ` + chalk.red(`Aborted.`))
-                                                console.log()
-                                                console.log()
+                                                console.log(`\n    ` + chalk.red(`Aborted.\n\n`))
                                               }
                                           })
                                       })
@@ -336,15 +322,20 @@ program
                 message: `${chalk.red('Admin password')}`,
               }]).then((answers) => {
                     account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
-                    
+
                     inquirer.prompt([{
                         name: 'owner',
                         type: 'list',
-                        message: 'Select branch owner',
+                        message: 'Candidate admin',
                         choices: db().get("accounts").map("address").value().slice(1),
                         default: 0
+                      }, {
+                        name: 'password',
+                        type: 'password',
+                        message: `${chalk.red('Candidate password')}`,
                       }]).then((answers) => {
-                        account.adminAccount(answers.owner)  
+                        account.adminVerify(answers.owner, answers.password)
+                        account.adminAccount(answers.owner)
                       })
               })
             break
@@ -365,9 +356,7 @@ program
     .action((action, cmd) => {
         if (action === "plant") {
             if(!cmd.owner || !cmd.seed){
-                console.log()
-                console.log(`  ` + chalk.red(`Unknown command`))
-                console.log()
+                console.log(`\n  ` + chalk.red(`Unknown command\n`))
             } else {
                 plant(cmd.owner, cmd.seed, cmd.net)
             }
@@ -385,17 +374,13 @@ program
     .description('Manage transaction')
     .action((action, cmd) => {
         if (!cmd.to || !cmd.value) {
-            console.log()
-            console.log(`  ` + chalk.red(`Unknown command`))
-            console.log()
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
             return false
         } 
         
         if (!db().get('currentBranch').value()) {
-            console.log()
-            console.log(chalk.red(`The current branch is not set.`))
-            console.log(`  ` + `use ${chalk.green('ygg branch set')}`)
-            console.log()
+            console.log(chalk.red(`\nThe current branch is not set.`))
+            console.log(`  ` + `use ${chalk.green('ygg branch set')}\n`)
             return false
         }
 
@@ -432,22 +417,16 @@ program
         const Yggdrash = require("@yggdrash/sdk")
         const ygg = new Yggdrash()
         if (!db().get('currentBranch').value()) {
-            console.log()
-            console.log(chalk.red(`The current branch is not set.`))
-            console.log(`  ` + `use ${chalk.green('ygg branch set')}`)
-            console.log()
+            console.log(chalk.red(`\nThe current branch is not set.`))
+            console.log(`  ` + `use ${chalk.green('ygg branch set')}\n`)
             return false
         }     
         if (!ygg.utils.isAddress(action)) {
-            console.log()
-            console.log(`  ` + chalk.red(`Invalid address`))
-            console.log()
+            console.log(`\n  ` + chalk.red(`Invalid address\n`))
             return false
         }   
         if (!action) {
-            console.log()
-            console.log(`  ` + chalk.red(`Please input address`))
-            console.log()
+            console.log(`\n  ` + chalk.red(`Please input address\n`))
             return false
         } 
         getBalance(action, cmd.net)
@@ -464,16 +443,12 @@ program
             node.restart(cmd.net)
         } else if(action === "setConfig"){
             if (!cmd.port || !cmd.log) {
-                console.log()
-                console.log(`  ` + chalk.red(`Unknown command`))
-                console.log()
+                console.log(`\n  ` + chalk.red(`Unknown command\n`))
             } else {
                 node.setConfig(cmd.port, cmd.log, cmd.net)
             }
         } else {
-            console.log()
-            console.log(`  ` + chalk.red(`Unknown command`))
-            console.log()
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
         }
     })
 program
@@ -489,9 +464,7 @@ program
     .arguments('<command>')
     .action(cmd => {
         program.outputHelp()
-        console.log()
-        console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}`))
-        console.log()
+        console.log(`\n  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}\n`))
     })
 
 program.parse(process.argv)
