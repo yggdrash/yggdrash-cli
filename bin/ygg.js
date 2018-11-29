@@ -252,13 +252,21 @@ program
                             branch.setBranch(answers.branch)
                       })
                 } else {
-                    inquirer.prompt([{
-                        name: 'branch',
-                        type: 'input',
-                        message: 'branch:'
-                      }]).then((answers) => {
-                            branch.setBranch(answers.branch)
-                      })
+                    const Yggdrash = require("@yggdrash/sdk")
+                    let ygg = new Yggdrash(new Yggdrash.providers.HttpProvider("http://localhost:8080"))
+                    ygg.client.getBranchId().then(all => {
+                        let allList = []
+                        inquirer.prompt([{
+                            name: 'branch',
+                            type: 'list',
+                            message: 'branch',
+                            choices: [all],
+                            default: 0
+                          }]).then((answers) => {
+                                branch.setBranch(answers.branch)
+                          })
+
+                    })
                 }
                   
               })
