@@ -493,4 +493,3 @@ function cleanArgs (cmd) {
     })
     return args
   }
-  
