@@ -259,11 +259,11 @@ program
             break
               
             case 'status':
-                branch.status()
+            branch.status()
             break
 
             default:
-            console.log('Not Found Command.')
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
             break
         }
     })
@@ -300,7 +300,7 @@ program
             break
 
             default:
-            console.log('Not Found Command.')
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
             break
         }
     })
@@ -315,7 +315,6 @@ program
             break
     
             case 'set':
-            // require admin password
             inquirer.prompt([{
                 name: 'password',
                 type: 'password',
@@ -341,9 +340,37 @@ program
             break
   
             default:
-            console.log('Not Found Command.')
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
             break
         }
+    })
+
+program
+    .command('node <action>')
+    .option('-p, --port <port>', 'port')
+    .option('-l, --log <log>', 'log')
+    .option('-n, --net <net>', 'net')
+    .description('Node Admin Controller')
+    .action((action, cmd) => {
+
+        if (action != 'start' && action != 'restart') {
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
+            return false
+        }
+
+        inquirer.prompt([{
+            name: 'password',
+            type: 'password',
+            message: `${chalk.red('Admin password')}`,
+          }]).then((answers) => {
+                account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
+                switch(action) {
+                    case 'start':
+                    node.start(cmd.net)
+                    case 'restart':
+                    // node.restart(cmd.net)
+                }
+          })
     })
 
 program
@@ -361,7 +388,7 @@ program
                 plant(cmd.owner, cmd.seed, cmd.net)
             }
         } else {
-            console.log('Not Found Command.')
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
         }
     })
 
@@ -432,25 +459,6 @@ program
         getBalance(action, cmd.net)
     })
 
-program
-    .command('node <action>')
-    .option('-p, --port <port>', 'port')
-    .option('-l, --log <log>', 'log')
-    .option('-n, --net <net>', 'net')
-    .description('Node Admin Controller')
-    .action((action, cmd) => {
-        if(action === "restart"){
-            node.restart(cmd.net)
-        } else if(action === "setConfig"){
-            if (!cmd.port || !cmd.log) {
-                console.log(`\n  ` + chalk.red(`Unknown command\n`))
-            } else {
-                node.setConfig(cmd.port, cmd.log, cmd.net)
-            }
-        } else {
-            console.log(`\n  ` + chalk.red(`Unknown command\n`))
-        }
-    })
 program
     .command('console')
     .description('Run YGGDRASH console')

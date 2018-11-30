@@ -6,7 +6,7 @@ const {
   coinbase,
   clear
 } = require('../lib/wallet/account')
-const { restart, setConfig } = require('../lib/admin');
+const { restart, setConfig } = require('../lib/node');
 const { transfer, transferFrom } = require('../lib/branch/sendTransaction');
 const { plant } = require('../lib/stem/plant');
 const Yggdrash = require("@yggdrash/sdk")
