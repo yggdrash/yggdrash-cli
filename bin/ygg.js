@@ -367,8 +367,13 @@ program
                 switch(action) {
                     case 'start':
                     node.start(cmd.net)
+                    break
                     case 'restart':
-                    // node.restart(cmd.net)
+                    node.restart(cmd.net)
+                    break
+                    case 'set':
+                    node.setConfig(cmd.net)
+                    break
                 }
           })
     })
@@ -411,7 +416,8 @@ program
             return false
         }
 
-        if(action === "transferFrom"){
+        switch(action) {
+            case 'transferFrom':
             inquirer.prompt([{
                 name: 'from',
                 type: 'list',
@@ -425,14 +431,19 @@ program
             }]).then((answers) => {
                 transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
             })
-        } else if(action === "transfer"){
+            break
+            case 'transfer':
             inquirer.prompt([{
                 name: 'password',
                 type: 'password',
-                message: 'Password:'
+                message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
                 transfer(cmd.to, cmd.value, answers.password, cmd.net)
             })
+            break
+            default:
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
+            break
         }
     })
 
