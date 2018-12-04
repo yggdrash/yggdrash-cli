@@ -3,7 +3,7 @@ const {
   createAccount,
   getAccounts,
   getAccount,
-  coinbase,
+  admin,
   clear
 } = require('../lib/wallet/account')
 const { restart, setConfig } = require('../lib/node');
@@ -32,9 +32,9 @@ describe('Wallet Tests...', () => {
       assert(accounts.length == 2)
     })
 
-    it('should get coinbase', () => {
+    it('should get admin', () => {
       createAccount()
-      let admin = coinbase()      
+      let admin = admin()      
       assert.equal(true, admin == getAccount(0))
     })
 

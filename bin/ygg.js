@@ -349,7 +349,7 @@ program
     .command('node <action>')
     .option('-p, --port <port>', 'port')
     .option('-l, --log <log>', 'log')
-    .option('-n, --net <net>', 'net')
+    .option('-n, --node <node>', 'node')
     .description('Node Admin Controller')
     .action((action, cmd) => {
 
@@ -366,18 +366,18 @@ program
                 account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
                 switch(action) {
                     case 'start':
-                    node.start(cmd.net)
+                    node.start(cmd.node)
                     break
                     case 'restart':
-                    node.restart(cmd.net)
+                    node.restart(cmd.node)
                     break
                     case 'set':
-                    node.setConfig(cmd.net)
+                    node.setConfig(cmd.node)
                     break
                 }
           })
     })
-
+    // "Usage: $0 start | stop | restart | status | log | build | help"
 program
     .command('stem <action>')
     .option('-o, --owner <owner>', 'owner')
