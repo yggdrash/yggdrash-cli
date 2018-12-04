@@ -382,7 +382,8 @@ program
     .description('Node Admin Controller')
     .action((action, cmd) => {
 
-        if (action != 'start' && action != 'restart') {
+        if (action != 'start' && action != 'restart'
+            && action != 'set'&& action != 'build') {
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
             console.log('  Options:')
             console.log(`\n  ` + 'ygg node help                     output usage information\n')
@@ -399,15 +400,22 @@ program
                     case 'start':
                     node.start(cmd.node, answers.password)
                     break
+                    
                     case 'restart':
                     node.restart(cmd.node)
                     break
+                    
                     case 'set':
                     node.setConfig(cmd.node)
                     break
 
+                    case 'build':
+                    node.build(cmd.node)
+                    break
+
                     case 'help':
                     console.log('\nCommands:')
+                    console.log(`  ` + 'build                      Node build with admin account')
                     console.log(`  ` + 'start                      Node start with admin account')
                     console.log(`  ` + 'restart                    Node restart with admin account')
                     console.log(`  ` + 'set                        Configutation settings for node\n')
