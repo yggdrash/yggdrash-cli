@@ -387,10 +387,15 @@ program
             return false
         }
         if (action != 'start' && action != 'restart'
-            && action != 'set' && action != 'build' && action != 'stop') {
+            && action != 'set' && action != 'build' 
+            && action != 'stop' && action != 'status') {
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
             console.log('  Options:')
             console.log(`\n  ` + 'ygg node help                     output usage information\n')
+            //TODO: not found node command
+            // if (!cmd.node) {
+                
+            // }
             return false
         }
 
@@ -409,6 +414,10 @@ program
                     node.restart(cmd.node)
                     break
                     
+                    case 'status':
+                    node.status()
+                    break
+
                     case 'stop':
                     node.stop(cmd.node)
                     break
