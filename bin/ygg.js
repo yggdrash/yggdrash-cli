@@ -382,8 +382,12 @@ program
     .description('Node Admin Controller')
     .action((action, cmd) => {
 
+        if (db().get("accounts").map("address").value()[0] == null) {
+            console.log(`  ` + `${chalk.red("\nPlease create a admin account.\n")}`)
+            return false
+        }
         if (action != 'start' && action != 'restart'
-            && action != 'set'&& action != 'build') {
+            && action != 'set' && action != 'build' && action != 'stop') {
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
             console.log('  Options:')
             console.log(`\n  ` + 'ygg node help                     output usage information\n')
@@ -405,6 +409,10 @@ program
                     node.restart(cmd.node)
                     break
                     
+                    case 'stop':
+                    node.stop(cmd.node)
+                    break
+
                     case 'set':
                     node.setConfig(cmd.node)
                     break
