@@ -383,7 +383,7 @@ program
     .action((action, cmd) => {
 
         if (db().get("accounts").map("address").value()[0] == null) {
-            console.log(`  ` + `${chalk.red("\nPlease create a admin account.\n")}`)
+            console.log(`\n  ` + `${chalk.red("Please create a admin account.\n")}`)
             return false
         }
         if (action != 'start' && action != 'restart'
@@ -391,11 +391,8 @@ program
             && action != 'stop' && action != 'status') {
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
             console.log('  Options:')
-            console.log(`\n  ` + 'ygg node help                     output usage information\n')
-            //TODO: not found node command
-            // if (!cmd.node) {
-                
-            // }
+            console.log(`\n  ` + 'ygg node help                     output usage information')
+            console.log(`\n  ` + 'ex) ygg node start -n [node path]\n')
             return false
         }
 
@@ -411,7 +408,7 @@ program
                     break
                     
                     case 'restart':
-                    node.restart(cmd.node)
+                    node.restart(cmd.node, answers.password)
                     break
                     
                     case 'status':
