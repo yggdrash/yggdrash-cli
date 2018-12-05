@@ -392,8 +392,17 @@ program
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
             console.log('  Options:')
             console.log(`\n  ` + 'ygg node help                     output usage information')
-            console.log(`\n  ` + 'ex) ygg node start -n [node path]\n')
             return false
+        }
+
+        switch (action) {
+            case 'status':
+            node.status()
+            return
+
+            case 'stop':
+            node.stop(cmd.node)
+            return
         }
 
         inquirer.prompt([{
@@ -402,6 +411,10 @@ program
             message: `${chalk.red('Admin password')}`,
           }]).then((answers) => {
                 account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
+                if (!cmd.node) {
+                    console.log(`\n  ` + chalk.red(`Please enter the node path.`))
+                    console.log(`  ` + 'ex) ygg node start -n [node path]\n')
+                }
                 switch(action) {
                     case 'start':
                     node.start(cmd.node, answers.password)
@@ -409,14 +422,6 @@ program
                     
                     case 'restart':
                     node.restart(cmd.node, answers.password)
-                    break
-                    
-                    case 'status':
-                    node.status()
-                    break
-
-                    case 'stop':
-                    node.stop(cmd.node)
                     break
 
                     case 'set':
