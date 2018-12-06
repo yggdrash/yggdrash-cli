@@ -386,7 +386,7 @@ program
             console.log(`\n  ` + `${chalk.red("Please create a admin account.\n")}`)
             return false
         }
-        if (action != 'start' && action != 'restart'
+        if (action != 'start' 
             && action != 'set' && action != 'build' 
             && action != 'stop' && action != 'status') {
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
@@ -401,7 +401,13 @@ program
             return
 
             case 'stop':
-            node.stop(cmd.node)
+            node.stop()
+            return
+        }
+
+        if (!cmd.node) {
+            console.log(`\n  ` + chalk.red(`Please enter the node path.`))
+            console.log(`  ` + 'ex) ygg node start -n [node path]\n')
             return
         }
 
@@ -411,19 +417,13 @@ program
             message: `${chalk.red('Admin password')}`,
           }]).then((answers) => {
                 account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
-                if (!cmd.node) {
-                    console.log(`\n  ` + chalk.red(`Please enter the node path.`))
-                    console.log(`  ` + 'ex) ygg node start -n [node path]\n')
-                }
                 switch(action) {
                     case 'start':
                     node.start(cmd.node, answers.password)
                     break
-                    
-                    case 'restart':
-                    node.restart(cmd.node, answers.password)
-                    break
 
+                    break
+                    
                     case 'set':
                     node.setConfig(cmd.node)
                     break
