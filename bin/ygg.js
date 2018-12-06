@@ -421,8 +421,6 @@ program
                     case 'start':
                     node.start(cmd.node, answers.password)
                     break
-
-                    break
                     
                     case 'set':
                     node.setConfig(cmd.node)
