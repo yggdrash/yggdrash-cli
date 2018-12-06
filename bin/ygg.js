@@ -376,9 +376,7 @@ program
 
 program
     .command('node <action>')
-    .option('-p, --port <port>', 'port')
-    .option('-l, --log <log>', 'log')
-    .option('-n, --node <node>', 'node')
+    .option('-p, --path <path>', 'path')
     .description('Node Admin Controller')
     .action((action, cmd) => {
 
@@ -396,6 +394,10 @@ program
         }
 
         switch (action) {
+            case 'build':
+            node.build(cmd.path)
+            return
+
             case 'status':
             node.status()
             return
@@ -408,14 +410,11 @@ program
             console.log('\nCommands:')
             console.log(`  ` + 'build                      Node build with admin account')
             console.log(`  ` + 'start                      Node start with admin account')
-            console.log(`  ` + 'restart                    Node restart with admin account')
-            console.log(`  ` + 'set                        Configutation settings for node\n')
-            return
-        }
-
-        if (!cmd.node) {
-            console.log(`\n  ` + chalk.red(`Please enter the node path.`))
-            console.log(`  ` + 'ex) ygg node start -n [node path]\n')
+            console.log(`  ` + 'status                     View status node')
+            console.log(`  ` + 'stop                       Stop node\n')
+            console.log('Options:')
+            console.log(`  ` + 'ygg node build -p [node path]')
+            console.log(`  ` + 'ㄴ If the yggdrash node already exists, specify the node path\n')
             return
         }
 
@@ -427,15 +426,12 @@ program
                 account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
                 switch(action) {
                     case 'start':
-                    node.start(cmd.node, answers.password)
+                    node.start(cmd.path, answers.password)
                     break
                     
                     case 'set':
-                    node.setConfig(cmd.node)
-                    break
-
-                    case 'build':
-                    node.build(cmd.node)
+                    console.log('Not yet')
+                    // node.setConfig(cmd.node)
                     break
                 }
           })
