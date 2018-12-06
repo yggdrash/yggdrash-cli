@@ -386,7 +386,7 @@ program
             console.log(`\n  ` + `${chalk.red("Please create a admin account.\n")}`)
             return false
         }
-        if (action != 'start' 
+        if (action != 'start' && action != 'help'
             && action != 'set' && action != 'build' 
             && action != 'stop' && action != 'status') {
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
@@ -402,6 +402,14 @@ program
 
             case 'stop':
             node.stop()
+            return
+
+            case 'help':
+            console.log('\nCommands:')
+            console.log(`  ` + 'build                      Node build with admin account')
+            console.log(`  ` + 'start                      Node start with admin account')
+            console.log(`  ` + 'restart                    Node restart with admin account')
+            console.log(`  ` + 'set                        Configutation settings for node\n')
             return
         }
 
@@ -428,14 +436,6 @@ program
 
                     case 'build':
                     node.build(cmd.node)
-                    break
-
-                    case 'help':
-                    console.log('\nCommands:')
-                    console.log(`  ` + 'build                      Node build with admin account')
-                    console.log(`  ` + 'start                      Node start with admin account')
-                    console.log(`  ` + 'restart                    Node restart with admin account')
-                    console.log(`  ` + 'set                        Configutation settings for node\n')
                     break
                 }
           })
