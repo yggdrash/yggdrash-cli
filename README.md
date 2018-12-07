@@ -26,11 +26,12 @@ $ yarn global add @yggdrash/cli
 - admin - Admin account
 - clear - Clear account
 
-### Node Control (soon)
+### Node Control
 The node control is only available in the admin account.
+- build
 - start
-- restart
-- setConfig
+- status
+- stop
 
 ### STEM
 - plant - Transactions that register a branch with the stem

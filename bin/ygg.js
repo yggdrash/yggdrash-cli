@@ -25,7 +25,7 @@ program
 
 program
     .command('branch <action>')
-    .description('create branch')
+    .description('Manage branch')
     .action((action) => {
         if (!account.getAccount(0)) {
             console.log(`\n    ` + chalk.red(`You need an account to create a branch. Please create an account.\n`))
@@ -195,7 +195,7 @@ program
                     break
         
                     default:
-                    console.log('Not Found Command.')
+                    console.log(`\n  ` + chalk.red(`Unknown command\n`))
                     break
                 }
               })
@@ -259,11 +259,23 @@ program
             break
               
             case 'status':
-                branch.status()
+            branch.status()
+            break
+
+            case 'help':
+            console.log('\nCommands:')
+            console.log(`  ` + 'init                      Initialize seed.json')
+            console.log(`  ` + 'build                     Create a branch file with seed.json')
+            console.log(`  ` + 'deploy                    Deploy to node')
+            console.log(`  ` + 'list                      View branch list')
+            console.log(`  ` + 'set                       Set branch')
+            console.log(`  ` + 'status                    View current branch\n')
             break
 
             default:
-            console.log('Not Found Command.')
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
+            console.log('  Options:')
+            console.log(`\n  ` + 'ygg branch help                     output usage information\n')
             break
         }
     })
@@ -299,15 +311,25 @@ program
             account.clear()
             break
 
+            case 'help':
+            console.log('\nCommands:')
+            console.log(`  ` + 'new                      Generate new account')
+            console.log(`  ` + 'list                     Account list')
+            console.log(`  ` + 'import                   Import account')
+            console.log(`  ` + 'clear                    Delete all account\n')
+            break
+
             default:
-            console.log('Not Found Command.')
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
+            console.log('  Options:')
+            console.log(`\n  ` + 'ygg account help                     output usage information\n')
             break
         }
     })
 
 program
     .command('admin <action>')
-    .description('Manage accounts')
+    .description('Manage admin account')
     .action((action) => {
         switch(action) {
             case 'get':
@@ -315,7 +337,6 @@ program
             break
     
             case 'set':
-            // require admin password
             inquirer.prompt([{
                 name: 'password',
                 type: 'password',
@@ -339,11 +360,81 @@ program
                       })
               })
             break
+
+            case 'help':
+            console.log('\nCommands:')
+            console.log(`  ` + 'get                      Current admin account')
+            console.log(`  ` + 'set                      Change admin account\n')
+            break
   
             default:
-            console.log('Not Found Command.')
+            console.log('  Options:')
+            console.log(`\n  ` + 'ygg admin help                     output usage information\n')
             break
         }
+    })
+
+program
+    .command('node <action>')
+    .option('-p, --path <path>', 'path')
+    .description('Node Admin Controller')
+    .action((action, cmd) => {
+
+        if (db().get("accounts").map("address").value()[0] == null) {
+            console.log(`\n  ` + `${chalk.red("Please create a admin account.\n")}`)
+            return false
+        }
+        if (action != 'start' && action != 'help'
+            && action != 'set' && action != 'build' 
+            && action != 'stop' && action != 'status') {
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
+            console.log('  Options:')
+            console.log(`\n  ` + 'ygg node help                     output usage information')
+            return false
+        }
+
+        switch (action) {
+            case 'build':
+            node.build(cmd.path)
+            return
+
+            case 'status':
+            node.status()
+            return
+
+            case 'stop':
+            node.stop()
+            return
+
+            case 'help':
+            console.log('\nCommands:')
+            console.log(`  ` + 'build                      Node build with admin account')
+            console.log(`  ` + 'start                      Node start with admin account')
+            console.log(`  ` + 'status                     View status node')
+            console.log(`  ` + 'stop                       Stop node\n')
+            console.log('Options:')
+            console.log(`  ` + 'ygg node build -p [node path]')
+            console.log(`  ` + 'ㄴ If the yggdrash node already exists, specify the node path\n')
+            return
+        }
+
+        inquirer.prompt([{
+            name: 'password',
+            type: 'password',
+            message: `${chalk.red('Admin password')}`,
+          }]).then((answers) => {
+                account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
+                switch(action) {
+                    case 'start':
+                    node.start(cmd.path, answers.password)
+                    break
+                    
+                    case 'set':
+                    console.log('Not yet')
+                    // node.setConfig(cmd.node)
+                    break
+                }
+          })
     })
 
 program
@@ -357,11 +448,15 @@ program
         if (action === "plant") {
             if(!cmd.owner || !cmd.seed){
                 console.log(`\n  ` + chalk.red(`Unknown command\n`))
+                console.log('  Options:')
+                console.log(`\n  ` + 'ygg sendTransaction help                     output usage information\n')
             } else {
                 plant(cmd.owner, cmd.seed, cmd.net)
             }
         } else {
-            console.log('Not Found Command.')
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
+            console.log('  Options:')
+            console.log(`\n  ` + 'ygg sendTransaction help                     output usage information\n')
         }
     })
 
@@ -373,8 +468,19 @@ program
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
+
+        if (action === 'help') {
+            console.log('\nCommands:')
+            console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
+            console.log(` ` + 'transfer                       Send transaction to default admin account')
+            console.log(` ` + 'ex) ygg sendTransaction transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
+            return false
+        }
+
         if (!cmd.to || !cmd.value) {
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
+            console.log('  Options:')
+            console.log(`\n  ` + 'ygg sendTransaction help                     output usage information\n')
             return false
         } 
         
@@ -384,7 +490,8 @@ program
             return false
         }
 
-        if(action === "transferFrom"){
+        switch(action) {
+            case 'transferFrom':
             inquirer.prompt([{
                 name: 'from',
                 type: 'list',
@@ -398,14 +505,22 @@ program
             }]).then((answers) => {
                 transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
             })
-        } else if(action === "transfer"){
+            break
+
+            case 'transfer':
             inquirer.prompt([{
                 name: 'password',
                 type: 'password',
-                message: 'Password:'
+                message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
                 transfer(cmd.to, cmd.value, answers.password, cmd.net)
             })
+            break
+
+            default:
+            console.log(`\n  ` + chalk.red(`Unknown command\n`))
+            console.log(`\n  ` + 'ygg sendTransaction help                     output usage information\n')
+            break
         }
     })
 
@@ -416,9 +531,10 @@ program
     .action((action, cmd) => {
         const Yggdrash = require("@yggdrash/sdk")
         const ygg = new Yggdrash()
+
         if (!db().get('currentBranch').value()) {
-            console.log(chalk.red(`\nThe current branch is not set.`))
-            console.log(`  ` + `use ${chalk.green('ygg branch set')}\n`)
+            console.log(chalk.red(`\n  The current branch is not set.`))
+            console.log(`\n  ` + `use ${chalk.green('ygg branch set')}\n`)
             return false
         }     
         if (!ygg.utils.isAddress(action)) {
@@ -427,30 +543,14 @@ program
         }   
         if (!action) {
             console.log(`\n  ` + chalk.red(`Please input address\n`))
+            console.log('  Commands:')
+            console.log(` ` + 'address                   Enter balance address iquired account')
+            console.log(` ` + 'ex) ygg balanceOf 757649D90145e30b567A1f1B97267198Cde5e96c\n')
             return false
         } 
         getBalance(action, cmd.net)
     })
 
-program
-    .command('node <action>')
-    .option('-p, --port <port>', 'port')
-    .option('-l, --log <log>', 'log')
-    .option('-n, --net <net>', 'net')
-    .description('Node Admin Controller')
-    .action((action, cmd) => {
-        if(action === "restart"){
-            node.restart(cmd.net)
-        } else if(action === "setConfig"){
-            if (!cmd.port || !cmd.log) {
-                console.log(`\n  ` + chalk.red(`Unknown command\n`))
-            } else {
-                node.setConfig(cmd.port, cmd.log, cmd.net)
-            }
-        } else {
-            console.log(`\n  ` + chalk.red(`Unknown command\n`))
-        }
-    })
 program
     .command('console')
     .description('Run YGGDRASH console')
