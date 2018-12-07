@@ -21,6 +21,7 @@ $ yarn global add @yggdrash/cli
 ### Wallet
 - create - Generate account
 - import - Import account
+- export - Export account
 - getAccounts - Account list
 - getAccount - View specific account
 - admin - Admin account
