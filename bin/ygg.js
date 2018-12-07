@@ -286,7 +286,13 @@ program
     .action((action) => {
         switch(action) {
             case 'new':
-            account.create()
+            inquirer.prompt([{
+                name: 'password',
+                type: 'password',
+                message: 'Password:'
+            }]).then((answers) => {
+                account.create(answers.password)
+            })
             break
     
             case 'list':  
