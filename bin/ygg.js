@@ -307,6 +307,28 @@ program
               })
             break
 
+            case 'export':
+            inquirer.prompt([{
+                name: 'address',
+                type: 'list',
+                message: 'Select export address',
+                choices: db().get("accounts").map("address").value(),
+                default: 0
+              }, {
+                name: 'key',
+                type: 'list',
+                message: 'export type',
+                choices: ['privatekey', 'keystore'],
+                default: 0
+              }, {
+                name: 'password',
+                type: 'password',
+                message: 'Password:'
+              }]).then((answers) => {
+                    account.exportAccount(answers.address, answers.password, answers.key)
+              })
+            break
+
             case 'clear':  
             account.clear()
             break
