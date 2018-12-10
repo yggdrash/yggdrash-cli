@@ -13,7 +13,6 @@ const {
 
 
 const Yggdrash = require("@yggdrash/sdk")
-const ygg = new Yggdrash()
 const password = 'Aa1234567890!'
 const privatekey = '310d08df73d4bc989ea82a7002ceb6f60896ebc80feeeb80c04b6a27f9b4985e'
 const importAddress = '2Dbe588dA70cafe98bd1797119E96165A8E74191'
@@ -44,6 +43,7 @@ describe('Wallet Tests...', () => {
         create(password)
         let accounts = getAccounts()
         assert(accounts.length == 2)
+        assert(address[0].length > 0 && address[0].length === 40)
       })
   
       it('should get admin', () => {

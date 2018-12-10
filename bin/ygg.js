@@ -6,7 +6,7 @@ const exec = require('child_process').exec
 const { db } = require('../lib/db')
 const inquirer = require('inquirer')
 const { account,
-        getBalance,
+        query,
         transferFrom,
         transfer,
         node,
@@ -576,7 +576,7 @@ program
             console.log(` ` + 'ex) ygg balanceOf 757649D90145e30b567A1f1B97267198Cde5e96c\n')
             return false
         } 
-        getBalance(action, cmd.net)
+        query.getBalance(action, cmd.net)
     })
 
 program

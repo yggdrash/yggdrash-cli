@@ -4,19 +4,18 @@ const { transfer, transferFrom } = require('../lib/tx/sendTransaction')
 const Yggdrash = require("@yggdrash/sdk")
 const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider('http://localhost:8080'))
 const password = 'Aa1234567890!'
-const transferData = []
+const transferBodyData = []
 
 describe('Transaction Tests...', () => {
   describe('Transction', () => {
     it('transfer body 검증', function () {
 			let to = 'aca4215631187ab5b3af0d4c251fdf45c79ad3c6'
 			let amount = 1001
-      assert.equal(40, to.length)
-      assert.equal(40, to.length)
+      		assert.equal(40, to.length)
 
 			const transfer = ygg.client.transfer(to, amount)
 			assert(ygg.utils.isObject(transfer) === true)
-			transferData.push(transfer)
+			transferBodyData.push(transfer)
 		})
 
 		// it('transfer Data 검증', function () {

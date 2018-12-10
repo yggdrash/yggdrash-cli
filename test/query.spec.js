@@ -6,7 +6,6 @@ const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider('http://localhost:8
 describe('Transaction Tests...', () => {
     describe('Query', () => {
       
-  
     })
 })
   
