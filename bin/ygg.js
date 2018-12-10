@@ -451,10 +451,9 @@ program
             type: 'password',
             message: `${chalk.red('Admin password')}`,
           }]).then((answers) => {
-                account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
                 switch(action) {
                     case 'start':
-                    node.start(cmd.path, answers.password)
+                    node.start(answers.password, cmd.path)
                     break
                     
                     case 'set':
