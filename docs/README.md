@@ -1,7 +1,10 @@
 # YGGDRASH CLI
 
 ## Usage
-### Interactive use
+1. Interactive use
+2. Non-Interactive use
+
+## 1. Interactive use
 ```
 $ ygg console
                            __                __
@@ -20,35 +23,32 @@ ygg>
 ygg> ygg.account.create()
 ```
 
-#### Returns
+### Returns
 ```
 Address - 4349f9965c6b488f2b17a62bfdd90aba6167a2f3
 ```
 - - -
 
-### coinbase
-An account that runs transactions by default
-```
-ygg> ygg.account.coinbase()
-```
-
+### admin
+- An account that runs transactions and noe by default
 - option - owner update (address)
 ```
-ygg> ygg.account.coinbase(owner)
+ygg> ygg.account.admin([option])
 ```
 
-#### Returns
+### Returns
 ```
-Coinbase - 09a73e44b8195d5057d05386527406dbb34a468b
+Admin - 09a73e44b8195d5057d05386527406dbb34a468b
 ```
 - - -
 
 ### getAccounts
+- Displays a list of all account accounts created by cli.
 ```
 ygg> ygg.account.getAccounts()
 ```
 
-#### Returns
+### Returns
 ```
 09a73e44b8195d5057d05386527406dbb34a468b
 c8d19bf9f999eae06a71da8c17000206ef463f39
@@ -58,86 +58,35 @@ c8d19bf9f999eae06a71da8c17000206ef463f39
 - - -
 
 ### getAccount
+- You can query the account of a specific account.
 ```
 ygg> ygg.account.getAccount(0)
 ```
 
-#### Returns
+### Returns
 ```
 09a73e44b8195d5057d05386527406dbb34a468b
 ```
 - - -
 
 ### clear
+- Delete all accounts created with cli.
 ```
 ygg> ygg.account.clear()
 ```
 - - -
 
-## Node
-A collection of libraries that allows you to control nodes using an administrator account
-### restart
-Restart the node
-```
-ygg> ygg.node.restart()
-```
-#### Returns
-nonce
-```
-09a73e44b8195d50
-```
-- - -
-
-#### setConfig
-Edit node settings
-- default network - localhost
-- option - port
-         - log
-```
-ygg> ygg.node.setConfig(port,  log)
-```
-#### Returns
-nonce
-```
-527406dbb34a468b
-```
-#### Example
-```
-ygg> ygg.node.setConfig(32191,  "info")
-or
-ygg> ygg.node.setConfig(32191,  "info", "testnet.yggdrash.io")
-```
-- - -
-
-## Branch
-Sends a transaction to the network.
-### Transaction - transfer
-- default network - localhost
-- transfer default account - coinbase
-```
-ygg> ygg.transfer([branch id], [to address], [value])
-or
-ygg> ygg.transfer([branch id], [to address], [value], [network])
-```
-#### Returns
-```
-TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
-```
-
-#### Example
-```
-ygg> ygg.transfer('186c70234e90406ff94eebd32edb9789346104a0', ygg.getAccount(0), 1000)
-or
-ygg> ygg.transfer('186c70234e90406ff94eebd32edb9789346104a0', ygg.getAccount(0), 1000, "testnet.yggdrash.io")
-```
-- - -
+## Transaction
+- Sends a transaction to the network.
 
 ### Transaction - transferFrom
+- This is the method that generates the transaction including the from address from which to generate the transaction.
+- Set the branch chain to send the transaction before sending the transaction.
+  - ygg branch set
 - default network - localhost
+- option - network
 ```
-ygg> ygg.transferFrom([branch id], [from address], [to address], [value])
-or
-ygg> ygg.transferFrom([branch id], [from address], [to address], [value], [network])
+ygg> ygg.transferFrom([from address], [to address], [value], [option])
 ```
 
 #### Returns
@@ -147,15 +96,37 @@ TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
 
 #### Example
 ```
-ygg> ygg.transferFrom('186c70234e90406ff94eebd32edb9789346104a0', 'aca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000)
-or
-ygg> ygg.transferFrom('186c70234e90406ff94eebd32edb9789346104a0', 'aca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000, "testnet.yggdrash.io")
+ygg> ygg.transferFrom('aca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000, ["testnet.yggdrash.io"])
 ```
 - - -
 
-### getBalance
+### Transaction - transfer
+- Unlike from transfer, from becomes an admin account and generates a transaction.
+- Set the branch chain to send the transaction before sending the transaction.
+  - ygg branch set
+- default network - localhost
+- option - network
+- transfer default account - admin
 ```
-ygg> ygg.getBalance([branch id], [address])
+ygg> ygg.transfer([to address], [value], [option])
+```
+#### Returns
+```
+TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
+```
+
+#### Example
+```
+ygg> ygg.transfer(ygg.getAccount(0), 1000, ["testnet.yggdrash.io"])
+```
+- - -
+
+## Query
+### getBalance
+- Before querying the balance, you should select the branch you want to query for balance.
+  - ygg branch set
+```
+ygg> ygg.getBalance([address])
 ```
 
 #### Returns
@@ -165,11 +136,12 @@ Balance : 999000000
 
 #### Example
 ```
-ygg> ygg.getBalance('186c70234e90406ff94eebd32edb9789346104a0', 'aca4215631187ab5b3af0d4c251fdf45c79ad3c6')
+ygg> ygg.getBalance('aca4215631187ab5b3af0d4c251fdf45c79ad3c6')
 ```
 - - -
+- - -
 
-## Non-Interactive use
+## 2. Non-Interactive use
 ```
 $ ygg <command> [options]
 ```
@@ -185,20 +157,17 @@ $ ygg account new
 ```
 - - -
 
-### coinbase
-An account that runs transactions by default
+### admin account
+- An account that runs transactions by default
+- option -o : admin (update admin - address)
 #### Example
 ```
-$ ygg account coinbase
-```
-- option -o : owner (owner update - address)
-#### Example
-```
-$ ygg account coinbase -o 09a73e44b8195d5057d05386527406dbb34a468b
+$ ygg account admin
 ```
 - - -
 
 ### Account list
+- Displays a list of all account accounts created by cli.
 #### Example
 ```
 $ ygg account list
@@ -206,6 +175,7 @@ $ ygg account list
 - - -
 
 ### clear
+- Delete all accounts created with cli.
 #### Example
 ```
 $ ygg account clear
@@ -213,36 +183,48 @@ $ ygg account clear
 - - -
 
 ## Node
-### Restart
-Restart the node
-- default network - localhost
-- default sign account(admin account) - ygg.coinbase()
+- A collection of libraries that allows you to control nodes using an administrator account
 
-#### Example
+### build
+Build the node
+- By default, the node is created in the .yggdrash folder under the home folder and is built to start the node.
 ```
-$ ygg node restart
+$ ygg node build
 ```
 - - -
 
-### Set config
-Edit node settings
-- default network - localhost
-- default sign account(admin account) - ygg.coinbase()
-- option - p : port
-         - l : log
-         - n : network
-
-#### Example
+### start
+Start the node
+- Nodes can only be controlled by the admin account, and you must enter the password for the admin account.
+- Run the node with the admin account on cli.
+- options - node path
 ```
-$ ygg node setconfig -p 32921 -l info
+$ ygg node start
+```
+- - -
+
+### status
+View status the node
+- This is a method that can query the status of the currently executing node.
+```
+$ ygg node status
+```
+- - -
+
+### stop
+Stop the node
+- This method stops the currently executing node.
+```
+$ ygg node stop
 ```
 - - -
 
 ## Generate branch
+- You can create an environment that allows you to do branch chain development.
 ### init
-Generate seed.json file 
-- default network - localhost
-
+- Generate seed file information to create branch
+  - The init command creates a contract and a seed.json file in that folder.
+  - The folder must be empty.
 #### Example
 ```
 $ ygg branch init 
@@ -268,9 +250,11 @@ mco.seed.json
 - - -
 
 ### build
-Generate branch.json file 
-- default network - localhost
-
+- Build a contract (Java file) to create a branch chain and create a branch file using the seed file.
+- You can add frontiers to your pre-build seed file to build the branch, and the contract id can be any pre-built contract id.
+``` warning
+The branch.json file is a signature file of the seed.json file, which acts as a generic for each branch chain. All data must be serialized and signed, so no blanks should be modified.
+```
 #### Example
 ```
 $ ygg branch build
@@ -302,9 +286,9 @@ mco.branch.json
 - - -
 
 ### deploy
-Generate branch.json file
-- default network - localhost
-- copy locations
+- Branch deployment to nodes
+  - default network - localhost
+- deploy location
 ```
 $HOME/.yggdrash/branch/[branchId]/branch.json
 $HOME/.yggdrash/contract/[2charOfContractId]/[ContractId].class
@@ -319,39 +303,44 @@ $ ygg branch deploy
 ```
 - - -
 
-### transfer
-- default network - localhost
-- option - b : branch id
-         - f : from address
-         - t : to address
-         - v : value
-         - n : network
-         
+### list
+- Get the branch list.
 #### Example
 ```
-$ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --to 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
-or
-$ ygg sendTransaction transfer --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --to 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000 -n testnet.yggdrash.io
-```
-#### Returns
-transaction hash
-```
-ebbe3d2ae42f7fdf0d6f81bca7aec9cac79d58ee688d34ac75ef3a03cfc4d56b
+$ ygg branch list
 ```
 - - -
+
+### set
+- Set the transaction or branch when querying.
+#### Example
+```
+$ ygg branch set
+```
+- - -
+
+### status
+- Retrieves branch information currently set.
+#### Example
+```
+$ ygg branch status
+```
+- - -
+
+## Transaction
 ### transferFrom
+- This is the method that generates the transaction including the from address from which to generate the transaction.
+- Set the branch chain to send the transaction before sending the transaction.
+  - ygg branch set
 - default network - localhost
-- option - b : branch id
-         - f : from address
+- option - f : from address
          - t : to address
          - v : value
          - n : network
 
 #### Example         
 ```
-$ ygg sendTransaction transferFrom --branch 3f5d7163fc703dee829f4a47640e8acedf0986ac --from 09a73e44b8195d5057d05386527406dbb34a468b --to 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000
-or
-$ ygg sendTransaction transferFrom -b 3f5d7163fc703dee829f4a47640e8acedf0986ac -f 09a73e44b8195d5057d05386527406dbb34a468b -t 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 -n testnet.yggdrash.io
+$ ygg sendTransaction transferFrom -f 09a73e44b8195d5057d05386527406dbb34a468b -t 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 [-n testnet.yggdrash.io]
 ```
 #### Returns
 transaction hash
@@ -360,6 +349,27 @@ ebbe3d2ae42f7fdf0d6f81bca7aec9cac79d58ee688d34ac75ef3a03cfc4d56b
 ```
 - - -
 
+### transfer
+- Unlike from transfer, from becomes an admin account and generates a transaction.
+- Set the branch chain to send the transaction before sending the transaction.
+  - ygg branch set
+- default network - localhost
+- option - t : to address
+         - v : value
+         - n : network
+         
+#### Example
+```
+$ ygg sendTransaction transfer --to 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000 [-n testnet.yggdrash.io]
+```
+#### Returns
+transaction hash
+```
+ebbe3d2ae42f7fdf0d6f81bca7aec9cac79d58ee688d34ac75ef3a03cfc4d56b
+```
+- - -
+
+## Query
 ### getBalance
 - default network - localhost
 - option - b : branch id

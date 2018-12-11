@@ -6,7 +6,7 @@ const exec = require('child_process').exec
 const { db } = require('../lib/db')
 const inquirer = require('inquirer')
 const { account,
-        getBalance,
+        query,
         transferFrom,
         transfer,
         node,
@@ -286,7 +286,13 @@ program
     .action((action) => {
         switch(action) {
             case 'new':
-            account.create()
+            inquirer.prompt([{
+                name: 'password',
+                type: 'password',
+                message: 'Password:'
+            }]).then((answers) => {
+                account.create(answers.password)
+            })
             break
     
             case 'list':  
@@ -304,6 +310,28 @@ program
                 message: 'Password:'
               }]).then((answers) => {
                     account.importAccount(answers.pk, answers.password)
+              })
+            break
+
+            case 'export':
+            inquirer.prompt([{
+                name: 'address',
+                type: 'list',
+                message: 'Select export address',
+                choices: db().get("accounts").map("address").value(),
+                default: 0
+              }, {
+                name: 'key',
+                type: 'list',
+                message: 'export type',
+                choices: ['privatekey', 'keystore'],
+                default: 0
+              }, {
+                name: 'password',
+                type: 'password',
+                message: 'Password:'
+              }]).then((answers) => {
+                    account.exportAccount(answers.address, answers.password, answers.key)
               })
             break
 
@@ -423,10 +451,9 @@ program
             type: 'password',
             message: `${chalk.red('Admin password')}`,
           }]).then((answers) => {
-                account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
                 switch(action) {
                     case 'start':
-                    node.start(cmd.path, answers.password)
+                    node.start(answers.password, cmd.path)
                     break
                     
                     case 'set':
@@ -548,7 +575,7 @@ program
             console.log(` ` + 'ex) ygg balanceOf 757649D90145e30b567A1f1B97267198Cde5e96c\n')
             return false
         } 
-        getBalance(action, cmd.net)
+        query.getBalance(action, cmd.net)
     })
 
 program
