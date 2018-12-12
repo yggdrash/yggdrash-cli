@@ -7,8 +7,7 @@ const { db } = require('../lib/db')
 const inquirer = require('inquirer')
 const { account,
         query,
-        transferFrom,
-        transfer,
+        tx,
         node,
         branch } = require('../lib/core')
 
@@ -491,6 +490,7 @@ program
     .command('sendTransaction <action>')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
+    .option('-s, --spender <spender>', 'spender')
     .option('-v, --value <value>', 'value')
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
@@ -501,15 +501,9 @@ program
             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
             console.log(` ` + 'transfer                       Send transaction to default admin account')
             console.log(` ` + 'ex) ygg sendTransaction transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
+            console.log(` ` + 'ex) ygg sendTransaction approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
             return false
         }
-
-        if (!cmd.to || !cmd.value) {
-            console.log(`\n  ` + chalk.red(`Unknown command\n`))
-            console.log('  Options:')
-            console.log(`\n  ` + 'ygg sendTransaction help                     output usage information\n')
-            return false
-        } 
         
         if (!db().get('currentBranch').value()) {
             console.log(chalk.red(`\nThe current branch is not set.`))
@@ -530,7 +524,7 @@ program
                 type: 'password',
                 message: 'Password:'
             }]).then((answers) => {
-                transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
+                tx.transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
             })
             break
 
@@ -540,13 +534,33 @@ program
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                transfer(cmd.to, cmd.value, answers.password, cmd.net)
+                tx.transfer(cmd.to, cmd.value, answers.password, cmd.net)
+            })
+            break
+
+            case 'approve':
+            inquirer.prompt([{
+                name: 'password',
+                type: 'password',
+                message: `${chalk.red('Admin password')}`
+            }]).then((answers) => {
+                tx.approve(cmd.spender, cmd.value, answers.password, cmd.net)
             })
             break
 
             default:
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
             console.log(`\n  ` + 'ygg sendTransaction help                     output usage information\n')
+            if (!cmd.to || !cmd.spender || !cmd.value) {
+                console.log(`\n  ` + chalk.red(`Unknown command\n`))
+                console.log('  Options:')
+                console.log(`\n  ` + '-f : from')
+                console.log(`\n  ` + '-t : to')
+                console.log(`\n  ` + '-s : spender')
+                console.log(`\n  ` + '-v : value')
+                console.log(`\n  ` + '-n : network')
+                return false
+            } 
             break
         }
     })

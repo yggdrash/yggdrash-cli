@@ -1,6 +1,6 @@
 {
   "name": "@yggdrash/cli",
-  "version": "0.0.16-beta.1",
+  "version": "0.1.0",
   "description": "Command line interface for YGGDRASH",
   "preferGlobal": true,
   "bin": {
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/yggdrash/yggdrash-cli#readme",
   "dependencies": {
-    "@yggdrash/sdk": "git+ssh://git@github.com:yggdrash/yggdrash-sdk-js.git#develop",
+    "@yggdrash/sdk": "git+https://github.com/yggdrash/yggdrash-sdk-js.git#develop",
     "bip39": "^2.5.0",
     "chalk": "^2.4.1",
     "child_process": "^1.0.2",
