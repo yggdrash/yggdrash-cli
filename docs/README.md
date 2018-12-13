@@ -340,7 +340,7 @@ $ ygg branch status
 
 #### Example         
 ```
-$ ygg sendTransaction transferFrom -f 09a73e44b8195d5057d05386527406dbb34a468b -t 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 [-n testnet.yggdrash.io]
+$ ygg transaction transferFrom -t 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 [-n testnet.yggdrash.io]
 ```
 #### Returns
 transaction hash
@@ -360,7 +360,28 @@ ebbe3d2ae42f7fdf0d6f81bca7aec9cac79d58ee688d34ac75ef3a03cfc4d56b
          
 #### Example
 ```
-$ ygg sendTransaction transfer --to 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000 [-n testnet.yggdrash.io]
+$ ygg transaction transfer --to 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000 [-n testnet.yggdrash.io]
+```
+#### Returns
+transaction hash
+```
+ebbe3d2ae42f7fdf0d6f81bca7aec9cac79d58ee688d34ac75ef3a03cfc4d56b
+```
+- - -
+
+### approve
+- In my account, grant some rights to the amount of money available to a particular account.
+- Set the branch chain to send the transaction before sending the transaction.
+- The address of from is the admin account by default.
+  - ygg branch set
+- default network - localhost
+- option - s : spender address
+         - v : value
+         - n : network
+         
+#### Example
+```
+$ ygg transaction approve --spender 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 --value 1000 [-n testnet.yggdrash.io]
 ```
 #### Returns
 transaction hash
@@ -372,15 +393,12 @@ ebbe3d2ae42f7fdf0d6f81bca7aec9cac79d58ee688d34ac75ef3a03cfc4d56b
 ## Query
 ### getBalance
 - default network - localhost
-- option - b : branch id
-         - a : address
+- option - a : address
          - n : network
 
 #### Example
 ```
-$ ygg balanceOf yeed -branch 0a39170899bd7e721730c7c312afc154d784034b -adress aca4215631187ab5b3af0d4c251fdf45c79ad3c6
-or
-$ ygg balanceOf yeed -b 0a39170899bd7e721730c7c312afc154d784034b -a aca4215631187ab5b3af0d4c251fdf45c79ad3c6 n testnet.yggdrash.io
+$ ygg query balanceOf -a aca4215631187ab5b3af0d4c251fdf45c79ad3c6 [-n testnet.yggdrash.io]
 ```
 #### Returns
 bignumber
