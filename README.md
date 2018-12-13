@@ -34,7 +34,7 @@ The node control is only available in the admin account.
 - status
 - stop
 
-### STEM
+### STEM(soon)
 - plant - Transactions that register a branch with the stem
 
 ### Branch
@@ -44,9 +44,17 @@ The node control is only available in the admin account.
 - branch list - View branch
 - branch set - Checked out branch
 - branch status - View current branch
-- transfer - Coin transfer
-- transferFrom - Coin transfer
+
+### Transaction
+- transfer - Asset transfer
+- transferFrom - Set up the account to be transferred and transfer it.
+- approve - In my account, grant some rights to the amount of money available to a particular account.
+
+### Query
 - getBalance - Account Balance Display
+- specification - It shows the specification of the branch.
+- totalSupply - Show the total supply of the branch.
+- allowance - It is possible to see how much the owner gave the quota to a particular address.
 
 ## Usage
 ### Interactive use
