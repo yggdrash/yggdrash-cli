@@ -3,6 +3,7 @@
 const program = require('commander')
 const chalk = require('chalk')
 const exec = require('child_process').exec
+const Yggdrash = require("@yggdrash/sdk")
 const { db } = require('../lib/db')
 const inquirer = require('inquirer')
 const { account,
@@ -566,12 +567,72 @@ program
     })
 
 program
-    .command('balanceOf <action>')
+    .command('query <action>')
+    .option('-a, --address <address>', 'address')
+    .option('-o, --owner <owner>', 'owner')
+    .option('-s, --spender <spender>', 'spender')
     .option('-n, --net <net>', 'net')
     .description('Query Balance')
     .action((action, cmd) => {
-        const Yggdrash = require("@yggdrash/sdk")
-        const ygg = new Yggdrash()
+        const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
+
+        if (!db().get('currentBranch').value()) {
+            console.log(chalk.red(`\n  The current branch is not set.`))
+            console.log(`\n  ` + `use ${chalk.green('ygg branch set')}\n`)
+            return false
+        }
+        if (!action || action === 'help') {
+            console.log(`\n  ` + chalk.red(`Please input address\n`))
+            console.log('  Commands:')
+            console.log(` ` + 'balanceOf                   Enter balance address iquired account')
+            console.log(` ` + 'specification               Enter balance address iquired account')
+            console.log(` ` + 'totalSupply                 Enter balance address iquired account')
+            console.log(` ` + 'allowance                   Enter balance address iquired account')
+            console.log(` ` + 'ex) ygg query balanceOf -a 757649D90145e30b567A1f1B97267198Cde5e96c\n')
+            console.log(` ` + 'ex) ygg query allowance  -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
+            return false
+        }
+
+        switch(action) {
+            case 'balanceOf':
+            if (!cmd.address || !ygg.utils.isAddress(cmd.address)) {
+                console.log(`\n  ` + chalk.red(`Invalid address\n`))
+                console.log('  Options:')
+                console.log(`  ` + '-a : address')
+                console.log(`  ` + '-n : network\n')
+                return false
+            }
+            query.getBalance(cmd.address, ygg)
+            break
+
+            case 'specification':
+            query.specification(ygg)
+            break
+
+            case 'totalSupply':
+            query.totalSupply(ygg)
+            break
+            
+            case 'allowance':
+            if (!cmd.owner || !cmd.spender || !ygg.utils.isAddress(cmd.owner) || !ygg.utils.isAddress(cmd.spender)) {
+                console.log(`\n  ` + chalk.red(`Unknown command\n`))
+                console.log('  Options:')
+                console.log(`  ` + '-o : owner')
+                console.log(`  ` + '-s : spender')
+                console.log(`  ` + '-n : network\n')
+                return false
+            }
+            query.allowance(cmd.owner, cmd.spender, ygg)
+            break
+        }
+    })
+
+program
+    .command('specification <action>')
+    .option('-n, --net <net>', 'net')
+    .description('Query specification')
+    .action((action, cmd) => {
+        const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
 
         if (!db().get('currentBranch').value()) {
             console.log(chalk.red(`\n  The current branch is not set.`))
@@ -579,17 +640,17 @@ program
             return false
         }     
         if (!ygg.utils.isAddress(action)) {
-            console.log(`\n  ` + chalk.red(`Invalid address\n`))
+            console.log(`\n  ` + chalk.red(`Invalid Branch ID\n`))
             return false
-        }   
+        }
         if (!action) {
             console.log(`\n  ` + chalk.red(`Please input address\n`))
             console.log('  Commands:')
-            console.log(` ` + 'address                   Enter balance address iquired account')
-            console.log(` ` + 'ex) ygg balanceOf 757649D90145e30b567A1f1B97267198Cde5e96c\n')
+            console.log(` ` + 'branch                   Enter branch id')
+            console.log(` ` + 'ex) ygg specification 757649D90145e30b567A1f1B97267198Cde5e96c\n')
             return false
         } 
-        query.getBalance(action, cmd.net)
+        query.specification(ygg)
     })
 
 program

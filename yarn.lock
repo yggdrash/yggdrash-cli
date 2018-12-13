@@ -108,8 +108,8 @@
     to-fast-properties "^2.0.0"
 
 "@types/node@^10.3.5":
-  version "10.12.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.12.tgz#e15a9d034d9210f00320ef718a50c4a799417c47"
+  version "10.12.14"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.14.tgz#c03b6380c5c301be0499ecd143b99b76ebe45678"
 
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
@@ -246,7 +246,7 @@
 
 "@yggdrash/sdk@git+https://github.com/yggdrash/yggdrash-sdk-js.git#develop":
   version "0.0.5-beta.1"
-  resolved "git+https://github.com/yggdrash/yggdrash-sdk-js.git#66bad5f87b9ed7406e740c5f66c701d032d73ca8"
+  resolved "git+https://github.com/yggdrash/yggdrash-sdk-js.git#b1f5c95c0287a0a40318d723e2e8d25db709f1bb"
   dependencies:
     assert "^1.4.1"
     bignumber.js "^8.0.1"
