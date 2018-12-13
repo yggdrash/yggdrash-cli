@@ -488,7 +488,7 @@ program
     })
 
 program
-    .command('sendTransaction <action>')
+    .command('transaction <action>')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
     .option('-s, --spender <spender>', 'spender')
@@ -496,12 +496,13 @@ program
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
-
+        const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
         if (action === 'help') {
             console.log('\nCommands:')
             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
             console.log(` ` + 'transfer                       Send transaction to default admin account')
-            console.log(` ` + 'ex) ygg sendTransaction transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
+            console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
+            console.log(` ` + 'ex) ygg sendTransaction transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
             console.log(` ` + 'ex) ygg sendTransaction approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
             return false
         }
@@ -512,8 +513,21 @@ program
             return false
         }
 
+        const check = function () {
+            if (!cmd.to || !cmd.value) {
+                console.log(`\n  ` + chalk.red(`Unknown command\n`))
+                console.log('  Options:')
+                console.log(`  ` + '-t : to')
+                console.log(`  ` + '-v : value')
+                console.log(`  ` + '-n : network')
+                return false
+            }
+            return true
+        }
+
         switch(action) {
             case 'transferFrom':
+            if (!check()) return
             inquirer.prompt([{
                 name: 'from',
                 type: 'list',
@@ -525,43 +539,42 @@ program
                 type: 'password',
                 message: 'Password:'
             }]).then((answers) => {
-                tx.transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
+                tx.transferFrom(answers.from, cmd.to, cmd.value, answers.password, ygg)
             })
             break
 
             case 'transfer':
+            if (!check()) return
             inquirer.prompt([{
                 name: 'password',
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                tx.transfer(cmd.to, cmd.value, answers.password, cmd.net)
+                tx.transfer(cmd.to, cmd.value, answers.password, ygg)
             })
             break
 
             case 'approve':
+            if (!cmd.spender || !cmd.value) {
+                console.log(`\n  ` + chalk.red(`Unknown command\n`))
+                console.log('  Options:')
+                console.log(`  ` + '-s : spender')
+                console.log(`  ` + '-v : value')
+                console.log(`  ` + '-n : network')
+                return false
+            }
             inquirer.prompt([{
                 name: 'password',
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                tx.approve(cmd.spender, cmd.value, answers.password, cmd.net)
+                tx.approve(cmd.spender, cmd.value, answers.password, ygg)
             })
             break
 
             default:
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
-            console.log(`\n  ` + 'ygg sendTransaction help                     output usage information\n')
-            if (!cmd.to || !cmd.spender || !cmd.value) {
-                console.log(`\n  ` + chalk.red(`Unknown command\n`))
-                console.log('  Options:')
-                console.log(`\n  ` + '-f : from')
-                console.log(`\n  ` + '-t : to')
-                console.log(`\n  ` + '-s : spender')
-                console.log(`\n  ` + '-v : value')
-                console.log(`\n  ` + '-n : network')
-                return false
-            } 
+            console.log(`  ` + 'ygg sendTransaction help                     output usage information\n')
             break
         }
     })
@@ -625,32 +638,6 @@ program
             query.allowance(cmd.owner, cmd.spender, ygg)
             break
         }
-    })
-
-program
-    .command('specification <action>')
-    .option('-n, --net <net>', 'net')
-    .description('Query specification')
-    .action((action, cmd) => {
-        const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
-
-        if (!db().get('currentBranch').value()) {
-            console.log(chalk.red(`\n  The current branch is not set.`))
-            console.log(`\n  ` + `use ${chalk.green('ygg branch set')}\n`)
-            return false
-        }     
-        if (!ygg.utils.isAddress(action)) {
-            console.log(`\n  ` + chalk.red(`Invalid Branch ID\n`))
-            return false
-        }
-        if (!action) {
-            console.log(`\n  ` + chalk.red(`Please input address\n`))
-            console.log('  Commands:')
-            console.log(` ` + 'branch                   Enter branch id')
-            console.log(` ` + 'ex) ygg specification 757649D90145e30b567A1f1B97267198Cde5e96c\n')
-            return false
-        } 
-        query.specification(ygg)
     })
 
 program
