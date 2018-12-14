@@ -20,11 +20,11 @@
     "cli",
     "commander"
   ],
-  "author": "YGGDRASH",
+  "author": "YGGDRASH Dev team",
   "authors": [
     {
       "name": "Tedy",
-      "email": "tedy@r2v.io",
+      "email": "dev@yggdrash.io",
       "url": "https://github.com/yggdrash"
     }
   ],
