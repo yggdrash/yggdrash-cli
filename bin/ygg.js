@@ -361,7 +361,7 @@ program
     .action((action) => {
         switch(action) {
             case 'get':
-            account.adminAccount()
+            account.admin()
             break
     
             case 'set':
@@ -384,7 +384,7 @@ program
                         message: `${chalk.red('Candidate password')}`,
                       }]).then((answers) => {
                         account.adminVerify(answers.owner, answers.password)
-                        account.adminAccount(answers.owner)
+                        account.setAdmin(answers.owner)
                       })
               })
             break
