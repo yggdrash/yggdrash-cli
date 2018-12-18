@@ -11,7 +11,8 @@ const { account,
         rawTx,
         tx,
         node,
-        branch } = require('../lib/core')
+        branch,
+        api } = require('../lib/core')
 
 program
     .version(require('../package').version)
@@ -407,7 +408,6 @@ program
     .option('-p, --path <path>', 'path')
     .description('Node Admin Controller')
     .action((action, cmd) => {
-
         if (db().get("accounts").map("address").value()[0] == null) {
             console.log(`\n  ` + `${chalk.red("Please create a admin account.\n")}`)
             return false
