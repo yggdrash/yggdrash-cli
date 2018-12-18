@@ -361,7 +361,7 @@ program
     .action((action) => {
         switch(action) {
             case 'get':
-            account.admin()
+            account.getAdmin()
             break
     
             case 'set':

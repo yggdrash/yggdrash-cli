@@ -6,7 +6,7 @@ const {
   exportAccount,
   getAccounts,
   getAccount,
-  adminAccount,
+  getAdmin,
   adminVerify,
   clear
 } = require('../lib/wallet/account')
@@ -47,7 +47,7 @@ describe('Wallet Tests...', () => {
       it('should get admin', () => {
         create(password)
         create(password)
-        let admin = adminAccount()      
+        let admin = getAdmin()      
         assert.equal(true, admin == getAccount(0))
         assert.equal(false, admin == getAccount(1))
       })
@@ -55,11 +55,11 @@ describe('Wallet Tests...', () => {
       it('should set admin', () => {
         create(password)
         create(password)
-        let admin = adminAccount()
+        let admin = getAdmin()
         assert.equal(true, admin == getAccount(0))
-        adminAccount(getAccount(1))
+        getAdmin(getAccount(1))
 
-        let tmpAdmin = adminAccount()
+        let tmpAdmin = getAdmin()
         assert.equal(true, admin != tmpAdmin)
       })
 
