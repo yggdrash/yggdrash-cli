@@ -70,7 +70,7 @@ $ ygg console
 ygg> 
 ```
 
-## Non-Interactive use
+## Non-Interactive use (recommended)
 ```
 $ ygg <command> [options]
 ```

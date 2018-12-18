@@ -6,13 +6,11 @@ const {
   exportAccount,
   getAccounts,
   getAccount,
-  adminAccount,
+  getAdmin,
   adminVerify,
   clear
 } = require('../lib/wallet/account')
 
-
-const Yggdrash = require("@yggdrash/sdk")
 const password = 'Aa1234567890!'
 const privatekey = '310d08df73d4bc989ea82a7002ceb6f60896ebc80feeeb80c04b6a27f9b4985e'
 const importAddress = '2Dbe588dA70cafe98bd1797119E96165A8E74191'
@@ -49,7 +47,7 @@ describe('Wallet Tests...', () => {
       it('should get admin', () => {
         create(password)
         create(password)
-        let admin = adminAccount()      
+        let admin = getAdmin()      
         assert.equal(true, admin == getAccount(0))
         assert.equal(false, admin == getAccount(1))
       })
@@ -57,11 +55,11 @@ describe('Wallet Tests...', () => {
       it('should set admin', () => {
         create(password)
         create(password)
-        let admin = adminAccount()
+        let admin = getAdmin()
         assert.equal(true, admin == getAccount(0))
-        adminAccount(getAccount(1))
+        getAdmin(getAccount(1))
 
-        let tmpAdmin = adminAccount()
+        let tmpAdmin = getAdmin()
         assert.equal(true, admin != tmpAdmin)
       })
 

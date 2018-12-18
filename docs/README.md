@@ -1,147 +1,10 @@
 # YGGDRASH CLI
 
 ## Usage
-1. Interactive use
-2. Non-Interactive use
+1. Non-Interactive use(recommended)
+2. Interactive use
 
-## 1. Interactive use
-```
-$ ygg console
-                           __                __
-    __  ______ _____ _____/ /________ ______/ /_
-   / / / / __ `/ __ `/ __  / ___/ __ `/ ___/ __ \
-  / /_/ / /_/ / /_/ / /_/ / /  / /_/ (__  ) / / /
-  \__, /\__, /\__, /\__,_/_/   \__,_/____/_/ /_/
- /____//____//____/
-
-ygg> 
-```
-
-## Wallet
-### create
-```
-ygg> ygg.account.create()
-```
-
-### Returns
-```
-Address - 4349f9965c6b488f2b17a62bfdd90aba6167a2f3
-```
-- - -
-
-### admin
-- An account that runs transactions and noe by default
-- option - owner update (address)
-```
-ygg> ygg.account.admin([option])
-```
-
-### Returns
-```
-Admin - 09a73e44b8195d5057d05386527406dbb34a468b
-```
-- - -
-
-### getAccounts
-- Displays a list of all account accounts created by cli.
-```
-ygg> ygg.account.getAccounts()
-```
-
-### Returns
-```
-09a73e44b8195d5057d05386527406dbb34a468b
-c8d19bf9f999eae06a71da8c17000206ef463f39
-2923379d13d6d56db59fc8b615218b023e634752
-...
-```
-- - -
-
-### getAccount
-- You can query the account of a specific account.
-```
-ygg> ygg.account.getAccount(0)
-```
-
-### Returns
-```
-09a73e44b8195d5057d05386527406dbb34a468b
-```
-- - -
-
-### clear
-- Delete all accounts created with cli.
-```
-ygg> ygg.account.clear()
-```
-- - -
-
-## Transaction
-- Sends a transaction to the network.
-
-### Transaction - transferFrom
-- This is the method that generates the transaction including the from address from which to generate the transaction.
-- Set the branch chain to send the transaction before sending the transaction.
-  - ygg branch set
-- default network - localhost
-- option - network
-```
-ygg> ygg.transferFrom([from address], [to address], [value], [option])
-```
-
-#### Returns
-```
-TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
-```
-
-#### Example
-```
-ygg> ygg.transferFrom('aca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000, ["testnet.yggdrash.io"])
-```
-- - -
-
-### Transaction - transfer
-- Unlike from transfer, from becomes an admin account and generates a transaction.
-- Set the branch chain to send the transaction before sending the transaction.
-  - ygg branch set
-- default network - localhost
-- option - network
-- transfer default account - admin
-```
-ygg> ygg.transfer([to address], [value], [option])
-```
-#### Returns
-```
-TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
-```
-
-#### Example
-```
-ygg> ygg.transfer(ygg.getAccount(0), 1000, ["testnet.yggdrash.io"])
-```
-- - -
-
-## Query
-### getBalance
-- Before querying the balance, you should select the branch you want to query for balance.
-  - ygg branch set
-```
-ygg> ygg.getBalance([address])
-```
-
-#### Returns
-```
-Balance : 999000000
-```
-
-#### Example
-```
-ygg> ygg.getBalance('aca4215631187ab5b3af0d4c251fdf45c79ad3c6')
-```
-- - -
-- - -
-
-## 2. Non-Interactive use
+## 1. Non-Interactive use
 ```
 $ ygg <command> [options]
 ```
@@ -404,4 +267,139 @@ $ ygg query balanceOf -a aca4215631187ab5b3af0d4c251fdf45c79ad3c6 [-n testnet.yg
 bignumber
 ```
 1000000000
+```
+
+## 2. Interactive use
+```
+$ ygg console
+                           __                __
+    __  ______ _____ _____/ /________ ______/ /_
+   / / / / __ `/ __ `/ __  / ___/ __ `/ ___/ __ \
+  / /_/ / /_/ / /_/ / /_/ / /  / /_/ (__  ) / / /
+  \__, /\__, /\__, /\__,_/_/   \__,_/____/_/ /_/
+ /____//____//____/
+
+ygg> 
+```
+
+## Wallet
+### create
+```
+ygg> ygg.account.create()
+```
+
+### Returns
+```
+Address - 4349f9965c6b488f2b17a62bfdd90aba6167a2f3
+```
+- - -
+
+### admin
+- An account that runs transactions and noe by default
+- option - owner update (address)
+```
+ygg> ygg.account.admin([option])
+```
+
+### Returns
+```
+Admin - 09a73e44b8195d5057d05386527406dbb34a468b
+```
+- - -
+
+### getAccounts
+- Displays a list of all account accounts created by cli.
+```
+ygg> ygg.account.getAccounts()
+```
+
+### Returns
+```
+09a73e44b8195d5057d05386527406dbb34a468b
+c8d19bf9f999eae06a71da8c17000206ef463f39
+2923379d13d6d56db59fc8b615218b023e634752
+...
+```
+- - -
+
+### getAccount
+- You can query the account of a specific account.
+```
+ygg> ygg.account.getAccount(0)
+```
+
+### Returns
+```
+09a73e44b8195d5057d05386527406dbb34a468b
+```
+- - -
+
+### clear
+- Delete all accounts created with cli.
+```
+ygg> ygg.account.clear()
+```
+- - -
+
+## Transaction
+- Sends a transaction to the network.
+
+### Transaction - transferFrom
+- This is the method that generates the transaction including the from address from which to generate the transaction.
+- Set the branch chain to send the transaction before sending the transaction.
+  - ygg branch set
+- default network - localhost
+- option - network
+```
+ygg> ygg.transferFrom([from address], [to address], [value], [option])
+```
+
+#### Returns
+```
+TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
+```
+
+#### Example
+```
+ygg> ygg.transferFrom('aca4215631187ab5b3af0d4c251fdf45c79ad3c6', ygg.getAccount(0), 1000, ["testnet.yggdrash.io"])
+```
+- - -
+
+### Transaction - transfer
+- Unlike from transfer, from becomes an admin account and generates a transaction.
+- Set the branch chain to send the transaction before sending the transaction.
+  - ygg branch set
+- default network - localhost
+- option - network
+- transfer default account - admin
+```
+ygg> ygg.transfer([to address], [value], [option])
+```
+#### Returns
+```
+TX ID : 4a51d99f4700331850239f581810c83d9047595b8113494a260ffec14ca0fe7a
+```
+
+#### Example
+```
+ygg> ygg.transfer(ygg.getAccount(0), 1000, ["testnet.yggdrash.io"])
+```
+- - -
+
+## Query
+### getBalance
+- Before querying the balance, you should select the branch you want to query for balance.
+  - ygg branch set
+```
+ygg> ygg.getBalance([address])
+```
+
+#### Returns
+```
+Balance : 999000000
+```
+
+#### Example
+```
+ygg> ygg.getBalance('aca4215631187ab5b3af0d4c251fdf45c79ad3c6')
 ```

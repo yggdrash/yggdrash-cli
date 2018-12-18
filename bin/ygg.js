@@ -3,11 +3,12 @@
 const program = require('commander')
 const chalk = require('chalk')
 const exec = require('child_process').exec
-const Yggdrash = require("@yggdrash/sdk")
+const { Ygg } = require("@yggdrash/sdk")
 const { db } = require('../lib/db')
 const inquirer = require('inquirer')
 const { account,
         query,
+        rawTx,
         tx,
         node,
         branch } = require('../lib/core')
@@ -238,8 +239,7 @@ program
                             branch.setBranch(answers.branch)
                       })
                 } else {
-                    const Yggdrash = require("@yggdrash/sdk")
-                    let ygg = new Yggdrash(new Yggdrash.providers.HttpProvider("http://localhost:8080"))
+                    let ygg = new Ygg(new Ygg.providers.HttpProvider("http://localhost:8080"))
                     ygg.client.getBranchId().then(all => {
                         let allList = []
                         inquirer.prompt([{
@@ -361,7 +361,7 @@ program
     .action((action) => {
         switch(action) {
             case 'get':
-            account.adminAccount()
+            account.getAdmin()
             break
     
             case 'set':
@@ -384,7 +384,7 @@ program
                         message: `${chalk.red('Candidate password')}`,
                       }]).then((answers) => {
                         account.adminVerify(answers.owner, answers.password)
-                        account.adminAccount(answers.owner)
+                        account.setAdmin(answers.owner)
                       })
               })
             break
@@ -407,7 +407,6 @@ program
     .option('-p, --path <path>', 'path')
     .description('Node Admin Controller')
     .action((action, cmd) => {
-
         if (db().get("accounts").map("address").value()[0] == null) {
             console.log(`\n  ` + `${chalk.red("Please create a admin account.\n")}`)
             return false
@@ -488,7 +487,7 @@ program
     })
 
 program
-    .command('transaction <action>')
+    .command('rawTx <action>')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
     .option('-s, --spender <spender>', 'spender')
@@ -496,14 +495,14 @@ program
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
-        const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
+        // const ygg = new Ygg(new Ygg.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
         if (action === 'help') {
             console.log('\nCommands:')
             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
             console.log(` ` + 'transfer                       Send transaction to default admin account')
             console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
-            console.log(` ` + 'ex) ygg sendTransaction transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
-            console.log(` ` + 'ex) ygg sendTransaction approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
+            console.log(` ` + 'ex) ygg rawTx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
+            console.log(` ` + 'ex) ygg rawTx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
             return false
         }
         
@@ -539,7 +538,7 @@ program
                 type: 'password',
                 message: 'Password:'
             }]).then((answers) => {
-                tx.transferFrom(answers.from, cmd.to, cmd.value, answers.password, ygg)
+                rawTx.transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
             })
             break
 
@@ -550,7 +549,7 @@ program
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                tx.transfer(cmd.to, cmd.value, answers.password, ygg)
+                rawTx.transfer(cmd.to, cmd.value, answers.password, cmd.net)
             })
             break
 
@@ -568,15 +567,37 @@ program
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                tx.approve(cmd.spender, cmd.value, answers.password, ygg)
+                rawTx.approve(cmd.spender, cmd.value, answers.password, cmd.net)
             })
             break
 
             default:
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
-            console.log(`  ` + 'ygg sendTransaction help                     output usage information\n')
+            console.log(`  ` + 'ygg rawTx help                     output usage information\n')
             break
         }
+    })
+
+program
+    .command('tx <action>')
+    .option('-f, --from <from>', 'from')
+    .option('-t, --to <to>', 'to')
+    .option('-s, --spender <spender>', 'spender')
+    .option('-v, --value <value>', 'value')
+    .option('-n, --net <net>', 'net')
+    .description('Manage transaction')
+    .action((action, cmd) => {
+        if (action === 'help') {
+            console.log('\nCommands:')
+            console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
+            console.log(` ` + 'transfer                       Send transaction to default admin account')
+            console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
+            console.log(` ` + 'ex) ygg tx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
+            console.log(` ` + 'ex) ygg tx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
+            return false
+        }
+
+        tx.sendTransaction(action, cmd.from, cmd.to, cmd.value)
     })
 
 program
@@ -587,7 +608,7 @@ program
     .option('-n, --net <net>', 'net')
     .description('Query Balance')
     .action((action, cmd) => {
-        const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
+        const ygg = new Ygg()
 
         if (!db().get('currentBranch').value()) {
             console.log(chalk.red(`\n  The current branch is not set.`))
@@ -615,15 +636,15 @@ program
                 console.log(`  ` + '-n : network\n')
                 return false
             }
-            query.getBalance(cmd.address, ygg)
+            query.getBalance(cmd.address, cmd.net)
             break
 
             case 'specification':
-            query.specification(ygg)
+            query.specification(cmd.net)
             break
 
             case 'totalSupply':
-            query.totalSupply(ygg)
+            query.totalSupply(cmd.net)
             break
             
             case 'allowance':
@@ -635,7 +656,7 @@ program
                 console.log(`  ` + '-n : network\n')
                 return false
             }
-            query.allowance(cmd.owner, cmd.spender, ygg)
+            query.allowance(cmd.owner, cmd.spender, cmd.net)
             break
         }
     })

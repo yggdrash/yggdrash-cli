@@ -1,8 +1,8 @@
 const assert = require('assert')
 const { transfer, transferFrom } = require('../lib/tx/sendTransaction')
 
-const Yggdrash = require("@yggdrash/sdk")
-const ygg = new Yggdrash(new Yggdrash.providers.HttpProvider('http://localhost:8080'))
+const { Ygg } = require("@yggdrash/sdk")
+const ygg = new Ygg(new Ygg.providers.HttpProvider('http://localhost:8080'))
 const password = 'Aa1234567890!'
 const transferBodyData = []
 
