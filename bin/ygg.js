@@ -11,8 +11,7 @@ const { account,
         rawTx,
         tx,
         node,
-        branch,
-        api } = require('../lib/core')
+        branch } = require('../lib/core')
 
 program
     .version(require('../package').version)
@@ -496,7 +495,7 @@ program
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
-        const ygg = new Ygg(new Ygg.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
+        // const ygg = new Ygg(new Ygg.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
         if (action === 'help') {
             console.log('\nCommands:')
             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
@@ -539,7 +538,7 @@ program
                 type: 'password',
                 message: 'Password:'
             }]).then((answers) => {
-                rawTx.transferFrom(answers.from, cmd.to, cmd.value, answers.password, ygg)
+                rawTx.transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
             })
             break
 
@@ -550,7 +549,7 @@ program
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                rawTx.transfer(cmd.to, cmd.value, answers.password, ygg)
+                rawTx.transfer(cmd.to, cmd.value, answers.password, cmd.net)
             })
             break
 
@@ -568,7 +567,7 @@ program
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                rawTx.approve(cmd.spender, cmd.value, answers.password, ygg)
+                rawTx.approve(cmd.spender, cmd.value, answers.password, cmd.net)
             })
             break
 
@@ -609,7 +608,7 @@ program
     .option('-n, --net <net>', 'net')
     .description('Query Balance')
     .action((action, cmd) => {
-        const ygg = new Ygg(new Ygg.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
+        const ygg = new Ygg()
 
         if (!db().get('currentBranch').value()) {
             console.log(chalk.red(`\n  The current branch is not set.`))
@@ -637,15 +636,15 @@ program
                 console.log(`  ` + '-n : network\n')
                 return false
             }
-            query.getBalance(cmd.address, ygg)
+            query.getBalance(cmd.address, cmd.net)
             break
 
             case 'specification':
-            query.specification(ygg)
+            query.specification(cmd.net)
             break
 
             case 'totalSupply':
-            query.totalSupply(ygg)
+            query.totalSupply(cmd.net)
             break
             
             case 'allowance':
@@ -657,7 +656,7 @@ program
                 console.log(`  ` + '-n : network\n')
                 return false
             }
-            query.allowance(cmd.owner, cmd.spender, ygg)
+            query.allowance(cmd.owner, cmd.spender, cmd.net)
             break
         }
     })
