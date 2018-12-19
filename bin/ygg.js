@@ -371,7 +371,10 @@ program
                 message: `${chalk.red('Admin password')}`,
               }]).then((answers) => {
                     account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
-
+                    if (!db().get("accounts").map("address").value()[1]) {
+                        console.log(`\n    ` + chalk.red(`There are only admin accounts\n`))
+                        return false
+                    }
                     inquirer.prompt([{
                         name: 'owner',
                         type: 'list',
@@ -495,7 +498,6 @@ program
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
-        // const ygg = new Ygg(new Ygg.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
         if (action === 'help') {
             console.log('\nCommands:')
             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
@@ -538,7 +540,7 @@ program
                 type: 'password',
                 message: 'Password:'
             }]).then((answers) => {
-                rawTx.transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
+                rawTx.transferFrom(answers.from, cmd.to, cmd.value, answers.password)
             })
             break
 
@@ -549,7 +551,7 @@ program
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                rawTx.transfer(cmd.to, cmd.value, answers.password, cmd.net)
+                rawTx.transfer(cmd.to, cmd.value, answers.password)
             })
             break
 
@@ -567,7 +569,7 @@ program
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                rawTx.approve(cmd.spender, cmd.value, answers.password, cmd.net)
+                rawTx.approve(cmd.spender, cmd.value, answers.password)
             })
             break
 
@@ -636,15 +638,15 @@ program
                 console.log(`  ` + '-n : network\n')
                 return false
             }
-            query.getBalance(cmd.address, cmd.net)
+            query.getBalance(cmd.address)
             break
 
             case 'specification':
-            query.specification(cmd.net)
+            query.specification()
             break
 
             case 'totalSupply':
-            query.totalSupply(cmd.net)
+            query.totalSupply()
             break
             
             case 'allowance':
@@ -656,7 +658,7 @@ program
                 console.log(`  ` + '-n : network\n')
                 return false
             }
-            query.allowance(cmd.owner, cmd.spender, cmd.net)
+            query.allowance(cmd.owner, cmd.spender)
             break
         }
     })
