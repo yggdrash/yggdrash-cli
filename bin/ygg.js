@@ -361,7 +361,7 @@ program
     .action((action) => {
         switch(action) {
             case 'get':
-            account.getAdmin()
+            console.log(`  ` + `${chalk.green(account.getAdmin())}`)
             break
     
             case 'set':
