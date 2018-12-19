@@ -173,33 +173,7 @@ program
             break
 
             case 'deploy':
-            inquirer.prompt([{
-                name: 'network',
-                type: 'list',
-                message: 'network',
-                choices: ['local', 'testnet(not yet)', 'mainnet(not yet)'],
-                default: 0
-              }]).then((answers) => {
-                switch(answers.network) {
-                    case 'local':
-                    branch.deploy('http://localhost:8080') 
-                    break
-            
-                    case 'testnet':  
-                    // branch.deploy('http://testnet.yggdrash.io') 
-                    console.log('Not yet')
-                    break
-          
-                    case 'mainnet':  
-                    // branch.deploy('http://mainnet.yggdrash.io') 
-                    console.log('Not yet')
-                    break
-        
-                    default:
-                    console.log(`\n  ` + chalk.red(`Unknown command\n`))
-                    break
-                }
-              })
+            branch.deploy()
             break
 
             case 'list':
@@ -490,7 +464,7 @@ program
     })
 
 program
-    .command('rawTx <action>')
+    .command('tx <action>')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
     .option('-s, --spender <spender>', 'spender')
@@ -580,27 +554,27 @@ program
         }
     })
 
-program
-    .command('tx <action>')
-    .option('-f, --from <from>', 'from')
-    .option('-t, --to <to>', 'to')
-    .option('-s, --spender <spender>', 'spender')
-    .option('-v, --value <value>', 'value')
-    .option('-n, --net <net>', 'net')
-    .description('Manage transaction')
-    .action((action, cmd) => {
-        if (action === 'help') {
-            console.log('\nCommands:')
-            console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
-            console.log(` ` + 'transfer                       Send transaction to default admin account')
-            console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
-            console.log(` ` + 'ex) ygg tx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
-            console.log(` ` + 'ex) ygg tx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
-            return false
-        }
+// program
+//     .command('tx <action>')
+//     .option('-f, --from <from>', 'from')
+//     .option('-t, --to <to>', 'to')
+//     .option('-s, --spender <spender>', 'spender')
+//     .option('-v, --value <value>', 'value')
+//     .option('-n, --net <net>', 'net')
+//     .description('Manage transaction')
+//     .action((action, cmd) => {
+//         if (action === 'help') {
+//             console.log('\nCommands:')
+//             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
+//             console.log(` ` + 'transfer                       Send transaction to default admin account')
+//             console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
+//             console.log(` ` + 'ex) ygg tx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
+//             console.log(` ` + 'ex) ygg tx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
+//             return false
+//         }
 
-        tx.sendTransaction(action, cmd.from, cmd.to, cmd.value)
-    })
+//         tx.sendTransaction(action, cmd.from, cmd.to, cmd.value)
+//     })
 
 program
     .command('query <action>')
@@ -608,47 +582,29 @@ program
     .option('-o, --owner <owner>', 'owner')
     .option('-s, --spender <spender>', 'spender')
     .option('-n, --net <net>', 'net')
-    .description('Query Balance')
+    .description('Query')
     .action((action, cmd) => {
-        const ygg = new Ygg()
-
-        if (!db().get('currentBranch').value()) {
-            console.log(chalk.red(`\n  The current branch is not set.`))
-            console.log(`\n  ` + `use ${chalk.green('ygg branch set')}\n`)
-            return false
-        }
         if (!action || action === 'help') {
-            console.log(`\n  ` + chalk.red(`Please input address\n`))
             console.log('  Commands:')
-            console.log(` ` + 'balanceOf                   Enter balance address iquired account')
-            console.log(` ` + 'specification               Enter balance address iquired account')
-            console.log(` ` + 'totalSupply                 Enter balance address iquired account')
-            console.log(` ` + 'allowance                   Enter balance address iquired account')
-            console.log(` ` + 'ex) ygg query balanceOf -a 757649D90145e30b567A1f1B97267198Cde5e96c\n')
-            console.log(` ` + 'ex) ygg query allowance  -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
+            console.log(`  ` + 'ex) ygg query balanceOf -a 757649D90145e30b567A1f1B97267198Cde5e96c')
+            console.log(`  ` + 'ex) ygg query allowance  -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
+            console.log('  Opsions:')
+            for (let i in cmd.options) {
+                console.log(`  ` + cmd.options[i].flags)
+            }
             return false
         }
 
         switch(action) {
             case 'balanceOf':
-            if (!cmd.address || !ygg.utils.isAddress(cmd.address)) {
-                console.log(`\n  ` + chalk.red(`Invalid address\n`))
-                console.log('  Options:')
-                console.log(`  ` + '-a : address')
-                console.log(`  ` + '-n : network\n')
-                return false
-            }
             query.getBalance(cmd.address)
             break
-
             case 'specification':
             query.specification()
             break
-
             case 'totalSupply':
             query.totalSupply()
             break
-            
             case 'allowance':
             if (!cmd.owner || !cmd.spender || !ygg.utils.isAddress(cmd.owner) || !ygg.utils.isAddress(cmd.spender)) {
                 console.log(`\n  ` + chalk.red(`Unknown command\n`))
