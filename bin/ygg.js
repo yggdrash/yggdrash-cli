@@ -12,8 +12,6 @@ const { account,
         tx,
         node,
         branch } = require('../lib/core')
-        
-let ygg = new Ygg(new Ygg.providers.HttpProvider("http://localhost:8080"))
 
 program
     .version(require('../package').version)
@@ -179,50 +177,11 @@ program
             break
 
             case 'list':
-            branch.getBranch()
+            branch.list(action)
             break
               
             case 'set':
-            inquirer.prompt([{
-                name: 'network',
-                type: 'list',
-                message: 'network',
-                choices: ['Local', 'Import'],
-                default: 0
-              }]).then((answers) => {
-                if (answers.network === 'Local') {
-                    let list = []
-                    let symbol = db().get('branches').map('symbol').value()
-                    let id = db().get('branches').map('id').value()
-                    for (let i in id)  {
-                        list[i] = `Symbol: ${symbol[i]}, ID: ${id[i]}`
-                    }   
-                    inquirer.prompt([{
-                        name: 'branch',
-                        type: 'list',
-                        message: 'branch',
-                        choices: list,
-                        default: 0
-                      }]).then((answers) => {
-                            branch.setBranch(answers.branch)
-                      })
-                } else {
-                    ygg.client.getBranchId().then(all => {
-                        let allList = []
-                        inquirer.prompt([{
-                            name: 'branch',
-                            type: 'list',
-                            message: 'branch',
-                            choices: [all],
-                            default: 0
-                          }]).then((answers) => {
-                                branch.setBranch(answers.branch)
-                          })
-
-                    })
-                }
-                  
-              })
+            branch.list(action)
             break
               
             case 'status':
@@ -499,17 +458,11 @@ program
             case 'transferFrom':
             if (!check()) return
             inquirer.prompt([{
-                name: 'owner',
-                type: 'list',
-                message: 'Select from address',
-                choices: db().get("accounts").map("address").value(),
-                default: 0,
-                }, {
                 name: 'password',
                 type: 'password',
-                message: 'Password:'
+                message: 'Admin password:'
             }]).then((answers) => {
-                rawTx.transferFrom(cmd.from, cmd.to, cmd.value, answers.owner, answers.password)
+                rawTx.transferFrom(cmd.from, cmd.to, cmd.value, answers.password)
             })
             break
 
@@ -597,8 +550,7 @@ program
         switch(action) {
             case 'balanceOf':
             query.getBalance(cmd.address)
-            if (!cmd.address || !ygg.utils.isAddress(address)) {
-                console.log(`\n  ` + chalk.red(`Invalid address\n`))
+            if (!cmd.address) {
                 console.log('  Options:')
                 console.log(`  ` + '-a : address')
                 console.log(`  ` + '-n : network\n')
@@ -612,7 +564,7 @@ program
             query.totalSupply()
             break
             case 'allowance':
-            if (!cmd.owner || !cmd.spender || !ygg.utils.isAddress(cmd.owner) || !ygg.utils.isAddress(cmd.spender)) {
+            if (!cmd.owner || !cmd.spender) {
                 console.log(`\n  ` + chalk.red(`Unknown command\n`))
                 console.log('  Options:')
                 console.log(`  ` + '-o : owner')
