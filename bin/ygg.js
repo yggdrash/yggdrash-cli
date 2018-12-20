@@ -179,15 +179,7 @@ program
             break
 
             case 'list':
-            inquirer.prompt([{
-                name: 'network',
-                type: 'list',
-                message: 'network',
-                choices: ['Local', 'All'],
-                default: 0
-              }]).then((answers) => {
-                    branch.getBranch(answers.network)
-              })
+            branch.getBranch()
             break
               
             case 'set':
