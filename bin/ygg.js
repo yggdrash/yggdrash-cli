@@ -270,6 +270,7 @@ program
             console.log(`  ` + 'new                      Generate new account')
             console.log(`  ` + 'list                     Account list')
             console.log(`  ` + 'import                   Import account')
+            console.log(`  ` + 'export                   Export account')
             console.log(`  ` + 'clear                    Delete all account\n')
             break
 
