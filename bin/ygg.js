@@ -12,6 +12,8 @@ const { account,
         tx,
         node,
         branch } = require('../lib/core')
+        
+let ygg = new Ygg(new Ygg.providers.HttpProvider("http://localhost:8080"))
 
 program
     .version(require('../package').version)
@@ -213,7 +215,6 @@ program
                             branch.setBranch(answers.branch)
                       })
                 } else {
-                    let ygg = new Ygg(new Ygg.providers.HttpProvider("http://localhost:8080"))
                     ygg.client.getBranchId().then(all => {
                         let allList = []
                         inquirer.prompt([{
@@ -477,8 +478,9 @@ program
             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
             console.log(` ` + 'transfer                       Send transaction to default admin account')
             console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
-            console.log(` ` + 'ex) ygg rawTx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
-            console.log(` ` + 'ex) ygg rawTx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
+            console.log(` ` + 'ex) ygg tx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
+            console.log(` ` + 'ex) ygg tx transferFrom -f 567A1f1B97267198Cde5e96c757649D90145e30b -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
+            console.log(` ` + 'ex) ygg tx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
             return false
         }
         
@@ -492,6 +494,7 @@ program
             if (!cmd.to || !cmd.value) {
                 console.log(`\n  ` + chalk.red(`Unknown command\n`))
                 console.log('  Options:')
+                console.log(`  ` + '-f : from')
                 console.log(`  ` + '-t : to')
                 console.log(`  ` + '-v : value')
                 console.log(`  ` + '-n : network')
@@ -504,7 +507,7 @@ program
             case 'transferFrom':
             if (!check()) return
             inquirer.prompt([{
-                name: 'from',
+                name: 'owner',
                 type: 'list',
                 message: 'Select from address',
                 choices: db().get("accounts").map("address").value(),
@@ -514,7 +517,7 @@ program
                 type: 'password',
                 message: 'Password:'
             }]).then((answers) => {
-                rawTx.transferFrom(answers.from, cmd.to, cmd.value, answers.password)
+                rawTx.transferFrom(cmd.from, cmd.to, cmd.value, answers.owner, answers.password)
             })
             break
 
@@ -586,6 +589,10 @@ program
     .action((action, cmd) => {
         if (!action || action === 'help') {
             console.log('  Commands:')
+            console.log(` ` + 'balanceOf                   Enter balance address iquired account')
+            console.log(` ` + 'specification               Show the characteristics of the branch.')
+            console.log(` ` + 'totalSupply                 Show the total supply of the coin branch.')
+            console.log(` ` + 'allowance                   It is possible to see how much the owner gave the quota to a particular address.')
             console.log(`  ` + 'ex) ygg query balanceOf -a 757649D90145e30b567A1f1B97267198Cde5e96c')
             console.log(`  ` + 'ex) ygg query allowance  -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
             console.log('  Opsions:')
@@ -598,6 +605,13 @@ program
         switch(action) {
             case 'balanceOf':
             query.getBalance(cmd.address)
+            if (!cmd.address || !ygg.utils.isAddress(address)) {
+                console.log(`\n  ` + chalk.red(`Invalid address\n`))
+                console.log('  Options:')
+                console.log(`  ` + '-a : address')
+                console.log(`  ` + '-n : network\n')
+                return false
+            }
             break
             case 'specification':
             query.specification()
