@@ -539,7 +539,7 @@ program
             console.log(` ` + 'totalSupply                 Show the total supply of the coin branch.')
             console.log(` ` + 'allowance                   It is possible to see how much the owner gave the quota to a particular address.')
             console.log(`  ` + 'ex) ygg query balanceOf -a 757649D90145e30b567A1f1B97267198Cde5e96c')
-            console.log(`  ` + 'ex) ygg query allowance  -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
+            console.log(`  ` + 'ex) ygg query allowance -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
             console.log('  Opsions:')
             for (let i in cmd.options) {
                 console.log(`  ` + cmd.options[i].flags)
