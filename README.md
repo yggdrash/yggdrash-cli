@@ -19,7 +19,7 @@ $ yarn global add @yggdrash/cli
 
 ## Method
 ### Wallet
-- create - Generate account
+- new - Generate account
 - import - Import account
 - export - Export account
 - getAccounts - Account list
@@ -38,12 +38,12 @@ The node control is only available in the admin account.
 - plant - Transactions that register a branch with the stem
 
 ### Branch
-- branch init - Create a seed file and a contract template
-- branch build - Build the created contract and create a branch file.
-- branch deploy - Deploy to node
-- branch list - View branch
-- branch set - Checked out branch
-- branch status - View current branch
+- init - Create a seed file and a contract template
+- build - Build the created contract and create a branch file.
+- deploy - Deploy to node
+- list - View branch
+- set - Checked out branch
+- status - View current branch
 
 ### Transaction
 - transfer - Asset transfer
@@ -51,7 +51,7 @@ The node control is only available in the admin account.
 - approve - In my account, grant some rights to the amount of money available to a particular account.
 
 ### Query
-- getBalance - Account Balance Display
+- balanceOf - Account Balance Display
 - specification - It shows the specification of the branch.
 - totalSupply - Show the total supply of the branch.
 - allowance - It is possible to see how much the owner gave the quota to a particular address.

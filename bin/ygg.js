@@ -173,89 +173,15 @@ program
             break
 
             case 'deploy':
-            inquirer.prompt([{
-                name: 'network',
-                type: 'list',
-                message: 'network',
-                choices: ['local', 'testnet(not yet)', 'mainnet(not yet)'],
-                default: 0
-              }]).then((answers) => {
-                switch(answers.network) {
-                    case 'local':
-                    branch.deploy('http://localhost:8080') 
-                    break
-            
-                    case 'testnet':  
-                    // branch.deploy('http://testnet.yggdrash.io') 
-                    console.log('Not yet')
-                    break
-          
-                    case 'mainnet':  
-                    // branch.deploy('http://mainnet.yggdrash.io') 
-                    console.log('Not yet')
-                    break
-        
-                    default:
-                    console.log(`\n  ` + chalk.red(`Unknown command\n`))
-                    break
-                }
-              })
+            branch.deploy()
             break
 
             case 'list':
-            inquirer.prompt([{
-                name: 'network',
-                type: 'list',
-                message: 'network',
-                choices: ['Local', 'All'],
-                default: 0
-              }]).then((answers) => {
-                    branch.getBranch(answers.network)
-              })
+            branch.list(action)
             break
               
             case 'set':
-            inquirer.prompt([{
-                name: 'network',
-                type: 'list',
-                message: 'network',
-                choices: ['Local', 'Import'],
-                default: 0
-              }]).then((answers) => {
-                if (answers.network === 'Local') {
-                    let list = []
-                    let symbol = db().get('branches').map('symbol').value()
-                    let id = db().get('branches').map('id').value()
-                    for (let i in id)  {
-                        list[i] = `Symbol: ${symbol[i]}, ID: ${id[i]}`
-                    }   
-                    inquirer.prompt([{
-                        name: 'branch',
-                        type: 'list',
-                        message: 'branch',
-                        choices: list,
-                        default: 0
-                      }]).then((answers) => {
-                            branch.setBranch(answers.branch)
-                      })
-                } else {
-                    let ygg = new Ygg(new Ygg.providers.HttpProvider("http://localhost:8080"))
-                    ygg.client.getBranchId().then(all => {
-                        let allList = []
-                        inquirer.prompt([{
-                            name: 'branch',
-                            type: 'list',
-                            message: 'branch',
-                            choices: [all],
-                            default: 0
-                          }]).then((answers) => {
-                                branch.setBranch(answers.branch)
-                          })
-
-                    })
-                }
-                  
-              })
+            branch.list(action)
             break
               
             case 'status':
@@ -344,6 +270,7 @@ program
             console.log(`  ` + 'new                      Generate new account')
             console.log(`  ` + 'list                     Account list')
             console.log(`  ` + 'import                   Import account')
+            console.log(`  ` + 'export                   Export account')
             console.log(`  ` + 'clear                    Delete all account\n')
             break
 
@@ -361,7 +288,7 @@ program
     .action((action) => {
         switch(action) {
             case 'get':
-            account.getAdmin()
+            console.log(`  ` + `${chalk.green(account.getAdmin())}`)
             break
     
             case 'set':
@@ -371,7 +298,10 @@ program
                 message: `${chalk.red('Admin password')}`,
               }]).then((answers) => {
                     account.adminVerify(db().get("accounts").map("address").value()[0], answers.password)
-
+                    if (!db().get("accounts").map("address").value()[1]) {
+                        console.log(`\n    ` + chalk.red(`There are only admin accounts\n`))
+                        return false
+                    }
                     inquirer.prompt([{
                         name: 'owner',
                         type: 'list',
@@ -487,7 +417,7 @@ program
     })
 
 program
-    .command('rawTx <action>')
+    .command('tx <action>')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
     .option('-s, --spender <spender>', 'spender')
@@ -495,14 +425,14 @@ program
     .option('-n, --net <net>', 'net')
     .description('Manage transaction')
     .action((action, cmd) => {
-        // const ygg = new Ygg(new Ygg.providers.HttpProvider(cmd.net ? `http://${cmd.net}` : 'http://localhost:8080'))
         if (action === 'help') {
             console.log('\nCommands:')
             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
             console.log(` ` + 'transfer                       Send transaction to default admin account')
             console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
-            console.log(` ` + 'ex) ygg rawTx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
-            console.log(` ` + 'ex) ygg rawTx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
+            console.log(` ` + 'ex) ygg tx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
+            console.log(` ` + 'ex) ygg tx transferFrom -f 567A1f1B97267198Cde5e96c757649D90145e30b -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
+            console.log(` ` + 'ex) ygg tx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
             return false
         }
         
@@ -516,6 +446,7 @@ program
             if (!cmd.to || !cmd.value) {
                 console.log(`\n  ` + chalk.red(`Unknown command\n`))
                 console.log('  Options:')
+                console.log(`  ` + '-f : from')
                 console.log(`  ` + '-t : to')
                 console.log(`  ` + '-v : value')
                 console.log(`  ` + '-n : network')
@@ -528,17 +459,11 @@ program
             case 'transferFrom':
             if (!check()) return
             inquirer.prompt([{
-                name: 'from',
-                type: 'list',
-                message: 'Select from address',
-                choices: db().get("accounts").map("address").value(),
-                default: 0,
-                }, {
                 name: 'password',
                 type: 'password',
-                message: 'Password:'
+                message: 'Admin password:'
             }]).then((answers) => {
-                rawTx.transferFrom(answers.from, cmd.to, cmd.value, answers.password, cmd.net)
+                rawTx.transferFrom(cmd.from, cmd.to, cmd.value, answers.password)
             })
             break
 
@@ -549,7 +474,7 @@ program
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                rawTx.transfer(cmd.to, cmd.value, answers.password, cmd.net)
+                rawTx.transfer(cmd.to, cmd.value, answers.password)
             })
             break
 
@@ -567,7 +492,7 @@ program
                 type: 'password',
                 message: `${chalk.red('Admin password')}`
             }]).then((answers) => {
-                rawTx.approve(cmd.spender, cmd.value, answers.password, cmd.net)
+                rawTx.approve(cmd.spender, cmd.value, answers.password)
             })
             break
 
@@ -578,27 +503,27 @@ program
         }
     })
 
-program
-    .command('tx <action>')
-    .option('-f, --from <from>', 'from')
-    .option('-t, --to <to>', 'to')
-    .option('-s, --spender <spender>', 'spender')
-    .option('-v, --value <value>', 'value')
-    .option('-n, --net <net>', 'net')
-    .description('Manage transaction')
-    .action((action, cmd) => {
-        if (action === 'help') {
-            console.log('\nCommands:')
-            console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
-            console.log(` ` + 'transfer                       Send transaction to default admin account')
-            console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
-            console.log(` ` + 'ex) ygg tx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
-            console.log(` ` + 'ex) ygg tx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
-            return false
-        }
+// program
+//     .command('tx <action>')
+//     .option('-f, --from <from>', 'from')
+//     .option('-t, --to <to>', 'to')
+//     .option('-s, --spender <spender>', 'spender')
+//     .option('-v, --value <value>', 'value')
+//     .option('-n, --net <net>', 'net')
+//     .description('Manage transaction')
+//     .action((action, cmd) => {
+//         if (action === 'help') {
+//             console.log('\nCommands:')
+//             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
+//             console.log(` ` + 'transfer                       Send transaction to default admin account')
+//             console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
+//             console.log(` ` + 'ex) ygg tx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
+//             console.log(` ` + 'ex) ygg tx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
+//             return false
+//         }
 
-        tx.sendTransaction(action, cmd.from, cmd.to, cmd.value)
-    })
+//         tx.sendTransaction(action, cmd.from, cmd.to, cmd.value)
+//     })
 
 program
     .command('query <action>')
@@ -606,49 +531,41 @@ program
     .option('-o, --owner <owner>', 'owner')
     .option('-s, --spender <spender>', 'spender')
     .option('-n, --net <net>', 'net')
-    .description('Query Balance')
+    .description('Query')
     .action((action, cmd) => {
-        const ygg = new Ygg()
-
-        if (!db().get('currentBranch').value()) {
-            console.log(chalk.red(`\n  The current branch is not set.`))
-            console.log(`\n  ` + `use ${chalk.green('ygg branch set')}\n`)
-            return false
-        }
         if (!action || action === 'help') {
-            console.log(`\n  ` + chalk.red(`Please input address\n`))
             console.log('  Commands:')
             console.log(` ` + 'balanceOf                   Enter balance address iquired account')
-            console.log(` ` + 'specification               Enter balance address iquired account')
-            console.log(` ` + 'totalSupply                 Enter balance address iquired account')
-            console.log(` ` + 'allowance                   Enter balance address iquired account')
-            console.log(` ` + 'ex) ygg query balanceOf -a 757649D90145e30b567A1f1B97267198Cde5e96c\n')
-            console.log(` ` + 'ex) ygg query allowance  -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
+            console.log(` ` + 'specification               Show the characteristics of the branch.')
+            console.log(` ` + 'totalSupply                 Show the total supply of the coin branch.')
+            console.log(` ` + 'allowance                   It is possible to see how much the owner gave the quota to a particular address.')
+            console.log(`  ` + 'ex) ygg query balanceOf -a 757649D90145e30b567A1f1B97267198Cde5e96c')
+            console.log(`  ` + 'ex) ygg query allowance -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
+            console.log('  Opsions:')
+            for (let i in cmd.options) {
+                console.log(`  ` + cmd.options[i].flags)
+            }
             return false
         }
 
         switch(action) {
             case 'balanceOf':
-            if (!cmd.address || !ygg.utils.isAddress(cmd.address)) {
-                console.log(`\n  ` + chalk.red(`Invalid address\n`))
+            query.getBalance(cmd.address)
+            if (!cmd.address) {
                 console.log('  Options:')
                 console.log(`  ` + '-a : address')
                 console.log(`  ` + '-n : network\n')
                 return false
             }
-            query.getBalance(cmd.address, cmd.net)
             break
-
             case 'specification':
-            query.specification(cmd.net)
+            query.specification()
             break
-
             case 'totalSupply':
-            query.totalSupply(cmd.net)
+            query.totalSupply()
             break
-            
             case 'allowance':
-            if (!cmd.owner || !cmd.spender || !ygg.utils.isAddress(cmd.owner) || !ygg.utils.isAddress(cmd.spender)) {
+            if (!cmd.owner || !cmd.spender) {
                 console.log(`\n  ` + chalk.red(`Unknown command\n`))
                 console.log('  Options:')
                 console.log(`  ` + '-o : owner')
@@ -656,7 +573,7 @@ program
                 console.log(`  ` + '-n : network\n')
                 return false
             }
-            query.allowance(cmd.owner, cmd.spender, cmd.net)
+            query.allowance(cmd.owner, cmd.spender)
             break
         }
     })
