@@ -1,6 +1,6 @@
 {
   "name": "@yggdrash/cli",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Command line interface for YGGDRASH",
   "preferGlobal": true,
   "bin": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yggdrash/yggdrash-cli.git"
+    "url": "https://github.com/yggdrash/yggdrash-cli.git"
   },
   "keywords": [
     "yggdrash",
@@ -21,18 +21,11 @@
     "commander"
   ],
   "author": "YGGDRASH Dev team",
-  "authors": [
-    {
-      "name": "Tedy",
-      "email": "dev@yggdrash.io",
-      "url": "https://github.com/yggdrash"
-    }
-  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/yggdrash/yggdrash-cli/issues"
   },
-  "homepage": "https://github.com/yggdrash/yggdrash-cli#readme",
+  "homepage": "https://developers.yggdrash.io",
   "dependencies": {
     "@yggdrash/sdk": "git+https://github.com/yggdrash/yggdrash-sdk-js.git#develop",
     "bip39": "^2.5.0",
