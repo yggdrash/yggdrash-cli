@@ -10,6 +10,7 @@ const { account,
         query,
         rawTx,
         tx,
+        contract,
         node,
         branch } = require('../lib/core')
 
@@ -575,6 +576,16 @@ program
             }
             query.allowance(cmd.owner, cmd.spender)
             break
+        }
+    })
+
+program
+    .command('contract <action>')
+    .option('-C, --contractId <contractId>', 'contractId')
+    .description('Query')
+    .action((action, cmd) => {
+        if (action == "getContracts") {
+            contract.getContracts()
         }
     })
 
