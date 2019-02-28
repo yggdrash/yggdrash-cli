@@ -497,6 +497,18 @@ program
             })
             break
 
+            case 'create':
+            inquirer.prompt([{
+                name: 'password',
+                type: 'password',
+                message: `${chalk.red('Admin password')}`
+            }]).then((answers) => {
+                // TODO: contract manager에게 브랜치의 컨트랙트 무엇인지 호출
+                // const branch = config().get('node').value()[0].branch
+                rawTx.create(answers.password)
+            })
+            break
+
             default:
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
             console.log(`  ` + 'ygg rawTx help                     output usage information\n')
