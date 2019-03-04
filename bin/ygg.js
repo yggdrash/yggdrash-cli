@@ -588,6 +588,9 @@ program
             }
             query.allowance(cmd.owner, cmd.spender)
             break
+            case 'feeState':
+            query.feeState()
+            break
         }
     })
 
