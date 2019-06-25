@@ -182,7 +182,7 @@ program
             break
               
             case 'set':
-            branch.list(action)
+            branch.setBranch(action)
             break
               
             case 'status':
@@ -336,35 +336,36 @@ program
 program
     .command('node <action>')
     .option('-p, --path <path>', 'path')
+    .option('-r, --remote <remote>', 'remote')
     .description('Node Admin Controller')
     .action((action, cmd) => {
         if (db().get("accounts").map("address").value()[0] == null) {
-            console.log(`\n  ` + `${chalk.red("Please create a admin account.\n")}`)
-            return false
-        }
-        if (action != 'start' && action != 'help'
-            && action != 'set' && action != 'build' 
-            && action != 'stop' && action != 'status') {
-            console.log(`\n  ` + chalk.red(`Unknown command\n`))
-            console.log('  Options:')
-            console.log(`\n  ` + 'ygg node help                     output usage information')
+            console.log(`\n  ` + `${chalk.red("Please create a account.\n")}`)
             return false
         }
 
         switch (action) {
             case 'build':
-            node.build(cmd.path)
-            return
+                node.build(cmd.path)
+                return
 
             case 'status':
-            node.status()
-            return
+                node.status()
+                return
 
             case 'stop':
-            node.stop()
-            return
+                node.stop()
+                return
 
-            case 'help':
+            case 'set':
+                node.remoteSet(cmd.remote)
+                return
+
+            case 'remoteStatus':
+                node.remoteStatus()
+                return
+
+            default:
             console.log('\nCommands:')
             console.log(`  ` + 'build                      Node build with admin account')
             console.log(`  ` + 'start                      Node start with admin account')
@@ -373,6 +374,7 @@ program
             console.log('Options:')
             console.log(`  ` + 'ygg node build -p [node path]')
             console.log(`  ` + 'ㄴ If the yggdrash node already exists, specify the node path\n')
+
             return
         }
 
@@ -419,6 +421,8 @@ program
 
 program
     .command('tx <action>')
+    .option('-b, --branchId <BranchID>', 'branchId')
+    .option('-c, --contractVersion <contractVersion>', 'contractVersion')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
     .option('-s, --spender <spender>', 'spender')
@@ -516,27 +520,6 @@ program
         }
     })
 
-// program
-//     .command('tx <action>')
-//     .option('-f, --from <from>', 'from')
-//     .option('-t, --to <to>', 'to')
-//     .option('-s, --spender <spender>', 'spender')
-//     .option('-v, --value <value>', 'value')
-//     .option('-n, --net <net>', 'net')
-//     .description('Manage transaction')
-//     .action((action, cmd) => {
-//         if (action === 'help') {
-//             console.log('\nCommands:')
-//             console.log(` ` + 'transferFrom                   Send the transaction after specifying the account to send')
-//             console.log(` ` + 'transfer                       Send transaction to default admin account')
-//             console.log(` ` + 'approve                        Allow an account to be owned by the owner in the owner\'s account')
-//             console.log(` ` + 'ex) ygg tx transfer -t 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000')
-//             console.log(` ` + 'ex) ygg tx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
-//             return false
-//         }
-
-//         tx.sendTransaction(action, cmd.from, cmd.to, cmd.value)
-//     })
 
 program
     .command('query <action>')

@@ -203,7 +203,7 @@ $ ygg branch status
 
 #### Example         
 ```
-$ ygg transaction transferFrom -t 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 [-n testnet.yggdrash.io]
+$ ygg tx transferFrom -t 60212061e7bf6fba4b0607fc9c1f8bbb930d87d0 -v 1000 [-n testnet.yggdrash.io]
 ```
 #### Returns
 transaction hash
