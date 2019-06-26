@@ -570,6 +570,8 @@ program
             case 'feeState':
             query.feeState()
             break
+            default:
+                console.log("no action")
         }
     })
 
