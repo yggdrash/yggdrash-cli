@@ -9,7 +9,6 @@ const inquirer = require('inquirer')
 const { account,
         query,
         rawTx,
-        tx,
         contract,
         node,
         branch } = require('../lib/core')
@@ -218,7 +217,7 @@ program
                 type: 'password',
                 message: 'Password:'
             }]).then((answers) => {
-                account.create(answers.password)
+                account.newAccount(answers.password)
             })
             break
     
@@ -421,8 +420,6 @@ program
 
 program
     .command('tx <action>')
-    .option('-b, --branchId <BranchID>', 'branchId')
-    .option('-c, --contractVersion <contractVersion>', 'contractVersion')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
     .option('-s, --spender <spender>', 'spender')
@@ -440,12 +437,13 @@ program
             console.log(` ` + 'ex) ygg tx approve -s 757649D90145e30b567A1f1B97267198Cde5e96c -v 1000\n')
             return false
         }
-        
-        if (!db().get('currentBranch').value()) {
-            console.log(chalk.red(`\nThe current branch is not set.`))
-            console.log(`  ` + `use ${chalk.green('ygg branch set')}\n`)
-            return false
-        }
+        let accountAddress = account.getAdmin()
+
+        // if (!db().get('currentBranch').value()) {
+        //     console.log(chalk.red(`\nThe current branch is not set.`))
+        //     console.log(`  ` + `use ${chalk.green('ygg branch set')}\n`)
+        //     return false
+        // }
 
         const check = function () {
             if (!cmd.to || !cmd.value) {
@@ -466,7 +464,7 @@ program
             inquirer.prompt([{
                 name: 'password',
                 type: 'password',
-                message: 'Admin password:'
+                message: accountAddress + ' password:'
             }]).then((answers) => {
                 rawTx.transferFrom(cmd.from, cmd.to, cmd.value, answers.password)
             })
@@ -477,7 +475,7 @@ program
             inquirer.prompt([{
                 name: 'password',
                 type: 'password',
-                message: `${chalk.red('Admin password')}`
+                message: `${chalk.red(accountAddress + ' password')}`
             }]).then((answers) => {
                 rawTx.transfer(cmd.to, cmd.value, answers.password)
             })
@@ -546,12 +544,10 @@ program
 
         switch(action) {
             case 'balanceOf':
-            query.getBalance(cmd.address)
-            if (!cmd.address) {
-                console.log('  Options:')
-                console.log(`  ` + '-a : address')
-                console.log(`  ` + '-n : network\n')
-                return false
+            if(cmd.address) {
+                query.getBalance(cmd.address)
+            } else {
+                query.getBalance(account.getAdmin())
             }
             break
             case 'specification':
