@@ -11,7 +11,9 @@ const { account,
         rawTx,
         contract,
         node,
-        branch } = require('../lib/core')
+        branch,
+        invokeTx
+    } = require('../lib/core')
 
 program
     .version(require('../package').version)
@@ -584,6 +586,34 @@ program
             contract.getContracts()
         }
     })
+
+program
+    .command('invoke <action>')
+    .option('-c, --contract <contract>', 'contract')
+    .option('-m, --method <method>', 'method')
+    .option('-p, --params <params>','params')
+    .description('invoke Transaction')
+    .action((action, cmd) => {
+        // action is method name
+        let accountAddress = account.getAdmin()
+        inquirer.prompt([{
+            name: 'password',
+            type: 'password',
+            message: accountAddress + ' password:'
+        }]).then((answers) => {
+            let contractName = "YEED"
+            if (cmd.contract) {
+                contractName = cmd.contract
+            }
+            let params = {}
+            if (cmd.params) {
+                params = JSON.parse(cmd.params)
+            }
+
+            invokeTx.invoke(answers.password, contractName, action, params)
+        })
+    })
+
 
 program
     .command('console')
