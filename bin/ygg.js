@@ -398,35 +398,13 @@ program
     })
 
 program
-    .command('stem <action>')
-    .option('-o, --owner <owner>', 'owner')
-    .option('-s, --seed <seed>', 'seed')
-    .option('-n, --net <net>', 'net')
-    .option('-b, --branch <branch>', 'branch')
-    .description('Plant branch to STEM')
-    .action((action, cmd) => {
-        if (action === "plant") {
-            if(!cmd.owner || !cmd.seed){
-                console.log(`\n  ` + chalk.red(`Unknown command\n`))
-                console.log('  Options:')
-                console.log(`\n  ` + 'ygg sendTransaction help                     output usage information\n')
-            } else {
-                plant(cmd.owner, cmd.seed, cmd.net)
-            }
-        } else {
-            console.log(`\n  ` + chalk.red(`Unknown command\n`))
-            console.log('  Options:')
-            console.log(`\n  ` + 'ygg sendTransaction help                     output usage information\n')
-        }
-    })
-
-program
     .command('tx <action>')
     .option('-f, --from <from>', 'from')
     .option('-t, --to <to>', 'to')
     .option('-s, --spender <spender>', 'spender')
     .option('-v, --value <value>', 'value')
     .option('-n, --net <net>', 'net')
+    .option('-i, --txId <txId>', 'txId')
     .description('Manage transaction')
     .action((action, cmd) => {
         if (action === 'help') {
@@ -459,7 +437,6 @@ program
             }
             return true
         }
-
         switch(action) {
             case 'transferFrom':
             if (!check()) return
@@ -513,9 +490,17 @@ program
             })
             break
 
+            case 'get':
+                rawTx.getTransaction(cmd.txId)
+            break
+
+            case 'receipt':
+                rawTx.getTransactionReceipt(cmd.txId)
+            break
+
             default:
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
-            console.log(`  ` + 'ygg rawTx help                     output usage information\n')
+            console.log(`  ` + 'ygg tx help                     output usage information\n')
             break
         }
     })
