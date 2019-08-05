@@ -366,6 +366,9 @@ program
                 node.remoteStatus()
                 return
 
+            case 'sync':
+                node.sync()
+                return
             default:
             console.log('\nCommands:')
             console.log(`  ` + 'build                      Node build with admin account')
@@ -460,6 +463,16 @@ program
             })
             break
 
+            case 'versioning':
+            inquirer.prompt([{
+                name: 'password',
+                type: 'password',
+                message: `${chalk.red(accountAddress + ' password')}`
+            }]).then((answers) => {
+                rawTx.versioning(answers.password)
+            })
+            break
+
             case 'approve':
             if (!cmd.spender || !cmd.value) {
                 console.log(`\n  ` + chalk.red(`Unknown command\n`))
@@ -498,6 +511,10 @@ program
                 rawTx.getTransactionReceipt(cmd.txId)
             break
 
+            case 'logs':
+                rawTx.getLogs()
+            break
+
             default:
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
             console.log(`  ` + 'ygg tx help                     output usage information\n')
@@ -512,6 +529,7 @@ program
     .option('-o, --owner <owner>', 'owner')
     .option('-s, --spender <spender>', 'spender')
     .option('-n, --net <net>', 'net')
+    .option('-i, --id <id>', 'id')
     .description('Query')
     .action((action, cmd) => {
         if (!action || action === 'help') {
@@ -557,6 +575,12 @@ program
             case 'feeState':
             query.feeState()
             break
+            case 'proposeSatatus':
+            query.proposeSatatus(cmd.id)
+            break
+            case 'transactionConfirmStatus':
+            query.transactionConfirmStatus(cmd.id)
+            break
             default:
                 console.log("no action")
         }
@@ -598,7 +622,7 @@ program
             invokeTx.invoke(answers.password, contractName, action, params)
         })
     })
-
+    // {"receiveAddress":"4e5cbe1d0db35add81e7f2840eeb250b5b469161","receiveAsset":"100","receiveChainId":-1,"senderAddress":"101167aaf090581b91c08480f6e559acdd9a3ddd","networkBlockHeight":0,"proposeType":1,"inputData":null,"stakeYeed":"1","blockHeight":1000000,"fee":"10"}
 
 program
     .command('console')
