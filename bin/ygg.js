@@ -408,6 +408,7 @@ program
     .option('-v, --value <value>', 'value')
     .option('-n, --net <net>', 'net')
     .option('-i, --txId <txId>', 'txId')
+    .option('-p, --passwd <password>', 'passwd')
     .description('Manage transaction')
     .action((action, cmd) => {
         if (action === 'help') {
@@ -443,24 +444,32 @@ program
         switch(action) {
             case 'transferFrom':
             if (!check()) return
-            inquirer.prompt([{
+            if (cmd.passwd) {
+              rawTx.transferFrom(cmd.from, cmd.to, cmd.value, cmd.passwd)
+            } else {
+              inquirer.prompt([{
                 name: 'password',
                 type: 'password',
                 message: accountAddress + ' password:'
-            }]).then((answers) => {
+              }]).then((answers) => {
                 rawTx.transferFrom(cmd.from, cmd.to, cmd.value, answers.password)
-            })
+              })
+            }
             break
 
             case 'transfer':
             if (!check()) return
-            inquirer.prompt([{
-                name: 'password',
-                type: 'password',
-                message: `${chalk.red(accountAddress + ' password')}`
-            }]).then((answers) => {
-                rawTx.transfer(cmd.to, cmd.value, answers.password)
-            })
+                if (cmd.passwd) {
+                  rawTx.transfer(cmd.to, cmd.value, cmd.passwd)
+                } else {
+                  inquirer.prompt([{
+                    name: 'password',
+                    type: 'password',
+                    message: `${chalk.red(accountAddress + ' password')}`
+                  }]).then((answers) => {
+                    rawTx.transfer(cmd.to, cmd.value, answers.password)
+                  })
+                }
             break
 
             case 'versioning':
@@ -474,21 +483,26 @@ program
             break
 
             case 'approve':
-            if (!cmd.spender || !cmd.value) {
-                console.log(`\n  ` + chalk.red(`Unknown command\n`))
-                console.log('  Options:')
-                console.log(`  ` + '-s : spender')
-                console.log(`  ` + '-v : value')
-                console.log(`  ` + '-n : network')
-                return false
-            }
-            inquirer.prompt([{
-                name: 'password',
-                type: 'password',
-                message: `${chalk.red('Admin password')}`
-            }]).then((answers) => {
-                rawTx.approve(cmd.spender, cmd.value, answers.password)
-            })
+              if (!cmd.spender || !cmd.value) {
+                  console.log(`\n  ` + chalk.red(`Unknown command\n`))
+                  console.log('  Options:')
+                  console.log(`  ` + '-s : spender')
+                  console.log(`  ` + '-v : value')
+                  console.log(`  ` + '-n : network')
+                  return false
+              }
+              if (cmd.passwd) {
+                rawTx.approve(cmd.spender, cmd.value, cmd.passwd)
+              } else {
+                inquirer.prompt([{
+                  name: 'password',
+                  type: 'password',
+                  message: `${chalk.red('Admin password')}`
+                }]).then((answers) => {
+                  rawTx.approve(cmd.spender, cmd.value, answers.password)
+                })
+
+              }
             break
 
             case 'create':
@@ -601,26 +615,40 @@ program
     .option('-c, --contract <contract>', 'contract')
     .option('-m, --method <method>', 'method')
     .option('-p, --params <params>','params')
+    .option('-o, --passwd <passwd>', 'passwd')
     .description('invoke Transaction')
     .action((action, cmd) => {
         // action is method name
         let accountAddress = account.getAdmin()
-        inquirer.prompt([{
+        if (cmd.passwd) {
+          let contractName = "YEED"
+          if (cmd.contract) {
+            contractName = cmd.contract
+          }
+          let params = {}
+          if (cmd.params) {
+            params = JSON.parse(cmd.params)
+          }
+          invokeTx.invoke(cmd.passwd, contractName, action, params)
+        } else {
+          inquirer.prompt([{
             name: 'password',
             type: 'password',
             message: accountAddress + ' password:'
-        }]).then((answers) => {
+          }]).then((answers) => {
             let contractName = "YEED"
             if (cmd.contract) {
-                contractName = cmd.contract
+              contractName = cmd.contract
             }
             let params = {}
             if (cmd.params) {
-                params = JSON.parse(cmd.params)
+              params = JSON.parse(cmd.params)
             }
 
             invokeTx.invoke(answers.password, contractName, action, params)
-        })
+          })
+
+        }
     })
     // {"receiveAddress":"4e5cbe1d0db35add81e7f2840eeb250b5b469161","receiveAsset":"100","receiveChainId":-1,"senderAddress":"101167aaf090581b91c08480f6e559acdd9a3ddd","networkBlockHeight":0,"proposeType":1,"inputData":null,"stakeYeed":"1","blockHeight":1000000,"fee":"10"}
 
