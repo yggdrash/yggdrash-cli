@@ -584,17 +584,29 @@ program
                 console.log(`  ` + '-n : network\n')
                 return false
             }
-            query.allowance(cmd.owner, cmd.spender)
-            break
+                query.allowance(cmd.owner, cmd.spender)
+                break
             case 'feeState':
-            query.feeState()
-            break
+                query.feeState()
+                break
             case 'proposeSatatus':
-            query.proposeSatatus(cmd.id)
-            break
+                query.proposeSatatus(cmd.id)
+                break
             case 'transactionConfirmStatus':
-            query.transactionConfirmStatus(cmd.id)
-            break
+                query.transactionConfirmStatus(cmd.id)
+                break
+            case 'getPendingTransactionList':
+                query.getPendingTransactionList()
+                break
+            case 'newPendingTransactionFilter':
+                query.newPendingTransactionFilter()
+                break
+            case 'blockNumber':
+                query.blockNumber()
+                break
+            case 'curIndex':
+                query.curIndex()
+                break
             default:
                 console.log("no action")
         }
