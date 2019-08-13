@@ -624,6 +624,7 @@ program
 
 program
     .command('invoke <action>')
+    .option('-a, --address <address>', 'address')
     .option('-c, --contract <contract>', 'contract')
     .option('-m, --method <method>', 'method')
     .option('-p, --params <params>','params')
@@ -646,7 +647,7 @@ program
           inquirer.prompt([{
             name: 'password',
             type: 'password',
-            message: accountAddress + ' password:'
+            message: cmd.address ? cmd.address + ' password:' : accountAddress + ' password:'
           }]).then((answers) => {
             let contractName = "YEED"
             if (cmd.contract) {
@@ -657,7 +658,7 @@ program
               params = JSON.parse(cmd.params)
             }
 
-            invokeTx.invoke(answers.password, contractName, action, params)
+            invokeTx.invoke(answers.address, answers.password, contractName, action, params)
           })
 
         }
