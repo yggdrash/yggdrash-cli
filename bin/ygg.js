@@ -7,7 +7,7 @@ const { Ygg } = require("@yggdrash/sdk")
 const { db } = require('../lib/db')
 const inquirer = require('inquirer')
 const { account,
-        query,
+        queries,
         rawTx,
         contract,
         node,
@@ -537,79 +537,97 @@ program
     })
 
 
+// program
+//     .command('query <action>')
+//     .option('-a, --address <address>', 'address')
+//     .option('-o, --owner <owner>', 'owner')
+//     .option('-s, --spender <spender>', 'spender')
+//     .option('-n, --net <net>', 'net')
+//     .option('-i, --id <id>', 'id')
+//     .description('Query')
+//     .action((action, cmd) => {
+//         if (!action || action === 'help') {
+//             console.log('  Commands:')
+//             console.log(` ` + 'balanceOf                   Enter balance address iquired account')
+//             console.log(` ` + 'specification               Show the characteristics of the branch.')
+//             console.log(` ` + 'totalSupply                 Show the total supply of the coin branch.')
+//             console.log(` ` + 'allowance                   It is possible to see how much the owner gave the quota to a particular address.')
+//             console.log(`  ` + 'ex) ygg query balanceOf -a 757649D90145e30b567A1f1B97267198Cde5e96c')
+//             console.log(`  ` + 'ex) ygg query allowance -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
+//             console.log('  Opsions:')
+//             for (let i in cmd.options) {
+//                 console.log(`  ` + cmd.options[i].flags)
+//             }
+//             return false
+//         }
+//
+//         switch(action) {
+//             case 'balanceOf':
+//             if(cmd.address) {
+//                 query.getBalance(cmd.address)
+//             } else {
+//                 query.getBalance(account.getAdmin())
+//             }
+//             break
+//             case 'specification':
+//             query.specification()
+//             break
+//             case 'totalSupply':
+//             query.totalSupply()
+//             break
+//             case 'allowance':
+//             if (!cmd.owner || !cmd.spender) {
+//                 console.log(`\n  ` + chalk.red(`Unknown command\n`))
+//                 console.log('  Options:')
+//                 console.log(`  ` + '-o : owner')
+//                 console.log(`  ` + '-s : spender')
+//                 console.log(`  ` + '-n : network\n')
+//                 return false
+//             }
+//                 query.allowance(cmd.owner, cmd.spender)
+//                 break
+//             case 'feeState':
+//                 query.feeState()
+//                 break
+//             case 'proposeSatatus':
+//                 query.proposeSatatus(cmd.id)
+//                 break
+//             case 'transactionConfirmStatus':
+//                 query.transactionConfirmStatus(cmd.id)
+//                 break
+//             case 'getPendingTransactionList':
+//                 query.getPendingTransactionList()
+//                 break
+//             case 'newPendingTransactionFilter':
+//                 query.newPendingTransactionFilter()
+//                 break
+//             case 'blockNumber':
+//                 query.blockNumber()
+//                 break
+//             case 'curIndex':
+//                 query.curIndex()
+//                 break
+//             default:
+//                 console.log("no action")
+//         }
+//     })
+
 program
     .command('query <action>')
-    .option('-a, --address <address>', 'address')
-    .option('-o, --owner <owner>', 'owner')
-    .option('-s, --spender <spender>', 'spender')
-    .option('-n, --net <net>', 'net')
-    .option('-i, --id <id>', 'id')
+    .option('-c, --contract <contract>', 'contract')
+    .option('-m, --method <method>', 'method')
+    .option('-p, --params <params>','params')
     .description('Query')
     .action((action, cmd) => {
-        if (!action || action === 'help') {
-            console.log('  Commands:')
-            console.log(` ` + 'balanceOf                   Enter balance address iquired account')
-            console.log(` ` + 'specification               Show the characteristics of the branch.')
-            console.log(` ` + 'totalSupply                 Show the total supply of the coin branch.')
-            console.log(` ` + 'allowance                   It is possible to see how much the owner gave the quota to a particular address.')
-            console.log(`  ` + 'ex) ygg query balanceOf -a 757649D90145e30b567A1f1B97267198Cde5e96c')
-            console.log(`  ` + 'ex) ygg query allowance -o 757649D90145e30b567A1f1B97267198Cde5e96c -s 757649D90145e30b567A1f1B97267198Cde5e96c\n')
-            console.log('  Opsions:')
-            for (let i in cmd.options) {
-                console.log(`  ` + cmd.options[i].flags)
-            }
-            return false
+        let contractName = "YEED"
+        if (cmd.contract) {
+            contractName = cmd.contract
         }
-
-        switch(action) {
-            case 'balanceOf':
-            if(cmd.address) {
-                query.getBalance(cmd.address)
-            } else {
-                query.getBalance(account.getAdmin())
-            }
-            break
-            case 'specification':
-            query.specification()
-            break
-            case 'totalSupply':
-            query.totalSupply()
-            break
-            case 'allowance':
-            if (!cmd.owner || !cmd.spender) {
-                console.log(`\n  ` + chalk.red(`Unknown command\n`))
-                console.log('  Options:')
-                console.log(`  ` + '-o : owner')
-                console.log(`  ` + '-s : spender')
-                console.log(`  ` + '-n : network\n')
-                return false
-            }
-                query.allowance(cmd.owner, cmd.spender)
-                break
-            case 'feeState':
-                query.feeState()
-                break
-            case 'proposeSatatus':
-                query.proposeSatatus(cmd.id)
-                break
-            case 'transactionConfirmStatus':
-                query.transactionConfirmStatus(cmd.id)
-                break
-            case 'getPendingTransactionList':
-                query.getPendingTransactionList()
-                break
-            case 'newPendingTransactionFilter':
-                query.newPendingTransactionFilter()
-                break
-            case 'blockNumber':
-                query.blockNumber()
-                break
-            case 'curIndex':
-                query.curIndex()
-                break
-            default:
-                console.log("no action")
+        let params = {}
+        if (cmd.params) {
+            params = JSON.parse(cmd.params)
         }
+        queries.query(contractName, action, params)
     })
 
 program
@@ -660,7 +678,6 @@ program
 
             invokeTx.invoke(answers.address, answers.password, contractName, action, params)
           })
-
         }
     })
     // {"receiveAddress":"4e5cbe1d0db35add81e7f2840eeb250b5b469161","receiveAsset":"100","receiveChainId":-1,"senderAddress":"101167aaf090581b91c08480f6e559acdd9a3ddd","networkBlockHeight":0,"proposeType":1,"inputData":null,"stakeYeed":"1","blockHeight":1000000,"fee":"10"}
