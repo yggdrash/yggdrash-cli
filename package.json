@@ -1,6 +1,6 @@
 {
   "name": "@yggdrash/cli",
-  "version": "0.3.8",
+  "version": "0.4.2",
   "description": "Command line interface for YGGDRASH",
   "preferGlobal": true,
   "bin": {
@@ -8,8 +8,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "test:watch": "mocha --watch",
-    "build-es5": "babel lib -w -d es5"
+    "test:watch": "mocha --watch"
   },
   "repository": {
     "type": "git",
@@ -27,7 +26,7 @@
   },
   "homepage": "https://developers.yggdrash.io",
   "dependencies": {
-    "@yggdrash/sdk": "^0.4.7",
+    "@yggdrash/sdk": "^0.4.9",
     "bip39": "^2.5.0",
     "chalk": "^2.4.1",
     "child_process": "^1.0.2",
@@ -41,10 +40,6 @@
     "utf8": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "babel-cli": "^6.26.0",
-    "babel-loader": "^8.0.4",
-    "babel-preset-env": "^1.7.0",
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
     "webpack": "^4.26.0"

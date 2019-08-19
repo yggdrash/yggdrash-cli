@@ -529,6 +529,12 @@ program
                 rawTx.getLogs()
             break
 
+            case 'getPendingTransactionList':
+                rawTx.getPendingTransactionList()
+            break
+            case 'newPendingTransactionFilter':
+                rawTx.newPendingTransactionFilter()
+            break
             default:
             console.log(`\n  ` + chalk.red(`Unknown command\n`))
             console.log(`  ` + 'ygg tx help                     output usage information\n')
@@ -594,12 +600,6 @@ program
 //                 break
 //             case 'transactionConfirmStatus':
 //                 query.transactionConfirmStatus(cmd.id)
-//                 break
-//             case 'getPendingTransactionList':
-//                 query.getPendingTransactionList()
-//                 break
-//             case 'newPendingTransactionFilter':
-//                 query.newPendingTransactionFilter()
 //                 break
 //             case 'blockNumber':
 //                 query.blockNumber()
