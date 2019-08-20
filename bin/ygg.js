@@ -650,33 +650,25 @@ program
     .description('invoke Transaction')
     .action((action, cmd) => {
         // action is method name
-        let accountAddress = account.getAdmin()
+        let address = cmd.address ? cmd.address : account.getAdmin()
+        let contractName = cmd.contract ? cmd.contract : "YEED"
         if (cmd.passwd) {
-          let contractName = "YEED"
-          if (cmd.contract) {
-            contractName = cmd.contract
-          }
           let params = {}
           if (cmd.params) {
             params = JSON.parse(cmd.params)
           }
-          invokeTx.invoke(cmd.passwd, contractName, action, params)
+          invokeTx.invoke(address, cmd.passwd, contractName, action, params)
         } else {
           inquirer.prompt([{
             name: 'password',
             type: 'password',
-            message: cmd.address ? cmd.address + ' password:' : accountAddress + ' password:'
+            message: address + ' password:'
           }]).then((answers) => {
-            let contractName = "YEED"
-            if (cmd.contract) {
-              contractName = cmd.contract
-            }
             let params = {}
             if (cmd.params) {
               params = JSON.parse(cmd.params)
             }
-
-            invokeTx.invoke(answers.address, answers.password, contractName, action, params)
+            invokeTx.invoke(address, answers.password, contractName, action, params)
           })
         }
     })
