@@ -12,7 +12,8 @@ const { account,
         contract,
         node,
         branch,
-        invokeTx
+        invokeTx,
+        peer
     } = require('../lib/core')
 
 program
@@ -637,6 +638,15 @@ program
     .action((action, cmd) => {
         if (action == "getContracts") {
             contract.getContracts()
+        }
+    })
+
+program
+    .command('peer <action>')
+    .description('peer')
+    .action((action, cmd) => {
+        if (action == "getAllActivePeer") {
+            peer.getAllActivePeer()
         }
     })
 
