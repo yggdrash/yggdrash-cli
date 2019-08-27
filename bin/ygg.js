@@ -620,15 +620,11 @@ program
     .option('-p, --params <params>','params')
     .description('Query')
     .action((action, cmd) => {
-        let contractName = "YEED"
-        if (cmd.contract) {
-            contractName = cmd.contract
-        }
         let params = {}
         if (cmd.params) {
             params = JSON.parse(cmd.params)
         }
-        queries.query(contractName, action, params)
+        queries.query(cmd.contract, action, params)
     })
 
 program
